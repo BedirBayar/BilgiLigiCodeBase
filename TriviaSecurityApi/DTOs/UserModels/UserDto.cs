@@ -8,6 +8,8 @@
         public string Avatar { get; set; }
         public decimal Rating {  get; set; }
         public decimal ContributionRating { get; set; }
-        public DateTime CreatedOn { get; set; }
+        public int Rank { get; set; }
+        public bool IsEmailConfirmed { get; set; }
+        public DateTime? CreatedOn { get; set; }
     }
 }

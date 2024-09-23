@@ -1,6 +1,12 @@
-﻿namespace TriviaSecurityApi.DTOs.RoleModels
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace TriviaSecurityApi.DTOs.RoleModels
 {
     public class RoleDto
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public bool IsActive { get; set; }
     }
 }

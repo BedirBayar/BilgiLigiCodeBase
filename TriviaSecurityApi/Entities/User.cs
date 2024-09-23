@@ -6,22 +6,22 @@ namespace TriviaSecurityApi.Entities
     public class User : BaseEntity
     {
         [Column("Email")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         [Column("UserName")]
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         [Column("Phone")]
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
         [Column("Password")]
-        public string Password { get; set; }
+        public string? Password   { get; set; }
 
         [Column("PasswordHash")]
-        public string PasswordHash { get; set; }
+        public string? PasswordHash { get; set; }
 
         [Column("SecurityStamp")]
-        public string SecurityStamp { get; set; }
+        public string? SecurityStamp { get; set; }
 
         [Column("RoleId")]
         public int RoleId { get; set; }
@@ -41,8 +41,11 @@ namespace TriviaSecurityApi.Entities
         [Column("IsBanned")]
         public bool IsBanned { get; set; }
 
+        [Column("IsEmailConfirmed")]
+        public bool IsEmailConfirmed { get; set; }
+
         [Column("BanReason")]
-        public string BanReason { get; set; }
+        public string? BanReason { get; set; }
 
         [Column("BannedUntil")]
         public DateTime? BannedUntil { get; set; }

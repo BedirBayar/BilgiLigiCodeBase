@@ -13,9 +13,9 @@ namespace TriviaSecurityApi.DataLayer.Repositories
 
         public async Task<int> AddUser(User user)
         {
-            context.Users.Add(user);
             try
             {
+                context.Users.Add(user);
                 await context.SaveChangesAsync();
                 return user.Id;
             }

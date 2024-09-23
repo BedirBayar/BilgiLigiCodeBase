@@ -4,6 +4,8 @@ using Microsoft.Extensions.Options;
 using TriviaSecurityApi.DataLayer;
 using TriviaSecurityApi.DataLayer.Repositories;
 using TriviaSecurityApi.Services;
+using TriviaSecurityApi.Services.Identity;
+using TriviaSecurityApi.Services.Role;
 using TriviaSecurityApi.Services.User;
 
 namespace TriviaSecurityApi.Extensions
@@ -16,12 +18,15 @@ namespace TriviaSecurityApi.Extensions
             services.AddTransient<ISecurityDbContext, SecurityDbContext>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserService, UserService>();
-            // services.AddTransient<IIdentityService, IdentityService>();
+            services.AddTransient<IRoleRepository, RoleRepository>();
+            services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IIdentityService, IdentityService>();
 
         }
         public static void AddTheDbContext(this IServiceCollection services)
         {
             services.AddDbContext<SecurityDbContext>(
+                       //options => options.UseSqlServer(@$"Data Source=host.docker.internal;Initial Catalog=TriviaSecurityDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False")
                        options => options.UseSqlServer(@$"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=TriviaSecurityDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False")
                    );
         }

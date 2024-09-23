@@ -19,11 +19,11 @@ namespace TriviaSecurityApi.Entities
         [Column("ArchivedBy")]
         public int ArchivedBy { get; set; }
         [Column("CreatedOn")]
-        public DateTime CreatedOn { get; set; }
+        public DateTime?  CreatedOn { get; set; }
         [Column("UpdatedOn")]
-        public DateTime UpdatedOn { get; set; }
+        public DateTime? UpdatedOn { get; set; }
         [Column("ArchivedOn")]
-        public DateTime ArchivedOn { get; set; }
+        public DateTime? ArchivedOn { get; set; }
 
     }
 }

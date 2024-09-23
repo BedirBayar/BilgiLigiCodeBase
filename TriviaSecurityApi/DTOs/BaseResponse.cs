@@ -9,7 +9,6 @@ namespace TriviaSecurityApi.DTOs
         public T Data { get; set; }
         public ErrorResponse? Error { get; set; }
         public BaseResponse() { }
-        public BaseResponse(bool success) { success = false; }
         public BaseResponse(ErrorResponse error)
         {
             Success = false;

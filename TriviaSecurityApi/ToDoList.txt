@@ -1,0 +1,2 @@
+﻿1- OAuth2 ile gelen E-Posta şifre ile kayıtta IsEmailConfirmed true set edilmeli, parola UI ekranında set ettirilmelidir.
+2- User ekleme apisi dışarıya kapatılmalı, register ile user eklenmelidir.
