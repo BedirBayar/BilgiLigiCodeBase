@@ -1,0 +1,321 @@
+ UYGULAMA ANALÝZÝ
+
+-VeriTabaný : MS SQL
+	--Tablolar (SECURITYDB)
+		(Base Entity)
+			-Id (int)
+			-IsActive (bool)
+			-IsArchived (bool)
+			-CreatedBy (int)
+			-CreatedOn (DateTime)
+			-UpdatedBy (int)
+			-UpdatedOn (DateTime)
+			-ArchivedBy (int)
+			-ArchivedOn (DateTime)
+		1-User
+			-Id (int)
+			-Email (string)
+			-UserName (string)
+			-Phone (string)
+			-Password (string)
+			-PasswordHash (string)
+			-SecurityStamp (string)
+			-RoleId (int)
+			-RankId (int)
+			-Rating (decimal)
+			-ContributionRating (decimal)
+			-ReportedRating (int)
+			-IsBanned (bool)
+			-BanReason (string)
+			-Avatar (string)
+			-IsEmailConfirmed (bool)
+			-IsArchived (bool)
+			-IsActive (bool)
+			-BannedUntil (DateTime)
+			-CreatedBy (int)
+			-CreatedOn (DateTime)
+			-UpdatedBy (int)
+			-UpdatedOn (DateTime)
+			-ArchivedBy (int)
+			-ArchivedOn (DateTime)
+		2-Role
+			-Id (int)
+			-Name (string)
+			-Description (string)
+			-IsActive (bool)
+			-IsArchived (bool)
+			
+	--Tablolar (CONTESTDB)		
+		3-Category
+			-Id (int)
+			-Name (string)
+			-Description (string)
+			-IsActive (bool)
+			-IsArchived (bool)
+		4-Question
+			-Id (int)
+			-CategoryId (int)
+			-Difficulty (int)
+			-Text (string)
+			-Image (string)
+			-Answer (string)
+			-Choice1 (string)
+			-Choice2 (string)
+			-Choice3 (string)
+			-Choice4 (string)
+			-IsActive (bool)
+			-IsArchived (bool)
+		5-Contest
+			-Id (int)
+			-Name (string)
+			-Description (string)
+			-PrizeRating (decimal)
+			-StartDate (DateTime)
+			-EndDate (DateTime)
+			-ContestTypeId (int)
+			-IsActive (bool)
+			-IsArchived (bool)
+			-MinimumRank (int)
+			-MaximumRank (int)
+			-LeaderBoardId (int)
+		6-ContestAward 
+			-Id (int)
+			-Name (string)
+			-Description (string)
+			-LeaderBoardRank (int)
+			-AwardRating (int)
+			-AwardId (int)
+		7-Match
+			-Id (int)
+			-StartDate (DateTime)
+			-EndDate (DateTime)
+			-User1Id (int) 
+			-User2Id (int)
+			-Team1Id (int)
+			-Team2Id (int)
+			-IsTeamMatch (bool)
+			-IsLeagueMatch (bool)
+			-ContestId (int)
+		8-LeaderBoard
+			-Id (int)
+			-Name (string)
+			-IsComplete (bool)
+			-IsTeamLeaderBoard (bool)
+			-Notes (string)
+		9-LeaderBoardTeam
+			-Id (int)
+			-LeaderBoardId (int)
+			-TeamId (int)
+			-Points (int)
+		10-LeaderBoardUser
+			-Id (int)
+			-LeaderBoardId (int)
+			-UserId (int)
+			-Points (int)
+		11-ContestType
+			-Id (int)
+			-Name (string)
+			-Description (string)
+			-IsActive (bool)
+			-IsArchived (bool)
+		12-ContestRule
+			-Id (int)
+			-ContestTypeId (int)
+			-Order (int)
+			-Description (string)
+		13-ContestTeam
+			-Id (int)
+			-ContestId (int)
+			-TeamId (int)
+		14-MatchQuestion
+			-Id (int)
+			-MatchId (int)
+			-QuestionId (int)
+
+	--Tablolar (RATINGDB)		
+		15-UserRank
+			-Id (int)
+			-Name (string)
+			-Degree (int)
+			-Description (string)
+			-IsActive (bool)
+			-IsArchived (bool)
+		16-TeamRank
+			-Id (int)
+			-Name (string)
+			-Degree (int)
+			-Description (string)
+			-IsActive (bool)
+			-IsArchived (bool)
+		17-UserRating
+			-UserId (int)
+			-Rating (int)
+		18-TeamRating
+			-TeamId (int)
+			-Rating (int)
+		19-Award
+			-Id (int)
+			-Name (string)
+			-Description (string)
+			-Badge (string)
+			-AwardType (string)
+			-IsActive (bool)
+			-IsArchived (bool)
+		20-Team
+			-Id (int)
+			-Name (string)
+			-Rating (decimal)
+			-LeaderId (int)
+			-TeamRankId (int)
+			-IsBanned (bool)
+			-BannedUntil (DateTime)
+			-BanReason (string)
+			-IsActive (bool)
+			-IsArchived (bool)
+		21-UserTeam 
+			-Id
+			-TeamId
+			-UserId
+		22-UserAward
+			-Id
+			-UserId
+			-AwardId
+		23-TeamAward
+			-Id
+			-TeamId
+			-AwardId
+					
+	--Tablolar (CONTRIBUTIONDB)		
+		24-QuestionDraft
+			-Id (int)
+			-CategoryId (int)
+			-Difficulty (int)
+			-Rating (decimal)
+			-AssessmentCount (int)
+			-Text (string)
+			-Answer (string)
+			-Choice1 (string)
+			-Choice2 (string)
+			-Choice3 (string)
+			-Choice4 (string)
+		25-QuestionAssessment
+			-Id (int)
+			-UserId (int)
+			-QuestionDraftId (int)
+			-QualityAssessment (string)
+			-DifficultyAssessment (string)
+			-QualityRating (int)
+			-DifficultyRating (int)
+		26-UserContributionRating (int)
+			- UserId (int)
+			- ContributionRating (decimal)
+
+	-Tablolar (GATEWAYDB)	
+		27-AuditLog
+			-Id
+			-UserId
+			-AuditTypeId
+			-Date
+			-NewData
+		28-AuditType
+			-Id
+			-Name
+			-IsActive (bool)
+			-IsArchived (bool)
+			
+		
+
+-API : .NET 8 RestAPI / Microservices
+	- SecurityApi
+		--Controller
+			-User
+			-Auth
+			-Audit
+			-Award
+	- ContestApi
+		--Controller
+			-Rank
+			-Team
+			-Category
+			-Question
+			-Contest
+			-League
+			-Match
+			-LeaderBoard
+	- RatingApi
+		--Controller
+			-Rating
+			-Ranking
+			-Award
+			-Team
+	- ContributionApi
+		--Controller
+			-QuestionDraft
+			-QuestionAssessment
+			-ContributionRating
+	- ApiGateway
+		--Controller
+			-AuthController
+			-ProxyController
+		--Services
+			-NLog
+			-Caching
+
+		
+		
+Teknolojiler :
+-OAuth 2.0
+-Microservice
+-Docker
+-Api Gateway
+
+Terimler 
+	- docker compose
+	- docker networking
+	- docker hub
+	- migrations over docker
+
+
+  
+  UI--------------------------------------------------------------
+
+1. **Profile**
+   - Personal Information
+   - Rank
+   - Rating
+   - Team Name
+   - Awards
+2. **Contests**
+   - **Upcoming Contests**: Contest name, start date, difficulty level, eligibility
+   - **Current/Active Contests**: Timer, current standings, list of questions (if applicable)
+   - **Past Contests**: Results, awards, performance stats
+   - **Main Screen**: List of available contests
+   - **Contest Detail Screen**: Contest rules, rewards, participation options
+   - **Live Contest Screen**: Real-time view, progress indicators, questions, remaining time
+3. **Leagues**
+4. **Team**
+   - Members
+   - Rank
+   - Rating
+   - Awards
+5. **My Contributions**
+   - My Questions
+   - Quality Assessments
+   - Difficulty Assessments
+
+
+: ReactUI Admin
+	- User management
+	- Category Management
+	- Team Management
+	- ContestManagement
+	- 
+
+--Sorularýn zorluðu nasýl deðerlendirilecek?
+	--ortalama doðru yanýtlanma süresi
+	--zorluk deðerlendirme geri bildirimi
+
+--Sorularýn kalitesi nasýl deðerlendirilecek?
+	--havuza ekleme öncesi kalite kontrol
+	--kalite deðerlendirme geri bildirimi
+	

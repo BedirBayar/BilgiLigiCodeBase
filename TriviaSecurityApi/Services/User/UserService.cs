@@ -3,7 +3,6 @@ using Azure.Core;
 using TriviaSecurityApi.DataLayer.Repositories;
 using TriviaSecurityApi.DTOs;
 using TriviaSecurityApi.DTOs.UserModels;
-using TriviaSecurityApi.Entities;
 
 namespace TriviaSecurityApi.Services.User
 {
@@ -24,7 +23,7 @@ namespace TriviaSecurityApi.Services.User
             var u= await _userRepository.GetUserByUsername(user.UserName);
             if(e==null && u == null)
             {
-                var entity = _mapper.Map<Entities.User>(user);
+                var entity = _mapper.Map<DataLayer.Entities.User>(user);
                 var result = await _userRepository.AddUser(entity);
                 if (result > 0) return new BaseResponse<int>(result);
                 else return new BaseResponse<int> { Error = new ErrorResponse { Code = "500",Message ="Bir hata oluştu" } }; 

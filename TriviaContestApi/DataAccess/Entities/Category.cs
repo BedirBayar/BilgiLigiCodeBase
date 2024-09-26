@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TriviaSecurityApi.Entities
+namespace TriviaContestApi.DataAccess.Entities
 {
-    [Table("Role")]
-    public class Role:BaseEntity
+    public class Category : BaseEntity
     {
         [Column("Name")]
         public string Name { get; set; }
         [Column("Description")]
         public string Description { get; set; }
+
     }
 }

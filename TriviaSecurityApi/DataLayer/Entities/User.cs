@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TriviaSecurityApi.Entities
+namespace TriviaSecurityApi.DataLayer.Entities
 {
     [Table("User")]
     public class User : BaseEntity
@@ -15,7 +15,7 @@ namespace TriviaSecurityApi.Entities
         public string? Phone { get; set; }
 
         [Column("Password")]
-        public string? Password   { get; set; }
+        public string? Password { get; set; }
 
         [Column("PasswordHash")]
         public string? PasswordHash { get; set; }

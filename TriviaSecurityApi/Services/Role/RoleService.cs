@@ -88,7 +88,7 @@ namespace TriviaSecurityApi.Services.Role
             {
                 return new BaseResponse<int> { Error = new ErrorResponse { Code = "400", Message = "Aynı isimde bir rol mevcut" }, Success = false };    
             }
-            var entity = new Entities.Role();
+            var entity = new DataLayer.Entities.Role();
             entity.Name = role.Name;
             entity.Description = role.Description;
             entity.CreatedBy = 2;

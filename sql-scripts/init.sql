@@ -1,0 +1,4 @@
+﻿CREATE DATABASE TriviaSecurityDB;
+CREATE DATABASE TriviaContestDB;
+CREATE DATABASE TriviaRankingDB;
+GO

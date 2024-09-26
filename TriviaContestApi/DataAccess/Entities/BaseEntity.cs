@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TriviaSecurityApi.Entities
+namespace TriviaContestApi.DataAccess.Entities
 {
     public class BaseEntity
     {
@@ -19,7 +19,7 @@ namespace TriviaSecurityApi.Entities
         [Column("ArchivedBy")]
         public int ArchivedBy { get; set; }
         [Column("CreatedOn")]
-        public DateTime?  CreatedOn { get; set; }
+        public DateTime? CreatedOn { get; set; }
         [Column("UpdatedOn")]
         public DateTime? UpdatedOn { get; set; }
         [Column("ArchivedOn")]

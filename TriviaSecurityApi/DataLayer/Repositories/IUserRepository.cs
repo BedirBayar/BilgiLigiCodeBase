@@ -1,4 +1,4 @@
-﻿using TriviaSecurityApi.Entities;
+﻿using TriviaSecurityApi.DataLayer.Entities;
 
 namespace TriviaSecurityApi.DataLayer.Repositories
 {

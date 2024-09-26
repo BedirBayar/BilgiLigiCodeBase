@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Reflection.Emit;
-using TriviaSecurityApi.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 using System.Xml;
+using TriviaSecurityApi.DataLayer.Entities;
 
 namespace TriviaSecurityApi.DataLayer
 {
-   
+
     public class SecurityDbContext : DbContext, ISecurityDbContext
     {
         public SecurityDbContext(DbContextOptions<SecurityDbContext> options) : base(options)

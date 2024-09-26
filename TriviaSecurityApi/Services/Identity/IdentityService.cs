@@ -11,7 +11,6 @@ using TriviaSecurityApi.DataLayer.Repositories;
 using TriviaSecurityApi.DTOs;
 using TriviaSecurityApi.DTOs.IdentityModels;
 using TriviaSecurityApi.DTOs.UserModels;
-using TriviaSecurityApi.Entities;
 
 namespace TriviaSecurityApi.Services.Identity
 {
@@ -34,7 +33,7 @@ namespace TriviaSecurityApi.Services.Identity
         }
         public async Task<BaseResponse<TokenResponse>> GetToken(TokenRequest tokenRequest)
         {
-            var user = new Entities.User();
+            var user = new DataLayer.Entities.User();
             if (!string.IsNullOrEmpty(tokenRequest.Email))
             {
                user= await _userRepository.GetUserByEmail(tokenRequest.Email);
@@ -104,7 +103,7 @@ namespace TriviaSecurityApi.Services.Identity
             }
             return new BaseResponse<bool> { Error = new ErrorResponse { Code = "400", Message = "Bilgiler eksik veya hatalı" } };
         }
-        private async Task<JwtSecurityToken> GenerateJWToken(Entities.User user)
+        private async Task<JwtSecurityToken> GenerateJWToken(DataLayer.Entities.User user)
         {
 
             var claims = new[]
@@ -139,9 +138,9 @@ namespace TriviaSecurityApi.Services.Identity
             // convert random bytes to hex string
             return BitConverter.ToString(randomBytes).Replace("-", "");
         }
-        private Entities.User GetUserWithDefaultValues()
+        private DataLayer.Entities.User GetUserWithDefaultValues()
         {
-            var user=new Entities.User();
+            var user=new DataLayer.Entities.User();
             user.IsEmailConfirmed = false;
             user.IsActive = true;
             user.CreatedBy = 2;

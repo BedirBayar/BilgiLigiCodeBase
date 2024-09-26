@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using TriviaSecurityApi.Entities;
 using TriviaSecurityApi.DTOs.UserModels;
 using TriviaSecurityApi.DTOs.RoleModels;
+using TriviaSecurityApi.DataLayer.Entities;
 
 namespace TriviaSecurityApi.Extensions
 {
