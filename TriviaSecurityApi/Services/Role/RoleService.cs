@@ -49,7 +49,7 @@ namespace TriviaSecurityApi.Services.Role
                 }
                 entity.Name = role.Name;
                 entity.Description = role.Description;
-                entity.UpdatedBy = 2;
+                entity.UpdatedBy = 1;
                 entity.UpdatedOn=DateTime.Now;
                 await _repository.UpdateRole(entity);
                 return new BaseResponse<int> { Data = entity.Id, Success = true };
@@ -75,7 +75,7 @@ namespace TriviaSecurityApi.Services.Role
             {
                 entity.IsArchived = true;
                 entity.ArchivedOn = DateTime.Now;
-                entity.ArchivedBy = 2;
+                entity.ArchivedBy = 1;
                 await _repository.UpdateRole(entity);
                 return new BaseResponse<bool> { Data = true, Success = true };
             }
@@ -83,7 +83,7 @@ namespace TriviaSecurityApi.Services.Role
         }
         public async Task<BaseResponse<int>> AddRole(RoleDto role)
         {
-            var nameCheck = _repository.GetRoleByName(role.Name);
+            var nameCheck = await _repository.GetRoleByName(role.Name);
             if (nameCheck != null)
             {
                 return new BaseResponse<int> { Error = new ErrorResponse { Code = "400", Message = "Aynı isimde bir rol mevcut" }, Success = false };    
@@ -91,7 +91,7 @@ namespace TriviaSecurityApi.Services.Role
             var entity = new DataLayer.Entities.Role();
             entity.Name = role.Name;
             entity.Description = role.Description;
-            entity.CreatedBy = 2;
+            entity.CreatedBy = 1;
             entity.CreatedOn = DateTime.Now;
             entity.IsArchived = false;
             entity.IsActive = true;

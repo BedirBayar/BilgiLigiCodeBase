@@ -56,9 +56,6 @@ namespace TriviaSecurityApi.Services.Identity
                     response.ExpiresOn = jwtSecurityToken.ValidTo.ToLocalTime();
                     response.User.Email = user.Email;
                     response.User.Avatar = user.Avatar;
-                    response.User.Rating = user.Rating;
-                    response.User.ContributionRating = user.ContributionRating;
-                    response.User.Rank = user.RankId;
                     response.User.CreatedOn = user.CreatedOn;
 
                     return new BaseResponse<TokenResponse> { Data = response,Success=true };
@@ -143,14 +140,11 @@ namespace TriviaSecurityApi.Services.Identity
             var user=new DataLayer.Entities.User();
             user.IsEmailConfirmed = false;
             user.IsActive = true;
-            user.CreatedBy = 2;
+            user.CreatedBy = 1;
             user.CreatedOn = DateTime.Now;
-            user.Rating = 33;
-            user.RankId= 1;
             user.RoleId= 2;
             user.IsBanned = false;
             user.ReportedRating = 0;
-            user.ContributionRating = 0;
             return user;
         }
     }

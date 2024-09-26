@@ -26,15 +26,6 @@ namespace TriviaSecurityApi.DataLayer.Entities
         [Column("RoleId")]
         public int RoleId { get; set; }
 
-        [Column("RankId")]
-        public int RankId { get; set; }
-
-        [Column("Rating")]
-        public decimal Rating { get; set; }
-
-        [Column("ContributionRating")]
-        public decimal ContributionRating { get; set; }
-
         [Column("ReportedRating")]
         public int ReportedRating { get; set; }
 
@@ -52,6 +43,8 @@ namespace TriviaSecurityApi.DataLayer.Entities
 
         [Column("Avatar")]
         public string? Avatar { get; set; }
+
+        public Role Role { get; set; }
 
     }
 }

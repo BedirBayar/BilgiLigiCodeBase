@@ -27,8 +27,50 @@ namespace TriviaSecurityApi.DataLayer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().Property(e => e.Rating).HasPrecision(38, 18);
-            modelBuilder.Entity<User>().Property(e => e.ContributionRating).HasPrecision(38, 18);
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(u => u.Id);
+                entity.Property(u=> u.Id)
+                    .UseIdentityColumn(1, 1);
+
+                // RoleId - Foreign Key to Role Table
+                entity.HasOne(u => u.Role)
+                    .WithMany(r => r.Users)
+                    .HasForeignKey(u => u.RoleId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                // ReportedRating
+                entity.Property(u => u.ReportedRating)
+                    .HasDefaultValue(0);
+
+                // IsBanned
+                entity.Property(u => u.IsBanned)
+                    .HasDefaultValue(false);
+
+                // Index on Email
+                entity.HasIndex(u => u.Email)
+                    .IsUnique();
+                // Index on UserName
+                entity.HasIndex(u => u.UserName)
+                    .IsUnique();
+            });
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+
+                // Id - Primary Key
+                entity.HasKey(r => r.Id);
+                entity.Property(r => r.Id)
+                    .UseIdentityColumn(1,1);
+                // Name
+                entity.Property(r => r.Name)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                // Index on Name
+                entity.HasIndex(r => r.Name)
+                    .IsUnique();
+            });
         }
     }
     

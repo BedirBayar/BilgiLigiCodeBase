@@ -133,27 +133,27 @@
 			-QuestionId (int)
 
 	--Tablolar (RATINGDB)		
-		15-UserRank
+		15-Rank
 			-Id (int)
 			-Name (string)
 			-Degree (int)
 			-Description (string)
-			-IsActive (bool)
-			-IsArchived (bool)
-		16-TeamRank
+			-IsTeamRank (bool)
+		16-UserRank
 			-Id (int)
-			-Name (string)
-			-Degree (int)
-			-Description (string)
-			-IsActive (bool)
-			-IsArchived (bool)
-		17-UserRating
+			-UserId (int)
+			-RankId (int)
+		17-TeamRank
+			-Id (int)
+			-TeamId (int)
+			-RankId (int)
+		18-UserRating
 			-UserId (int)
 			-Rating (int)
-		18-TeamRating
+		19-TeamRating
 			-TeamId (int)
 			-Rating (int)
-		19-Award
+		20-Award
 			-Id (int)
 			-Name (string)
 			-Description (string)
@@ -161,7 +161,7 @@
 			-AwardType (string)
 			-IsActive (bool)
 			-IsArchived (bool)
-		20-Team
+		21-Team
 			-Id (int)
 			-Name (string)
 			-Rating (decimal)
@@ -172,21 +172,21 @@
 			-BanReason (string)
 			-IsActive (bool)
 			-IsArchived (bool)
-		21-UserTeam 
+		22-UserTeam 
 			-Id
 			-TeamId
 			-UserId
-		22-UserAward
+		23-UserAward
 			-Id
 			-UserId
 			-AwardId
-		23-TeamAward
+		24-TeamAward
 			-Id
 			-TeamId
 			-AwardId
 					
 	--Tablolar (CONTRIBUTIONDB)		
-		24-QuestionDraft
+		25-QuestionDraft
 			-Id (int)
 			-CategoryId (int)
 			-Difficulty (int)
@@ -198,7 +198,7 @@
 			-Choice2 (string)
 			-Choice3 (string)
 			-Choice4 (string)
-		25-QuestionAssessment
+		26-QuestionAssessment
 			-Id (int)
 			-UserId (int)
 			-QuestionDraftId (int)
@@ -206,18 +206,18 @@
 			-DifficultyAssessment (string)
 			-QualityRating (int)
 			-DifficultyRating (int)
-		26-UserContributionRating (int)
+		27-UserContributionRating (int)
 			- UserId (int)
 			- ContributionRating (decimal)
 
 	-Tablolar (GATEWAYDB)	
-		27-AuditLog
+		28-AuditLog
 			-Id
 			-UserId
 			-AuditTypeId
 			-Date
 			-NewData
-		28-AuditType
+		29-AuditType
 			-Id
 			-Name
 			-IsActive (bool)

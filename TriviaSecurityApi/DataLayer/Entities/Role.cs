@@ -9,5 +9,7 @@ namespace TriviaSecurityApi.DataLayer.Entities
         public string Name { get; set; }
         [Column("Description")]
         public string Description { get; set; }
+
+        public ICollection<User> Users { get; set; }
     }
 }

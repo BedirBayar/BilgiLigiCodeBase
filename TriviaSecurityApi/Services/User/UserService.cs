@@ -38,7 +38,7 @@ namespace TriviaSecurityApi.Services.User
             {
                 u.IsArchived = true;
                 u.ArchivedOn = DateTime.Now;
-                u.ArchivedBy = 2;
+                u.ArchivedBy = 1;
                 var result = await _userRepository.UpdateUser(u);
                 if (result > 0) return new BaseResponse<int>(result);
                 else return new BaseResponse<int> { Error = new ErrorResponse { Code = "500", Message = "Bir hata oluştu" } };
@@ -115,7 +115,7 @@ namespace TriviaSecurityApi.Services.User
                 u.Avatar = user.Avatar;
                 u.Email = user.Email;
                 u.UpdatedOn= DateTime.Now;
-                u.UpdatedBy = 2;
+                u.UpdatedBy = 1;
                 var result = await _userRepository.UpdateUser(u);
                 if (result > 0) return new BaseResponse<int>(result);
                 else return new BaseResponse<int> { Error = new ErrorResponse { Code = "500", Message = "Bir hata oluştu" } };

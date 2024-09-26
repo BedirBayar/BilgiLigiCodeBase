@@ -12,8 +12,8 @@ using TriviaSecurityApi.DataLayer;
 namespace TriviaSecurityApi.Migrations
 {
     [DbContext(typeof(SecurityDbContext))]
-    [Migration("20240923094710_IsEmailConfirmed_column")]
-    partial class IsEmailConfirmed_column
+    [Migration("20240926135709_recreate")]
+    partial class recreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace TriviaSecurityApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TriviaSecurityApi.Entities.Role", b =>
+            modelBuilder.Entity("TriviaSecurityApi.DataLayer.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -38,7 +38,7 @@ namespace TriviaSecurityApi.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ArchivedBy");
 
-                    b.Property<DateTime>("ArchivedOn")
+                    b.Property<DateTime?>("ArchivedOn")
                         .HasColumnType("datetime2")
                         .HasColumnName("ArchivedOn");
 
@@ -46,7 +46,7 @@ namespace TriviaSecurityApi.Migrations
                         .HasColumnType("int")
                         .HasColumnName("CreatedBy");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime2")
                         .HasColumnName("CreatedOn");
 
@@ -65,23 +65,27 @@ namespace TriviaSecurityApi.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
                         .HasColumnName("Name");
 
                     b.Property<int>("UpdatedBy")
                         .HasColumnType("int")
                         .HasColumnName("UpdatedBy");
 
-                    b.Property<DateTime>("UpdatedOn")
+                    b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2")
                         .HasColumnName("UpdatedOn");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Role");
                 });
 
-            modelBuilder.Entity("TriviaSecurityApi.Entities.User", b =>
+            modelBuilder.Entity("TriviaSecurityApi.DataLayer.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,7 +98,7 @@ namespace TriviaSecurityApi.Migrations
                         .HasColumnType("int")
                         .HasColumnName("ArchivedBy");
 
-                    b.Property<DateTime>("ArchivedOn")
+                    b.Property<DateTime?>("ArchivedOn")
                         .HasColumnType("datetime2")
                         .HasColumnName("ArchivedOn");
 
@@ -103,7 +107,6 @@ namespace TriviaSecurityApi.Migrations
                         .HasColumnName("Avatar");
 
                     b.Property<string>("BanReason")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("BanReason");
 
@@ -111,22 +114,16 @@ namespace TriviaSecurityApi.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("BannedUntil");
 
-                    b.Property<decimal>("ContributionRating")
-                        .HasPrecision(38, 18)
-                        .HasColumnType("decimal(38,18)")
-                        .HasColumnName("ContributionRating");
-
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int")
                         .HasColumnName("CreatedBy");
 
-                    b.Property<DateTime>("CreatedOn")
+                    b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime2")
                         .HasColumnName("CreatedOn");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Email");
 
                     b.Property<bool>("IsActive")
@@ -138,7 +135,9 @@ namespace TriviaSecurityApi.Migrations
                         .HasColumnName("IsArchived");
 
                     b.Property<bool>("IsBanned")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
+                        .HasDefaultValue(false)
                         .HasColumnName("IsBanned");
 
                     b.Property<bool>("IsEmailConfirmed")
@@ -146,31 +145,21 @@ namespace TriviaSecurityApi.Migrations
                         .HasColumnName("IsEmailConfirmed");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Password");
 
                     b.Property<string>("PasswordHash")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("PasswordHash");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Phone");
 
-                    b.Property<int>("RankId")
-                        .HasColumnType("int")
-                        .HasColumnName("RankId");
-
-                    b.Property<decimal>("Rating")
-                        .HasPrecision(38, 18)
-                        .HasColumnType("decimal(38,18)")
-                        .HasColumnName("Rating");
-
                     b.Property<int>("ReportedRating")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasDefaultValue(0)
                         .HasColumnName("ReportedRating");
 
                     b.Property<int>("RoleId")
@@ -178,7 +167,6 @@ namespace TriviaSecurityApi.Migrations
                         .HasColumnName("RoleId");
 
                     b.Property<string>("SecurityStamp")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("SecurityStamp");
 
@@ -186,18 +174,43 @@ namespace TriviaSecurityApi.Migrations
                         .HasColumnType("int")
                         .HasColumnName("UpdatedBy");
 
-                    b.Property<DateTime>("UpdatedOn")
+                    b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2")
                         .HasColumnName("UpdatedOn");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("UserName");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserName")
+                        .IsUnique()
+                        .HasFilter("[UserName] IS NOT NULL");
+
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("TriviaSecurityApi.DataLayer.Entities.User", b =>
+                {
+                    b.HasOne("TriviaSecurityApi.DataLayer.Entities.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("TriviaSecurityApi.DataLayer.Entities.Role", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }
