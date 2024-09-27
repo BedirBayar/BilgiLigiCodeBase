@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TriciaContestApi.DTOs;
-using TriviaContestApi.DTOs.ContestModels;
+using TriviaContestApi.DTOs;
 
 namespace TriviaContestApi.Controllers
 {

@@ -16,7 +16,7 @@ namespace TriviaContestApi.DataAccess
         public DbSet<ContestRule> ContestRules { get; set; }
         public DbSet<ContestTeam> ContestTeams { get; set; }
         public DbSet<LeaderBoardTeam> LeaderBoardTeams { get; set; }
-        public DbSet<LeaderBoardUser> LeaderBoardUser { get; set; }
+        public DbSet<LeaderBoardUser> LeaderBoardUsers { get; set; }
         public DbSet<MatchQuestion> MatchQuestions { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken());

@@ -27,8 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DataAccess\Repositories\" />
-    <Folder Include="Extensions\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

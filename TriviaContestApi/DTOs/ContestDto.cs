@@ -1,4 +1,4 @@
-﻿namespace TriviaContestApi.DTOs.ContestModels
+﻿namespace TriviaContestApi.DTOs
 {
     public class ContestDto
     {
