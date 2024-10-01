@@ -13,6 +13,7 @@
     <Folder Include="src\components\" />
     <Folder Include="src\hooks\" />
     <Folder Include="src\context\" />
+    <Folder Include="src\layouts\" />
     <Folder Include="src\styles\" />
     <Folder Include="src\utils\" />
     <Folder Include="src\store\" />
