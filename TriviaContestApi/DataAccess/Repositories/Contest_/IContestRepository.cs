@@ -6,6 +6,7 @@ namespace TriviaContestApi.DataAccess.Repositories.Contest_
     {
         Task<List<Contest>> GetAll();
         Task<Contest> GetById(int id);
+        Task<Contest> GetByName(string name);
         Task<bool> Update(Contest contest);
         Task<int> Add(Contest contest);
     }

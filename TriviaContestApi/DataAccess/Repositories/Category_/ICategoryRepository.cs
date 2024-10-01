@@ -9,5 +9,6 @@ namespace TriviaContestApi.DataAccess.Repositories.Category_
         Task<Category> GetByName(string name);
         Task<bool> Update(Category cat);
         Task<int> Add(Category cat);
+
     }
 }
