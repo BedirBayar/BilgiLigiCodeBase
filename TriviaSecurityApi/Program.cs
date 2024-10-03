@@ -1,6 +1,7 @@
 using TriviaSecurityApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+var allowedOrigins = "_allowedOrigins";
 
 // Add services to the container.
 
@@ -11,6 +12,17 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddTheDbContext();
 builder.Services.AddApplicationLayer();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(allowedOrigins,
+      builder =>
+      {
+          builder.WithOrigins("http://localhost:5175") // Frontend adresini ekleyin
+                 .AllowAnyHeader() // Gerekli olan header'larý ekleyin, örneðin Content-Type
+                 .AllowAnyMethod() // GET, POST gibi HTTP metotlarýný ekleyin
+                 .AllowCredentials(); // Ýsterseniz cookie ve kimlik doðrulama bilgilerini ekleyebilirsiniz
+      });
+});
 
 var app = builder.Build();
 
@@ -21,6 +33,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(allowedOrigins);
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

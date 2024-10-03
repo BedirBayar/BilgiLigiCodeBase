@@ -51,6 +51,7 @@ namespace TriviaSecurityApi.Services.Identity
                     response.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                     response.User = new UserDto();
                     response.User.Id = user.Id;
+                    response.User.UserName = user.UserName;
                     response.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                     response.IssuedOn = jwtSecurityToken.ValidFrom.ToLocalTime();
                     response.ExpiresOn = jwtSecurityToken.ValidTo.ToLocalTime();

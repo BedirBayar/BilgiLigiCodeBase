@@ -1,22 +1,12 @@
-import React from 'react';
-import { Route, Navigate } from 'react-router-dom';
-import { useAuth } from './AuthProvider';
+// components/PrivateRoute.jsx
 
-function PrivateRoute({ component: Component, ...rest }) {
-    const { isAuthenticated } = useAuth(); // Giriþ yapýldý mý kontrol ediliyor
+import React, { useContext } from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
+import { AuthContext } from './AuthProvider'; // AuthContext'i import ediyoruz
 
-    return (
-        <Route
-            {...rest}
-            render={(props) =>
-                isAuthenticated ? (
-                    <Component {...props} />
-                ) : (
-                        <Navigate to="/login" /> // Eðer giriþ yapýlmadýysa login sayfasýna yönlendir
-                )
-            }
-        />
-    );
+function PrivateRoute() {
+    const { isAuthenticated } = useContext(AuthContext); // AuthContext'ten isAuthenticated deðerini çekiyoruz
+    return isAuthenticated ? <Outlet /> : <Navigate to="/login" />; // Eðer kullanýcý authenticated deðilse login sayfasýna yönlendiriyoruz
 }
 
 export default PrivateRoute;

@@ -1,0 +1,61 @@
+.dashboard-tepsi{
+    width:720px!important;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    background-color:#444;
+    height:720px;
+    border-radius:50%;
+    margin-left:auto;
+    margin-right:auto;
+}
+.dashboard-line {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    width:100%;
+    height:33.3%;
+}
+.dashboard-item {
+    width: 240px;
+    height: 240px;
+    display:flex;
+    padding: 20px;
+    color: lightgray;
+}
+.dashboard-item1 {
+    justify-content: center;
+    align-items: center;
+}
+.dashboard-item2 {
+    justify-content: center;
+    align-items: start;
+}
+.dashboard-item3 {
+    justify-content: center;
+    align-items: center;
+}
+.dashboard-item4 {
+    justify-content: start;
+    align-items: center;
+}
+.dashboard-item5 {
+    justify-content: center;
+    align-items: center;
+}
+.dashboard-item6 {
+    justify-content: end;
+    align-items: center;
+}
+.dashboard-item7 {
+    justify-content: center;
+    align-items: center;
+}
+.dashboard-item8 {
+    justify-content: center;
+    align-items: end;
+}
+.dashboard-item9 {
+    justify-content: center;
+    align-items: center;
+}

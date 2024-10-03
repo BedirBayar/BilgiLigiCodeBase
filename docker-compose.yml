@@ -41,6 +41,19 @@ services:
         - DB_SA_PASSWORD=Single2024
     networks:
         - backend_network
+  triviaratingapi:
+    image: ${DOCKER_REGISTRY-}triviaratingapi
+    ports:
+        - 44314:8081
+    build:
+      context: TriviaRatingApi
+      dockerfile: Dockerfile
+    environment:
+        - DB_HOST=Server=host.docker.internal,1433
+        - DB_NAME=TriviaSecurityDB
+        - DB_SA_PASSWORD=Single2024
+    networks:
+        - backend_network
 networks:
     backend_network:
 volumes:

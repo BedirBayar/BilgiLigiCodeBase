@@ -1,0 +1,79 @@
+/*.octa {
+    width: 600px;
+    background-color: #444;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    aspect-ratio: 1;
+    --o: calc(50%*tan(-22.5deg));
+    clip-path: polygon( var(--o) 50%,50% var(--o), calc(100% - var(--o)) 50%, 50% calc(100% - var(--o)) );
+}
+.circle {
+    width: 200px;
+    height: 200px;
+    background-color: #777;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+}*/
+
+.inner-palette {
+    --g: 10px; /* The gap between shapes*/
+    --s: 200px; /* the size*/
+
+    height:600px;
+    width: 600px;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+
+    .inner-palette > * {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: var(--s) solid var(--c,#444);
+        border-radius: 50%;
+        clip-path: polygon( calc(50% + var(--g)/2) 50%, calc(50% + var(--g)/2) 0%, 100% 0%, 100% calc(0% - var(--g)/2), 50% calc(50% - var(--g)/2));
+    }
+
+.color1 {
+    transform: rotate(45deg); /* 360/8 */
+    --c: #444;
+}
+
+.color2 {
+    transform: rotate(90deg);
+    --c: #444;
+}
+
+.color3 {
+    transform: rotate(135deg);
+    --c: #444;
+}
+
+.color4 {
+    transform: rotate(180deg);
+    --c: #444;
+}
+
+.color5 {
+    transform: rotate(-45deg); /* 360/8 */
+    --c: #444;
+}
+
+.color6 {
+    transform: rotate(-90deg);
+    --c: #444;
+}
+
+.color7 {
+    transform: rotate(-135deg);
+    --c: #444;
+}

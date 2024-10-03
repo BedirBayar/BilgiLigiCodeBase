@@ -1,0 +1,23 @@
+.login-container {
+    /*
+    background: url('../../../public/assets/images/login-background.png') center center*/
+}
+.login-form{
+    background:rgb(192, 192, 192,0.8);
+    padding:70px 50px;
+    border-radius:40px;
+}
+.login-form .form-group{
+    margin-top:13px;
+}
+.login-form .form-control {
+    background-color:#aaa;
+}.login-form .form-control :focus{
+    background-color:#bbb;
+}
+#submit{
+    padding:10px 30px;
+}
+body{
+   
+}

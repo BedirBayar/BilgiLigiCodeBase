@@ -9,7 +9,6 @@ import Dashboard from './pages/Dashboard.jsx'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
       <AuthProvider>
@@ -25,15 +24,14 @@ function App() {
                   </Route>
 
                   {/* Ana sayfa farklý bir layout ile sarýlý */}
-                  <Route path="/home" element={
-                      <PrivateRoute>
-                          <MainLayout>
-                              <Dashboard />
-                            </MainLayout>
-                      </PrivateRoute>
-                  } >
-                     
+                  <Route element={<PrivateRoute />}>
+                      <Route path="/dashboard" element={<MainLayout>
+                          <Dashboard />
+                      </MainLayout>} />
+                      {/* Ýsterseniz baþka korumalý rotalar ekleyebilirsiniz */}
                   </Route>
+                  
+                     
 
                   {/* Dashboard, özel bir layout ile sarýlý ve PrivateRoute ile korunuyor */}
                   {/*<PrivateRoute path="/dashboard">*/}

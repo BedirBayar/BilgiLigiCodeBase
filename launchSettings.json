@@ -5,7 +5,8 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "triviacontestapi": "StartDebugging",
-        "triviasecurityapi": "StartDebugging"
+        "triviasecurityapi": "StartDebugging",
+        "triviaratingapi": "StartDebugging"
       }
     }
   }
