@@ -6,6 +6,10 @@ import AuthProvider from './components/AuthProvider.jsx'
 import AuthLayout from './layouts/AuthLayout.jsx'
 import MainLayout from './layouts/MainLayout.jsx'
 import Dashboard from './pages/Dashboard.jsx'
+import Competitions from './pages/Competitions.jsx'
+import Leagues from './pages/Leagues.jsx'
+import MyTeam from './pages/MyTeam.jsx'
+import Contributor from './pages/Contributor.jsx'
 import './App.css'
 
 function App() {
@@ -27,6 +31,30 @@ function App() {
                   <Route element={<PrivateRoute />}>
                       <Route path="/dashboard" element={<MainLayout>
                           <Dashboard />
+                      </MainLayout>} />
+                      {/* Ýsterseniz baþka korumalý rotalar ekleyebilirsiniz */}
+                  </Route>
+                  <Route element={<PrivateRoute />}>
+                      <Route path="/competitions" element={<MainLayout>
+                          <Competitions />
+                      </MainLayout>} />
+                      {/* Ýsterseniz baþka korumalý rotalar ekleyebilirsiniz */}
+                  </Route>
+                  <Route element={<PrivateRoute />}>
+                      <Route path="/leagues" element={<MainLayout>
+                          <Leagues />
+                      </MainLayout>} />
+                      {/* Ýsterseniz baþka korumalý rotalar ekleyebilirsiniz */}
+                  </Route>
+                  <Route element={<PrivateRoute />}>
+                      <Route path="/myteam" element={<MainLayout>
+                          <MyTeam />
+                      </MainLayout>} />
+                      {/* Ýsterseniz baþka korumalý rotalar ekleyebilirsiniz */}
+                  </Route>
+                  <Route element={<PrivateRoute />}>
+                      <Route path="/contributor" element={<MainLayout>
+                          <Contributor />
                       </MainLayout>} />
                       {/* Ýsterseniz baþka korumalý rotalar ekleyebilirsiniz */}
                   </Route>

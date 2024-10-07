@@ -17,7 +17,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(allowedOrigins,
       builder =>
       {
-          builder.WithOrigins("http://localhost:5175") // Frontend adresini ekleyin
+          builder.WithOrigins("http://localhost:44319") // Frontend adresini ekleyin
                  .AllowAnyHeader() // Gerekli olan header'larý ekleyin, örneðin Content-Type
                  .AllowAnyMethod() // GET, POST gibi HTTP metotlarýný ekleyin
                  .AllowCredentials(); // Ýsterseniz cookie ve kimlik doðrulama bilgilerini ekleyebilirsiniz
@@ -27,11 +27,11 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+app.UseSwagger();
+app.UseSwaggerUI();
+//}
 
 app.UseCors(allowedOrigins);
 app.UseHttpsRedirection();

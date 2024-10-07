@@ -5,7 +5,7 @@ import Footer from '../components/Footer'
 
 function MainLayout({ children }) {
     return (
-        <div>
+        <div className="d-flex flex-row">
             <Navbar></Navbar>
             <main>{children}</main>
             <Footer></Footer>

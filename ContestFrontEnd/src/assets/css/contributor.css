@@ -1,0 +1,26 @@
+.y-contributor-container {
+    width: 600px;
+    height: 600px;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 kolonlu bir grid oluþtur */
+    gap: 2px; /* Aradaki boþluk */
+}
+.y-contributor-menu-box {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:50px;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #464, #575);
+}
+.y-contributor-menu-box:hover {
+    background: linear-gradient(45deg, #353, #464);
+    cursor:pointer;
+}
+.y-contributor-menu-text{
+    color:lightgray;
+    font-size:larger;
+    font-family:Consolas;
+}

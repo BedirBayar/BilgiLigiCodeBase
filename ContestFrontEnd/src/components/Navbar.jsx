@@ -1,27 +1,28 @@
 import React from 'react'
+import '../assets/css/navbar.css'
 
 function Navbar() {
     return (
-        <header>
-            <nav className="navbar navbar-expand-sm bg-secondary navbar-dark">
-                <div className="container-fluid">
-                    <ul className="navbar-nav">
-                        <li className="nav-item">
-                            <a className="nav-link active" href="#">Active</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Link</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Link</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link disabled" href="#">Disabled</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
+        <div className="y-menu">
+            <ul className="y-menu-list">
+                 <li className="y-menu-item">
+                     <a className="y-menu-link active" href="/dashboard">Profilim</a>
+                 </li>
+                <li className="y-menu-item">
+                    <a className="y-menu-link" href="/competitions">Yarismalar</a>
+                 </li>
+                <li className="y-menu-item">
+                    <a className="y-menu-link" href="/leagues">Ligler</a>
+                 </li>
+                <li className="y-menu-item">
+                    <a className="y-menu-link" href="/myteam">Takimim</a>
+                 </li>
+                <li className="y-menu-item">
+                    <a className="y-menu-link" href="/contributor">Katkilarim</a>
+                 </li>
+             </ul>
+        </div>
+      
     )
 }
 

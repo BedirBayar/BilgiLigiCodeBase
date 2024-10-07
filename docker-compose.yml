@@ -2,45 +2,20 @@ version: '3.4'
 name: trivia_backend_container
 
 services:
-  # triviadb:
-  #     container_name: TriviaSecurityDB
-  # #     image: mcr.microsoft.com/mssql/server:2022-latest
-  # #     ports: 
-  # #       - 44310:1433
-  # #     environment:
-  # #       - ACCEPT_EULA=Y
-  # #       - SA_PASSWORD=Jko3va-D9821jhsvGD
-  # #       - MSSQL_DATABASE=TriviaSecurityDB   
-  #     networks:
-  #       - backend_network
-  #     volumes:
-  #       - securitydb_data:/var/opt/mssql  
-  triviacontestapi:
-    image: ${DOCKER_REGISTRY-}triviacontestapi
-    ports:
-        - 44312:8081
-    build:
-      context: TriviaContestApi
-      dockerfile: Dockerfile
-    environment:
-        - DB_HOST=TriviaSecurityDB
-        - DB_NAME=TriviaContestDB
-        - DB_SA_PASSWORD=Single2024
-    networks:
-        - backend_network
   triviasecurityapi:
     image: ${DOCKER_REGISTRY-}triviasecurityapi
     ports:
-        - 44313:8081
+        - 44312:8081
     build:
       context: TriviaSecurityApi
       dockerfile: Dockerfile
-    environment:
-        - DB_HOST=Server=host.docker.internal,1433
-        - DB_NAME=TriviaSecurityDB
-        - DB_SA_PASSWORD=Single2024
-    networks:
-        - backend_network
+  triviacontestapi:
+    image: ${DOCKER_REGISTRY-}triviacontestapi
+    ports:
+        - 44313:8081
+    build:
+      context: TriviaContestApi
+      dockerfile: Dockerfile
   triviaratingapi:
     image: ${DOCKER_REGISTRY-}triviaratingapi
     ports:
@@ -48,13 +23,3 @@ services:
     build:
       context: TriviaRatingApi
       dockerfile: Dockerfile
-    environment:
-        - DB_HOST=Server=host.docker.internal,1433
-        - DB_NAME=TriviaSecurityDB
-        - DB_SA_PASSWORD=Single2024
-    networks:
-        - backend_network
-networks:
-    backend_network:
-volumes:
-  securitydb_data:

@@ -11,13 +11,13 @@
   <ItemGroup>
     <Folder Include="public\assets\profile-pictures\" />
     <Folder Include="src\assets\NewFolder\" />
-    <Folder Include="src\components\" />
+    <Folder Include="src\components\competition\" />
+    <Folder Include="src\components\dashboard\" />
     <Folder Include="src\hooks\" />
     <Folder Include="src\context\" />
     <Folder Include="src\layouts\" />
     <Folder Include="src\styles\" />
     <Folder Include="src\utils\" />
     <Folder Include="src\store\" />
-    <Folder Include="src\services\" />
   </ItemGroup>
 </Project>

@@ -13,7 +13,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 #root{
-    width:100%;
+    width:1000px;
 }
 
 a {
@@ -26,12 +26,12 @@ a:hover {
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-  background-color:#888!important;
+    margin: 0;
+    display: flex;
+    place-items: center;
+    min-width: 320px;
+    min-height: 100vh;
+    background-color: #8f7b5a!important;
 }
 
 h1 {

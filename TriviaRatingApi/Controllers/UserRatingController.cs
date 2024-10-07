@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using TriviaRatingApi.Models;
 
 namespace TriviaRatingApi.Controllers
 {
@@ -6,22 +7,11 @@ namespace TriviaRatingApi.Controllers
     [Route("api/userrating")]
     public class UserRatingController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        private readonly ILogger<UserRatingController> _logger;
-
-        public UserRatingController(ILogger<UserRatingController> logger)
-        {
-            _logger = logger;
-        }
-
         [HttpGet("getuserrating")]
-        public decimal Get(int id)
+        public IActionResult Get(int id)
         {
-            return (decimal)Math.Round(id * Math.PI,2);
+            var data = (decimal)Math.Round(id * Math.PI, 2);
+            return Ok(new BaseResponse<decimal>(data));
         }
     }
 }
