@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TriviaContestApi.DataAccess;
 
@@ -11,9 +12,11 @@ using TriviaContestApi.DataAccess;
 namespace TriviaContestApi.Migrations
 {
     [DbContext(typeof(ContestDbContext))]
-    partial class ContestDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241011220413_Matchesfixed")]
+    partial class Matchesfixed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

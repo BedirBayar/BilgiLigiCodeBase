@@ -14,42 +14,43 @@ const AuthProvider = ({ children }) => {
     }, []);
 
     const login = async (credentials) => {
-        //var fullCredentials = getFullCredentials(credentials);
-        //try {
-        //    const response = await fetch('https://localhost:44312/api/identity/login', {
-        //        method: 'POST',
-        //        headers: {
-        //            'Content-Type': 'application/json',
-        //        },
-        //        body: JSON.stringify(fullCredentials),
-        //    });
+        var fullCredentials = getFullCredentials(credentials);
+        try {
+            const response = await fetch('https://localhost:44312/api/identity/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(fullCredentials),
+            });
 
-        //    if (!response.ok) {
-        //        throw new Error('Login failed');
-        //    }
-        //    const data = await response.json();
-        //    localStorage.setItem('token', data.data.token); // Save the token in localStorage
-        //    localStorage.setItem('user', JSON.stringify(data.data.user)); // Save the token in localStorage
-        //    localStorage.setItem('expiresOn', data.data.expiresOn)
-        //    return true; // Baþarýlý olduðunu belirten bir deðer döndür
-        //} catch (err) {
-        //    console.error(err);
-        //    return false; // Baþarýsýzlýk durumunu döndür
-        //}
-        var user = {
-            userName: "Yasemin",
-            id: 4,
-            rating: 9.44,
-            rank: "Yürüyen Ansiklopedi",
-            email: "email@example.com",
-            createdOn: new Date(),
-            awards: "Çok Ödül Alma Ödülü",
-            team:"Beyin Takýmý"
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
+            const data = await response.json();
+            localStorage.setItem('token', data.data.token); // Save the token in localStorage
+            localStorage.setItem('user', JSON.stringify(data.data.user)); // Save the token in localStorage
+            localStorage.setItem('expiresOn', data.data.expiresOn)
+            return true; // Baþarýlý olduðunu belirten bir deðer döndür
+        } catch (err) {
+            console.error(err);
+            return false; // Baþarýsýzlýk durumunu döndür
         }
-        localStorage.setItem('user', JSON.stringify(user)); // Save the token in localStorage
-        localStorage.setItem('expiresOn', new Date('10/10/2024'));
-        debugger;
-        return true;
+        //var user = {
+        //    userName: "Yasemin",
+        //    id: 4,
+        //    rating: 9.44,
+        //    rank: "Bilge",
+        //    rankDegree:4,
+        //    email: "email@example.com",
+        //    createdOn: new Date(),
+        //    awards: "Çok Ödül Alma Ödülü",
+        //    team:"Beyin Takýmý"
+        //}
+        //localStorage.setItem('user', JSON.stringify(user)); // Save the token in localStorage
+        //localStorage.setItem('expiresOn', new Date('10/10/2024'));
+        //debugger;
+        //return true;
     };
     function getFullCredentials(credentials) {
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;

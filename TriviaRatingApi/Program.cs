@@ -1,3 +1,5 @@
+using TriviaSecurityApi.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var allowedOrigins = "_allowedOrigins";
@@ -7,6 +9,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddApplicationLayer();
+builder.Services.AddTheDbContext();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(allowedOrigins,

@@ -11,6 +11,8 @@ namespace TriviaContestApi.DataAccess.Entities
         public string Description { get; set; }
         [Column("PrizeRating")]
         public decimal PrizeRating { get; set; } = 0;
+        [Column("AwardId")]
+        public int AwardId { get; set; } = 0;
         [Column("StartDate")]
         public DateTime StartDate { get; set; } = DateTime.MinValue;
         [Column("EndDate")]

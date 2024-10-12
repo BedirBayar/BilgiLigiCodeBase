@@ -2,34 +2,50 @@ import React from 'react'
 import {useEffect, useState} from 'react'
 import "../assets/css/dashboard.css"
 import DashboardService from "../services/DashboardService"
+import RankProgressBar from "../components/dashboard/RankProgressBar"
 
 function Dashboard() {
+    const { GetUserRating, GetUserRank, GetUserAwards, GetAllRanks } = DashboardService(); 
     var data = JSON.parse(localStorage.getItem('user'));
     data.createdOn = new Date(data.createdOn).toLocaleDateString();
     var [user, setUser] = useState(data);
+    var [allRanks, setAllRanks] = useState([]);
+    const [rankModalOpen, setRankModalOpen] = useState(false);
 
-    const { GetUserRating, GetUserRank, GetUserAwards } = DashboardService(); // Servisi çaðýr
+
+    // Function to open or close the popup
+    const toggleRankPopup = () => {
+        setRankModalOpen(!rankModalOpen);
+    };
+    var allR = [];
+    var rank = {}
     var rating = 0;
-    var rank = "";
-    var awards = [];
+    var awards = "";
+
+
+   
     useEffect(() => {
         const fetchUserStats = async () => {
-            rating = await GetUserRating(user.id);
+             rating = await GetUserRating(user.id);
             setUser( prev =>( { ...prev,rating: rating }));
-            rank = await GetUserRank(user.id) 
-            setUser(prev => ({ ...prev, rank: rank }));
-            awards = await GetUserAwards(user.id)
+             rank = await GetUserRank(user.id) 
+            setUser(prev => ({ ...prev, rankNumber: rank.rankNumber }));
+            setUser(prev => ({ ...prev, rankName: rank.rankName }));
+             awards = await GetUserAwards(user.id)
             setUser(prev => ({ ...prev, awards: awards }));
+            allR = await GetAllRanks();
+            setAllRanks(allR);
+            
         };
 
         fetchUserStats(); // Sayfa yüklendiðinde çaðýr
     }, []);
 
-    console.log(user);
+   
 
     return <div className="dashboard-square">
         <div className="dashboard-line">
-            <div className="dashboard-item dashboard-item1">Rütbe: {user.rank}</div>
+            <div className="dashboard-item dashboard-item1" onClick={toggleRankPopup}>Rütbe: {user.rankName}</div>
             <div className="dashboard-item dashboard-item2">{user.userName}</div>
             <div className="dashboard-item dashboard-item3">{user.email}</div>
         </div>
@@ -47,6 +63,17 @@ function Dashboard() {
             <div className="dashboard-item dashboard-item9">Katký Puaný: 0</div>
         </div>
 
+
+        {rankModalOpen && (
+             <div className="popup">
+            <div className="popup-inner">
+                <h2>Terfi gecmisim</h2>
+
+                    <RankProgressBar rank={user.rankNumber} allRanks={allRanks}></RankProgressBar>
+                <button onClick={toggleRankPopup}>Geri</button>
+            </div>
+        </div>
+        )}
     </div>
 }
 

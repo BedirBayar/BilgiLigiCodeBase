@@ -13,7 +13,8 @@ namespace TriviaContestApi.DataAccess
         public DbSet<Contest> Contests { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<LeaderBoard> LeaderBoards { get; set; }
-        public DbSet<Match> Matches { get; set; }
+        public DbSet<UserMatch> UserMatches { get; set; }
+        public DbSet<TeamMatch> TeamMatches { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<ContestAward> ContestAwards { get; set; }
         public DbSet<ContestType> ContestTypes { get; set; }
@@ -21,7 +22,8 @@ namespace TriviaContestApi.DataAccess
         public DbSet<ContestTeam> ContestTeams { get; set; }
         public DbSet<LeaderBoardTeam> LeaderBoardTeams { get; set; }
         public DbSet<LeaderBoardUser> LeaderBoardUsers { get; set; }
-        public DbSet<MatchQuestion> MatchQuestions { get; set; }
+        public DbSet<UserMatchQuestion> UserMatchQuestions { get; set; }
+        public DbSet<TeamMatchQuestion> TeamMatchQuestions { get; set; }
 
 
         protected override void OnModelCreating (ModelBuilder modelBuilder)
@@ -83,7 +85,22 @@ namespace TriviaContestApi.DataAccess
                
             });
 
-            modelBuilder.Entity<Match>(entity =>
+            modelBuilder.Entity<UserMatch>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.StartDate).IsRequired();
+                entity.Property(e => e.EndDate).IsRequired();
+                entity.Property(e => e.IsTeamMatch).IsRequired();
+                entity.Property(e => e.IsLeagueMatch).IsRequired();
+
+                entity.HasOne<Contest>()  // Contest reference from another DB
+                    .WithMany()
+                    .HasForeignKey(e => e.ContestId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+            });
+
+            modelBuilder.Entity<TeamMatch>(entity =>
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.StartDate).IsRequired();
@@ -152,13 +169,28 @@ namespace TriviaContestApi.DataAccess
 
             });
 
-            modelBuilder.Entity<MatchQuestion>(entity =>
+            modelBuilder.Entity<UserMatchQuestion>(entity =>
             {
                 entity.HasKey(e => e.Id);
 
-                entity.HasOne<Match>()  // Match reference
+                entity.HasOne<UserMatch>()  // Match reference
                     .WithMany()
-                    .HasForeignKey(e => e.MatchId)
+                    .HasForeignKey(e => e.UserMatchId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne<Question>()  // Question reference from another DB
+                    .WithMany()
+                    .HasForeignKey(e => e.QuestionId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+            
+            modelBuilder.Entity<TeamMatchQuestion>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne<TeamMatch>()  // Match reference
+                    .WithMany()
+                    .HasForeignKey(e => e.TeamMatchId)
                     .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne<Question>()  // Question reference from another DB

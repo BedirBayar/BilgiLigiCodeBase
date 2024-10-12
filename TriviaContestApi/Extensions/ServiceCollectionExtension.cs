@@ -30,9 +30,10 @@ namespace TriviaSecurityApi.Extensions
             services.AddTransient<ILeaderBoardRepository, LeaderBoardRepository>();
             services.AddTransient<ILeaderBoardTeamRepository, LeaderBoardTeamRepository>();
             services.AddTransient<ILeaderBoardUserRepository, LeaderBoardUserRepository>();
-            services.AddTransient<IMatchRepository, MatchRepository>();
+            services.AddTransient<IUserMatchRepository, UserMatchRepository>();
+            services.AddTransient<ITeamMatchRepository, TeamMatchRepository>();
             services.AddTransient<IQuestionRepository, QuestionRepository>();
-            services.AddTransient<IMatchQuestionRepository, MatchQuestionRepository>();
+            services.AddTransient<IUserMatchQuestionRepository, UserMatchQuestionRepository>();
 
             services.AddTransient<ICategoryService, CategoryService>();
 

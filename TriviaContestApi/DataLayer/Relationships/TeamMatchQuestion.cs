@@ -1,17 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace TriviaContestApi.DataAccess.Relationships
 {
-    public class MatchQuestion
+    
+    public class TeamMatchQuestion
     {
         [Key]
         [Column("Id")]
         public int Id { get; set; }
         [Column("MatchId")]
-        public int MatchId { get; set; }
+        public int TeamMatchId { get; set; }
         [Column("QuestionId")]
         public int QuestionId { get; set; }
-
     }
 }
