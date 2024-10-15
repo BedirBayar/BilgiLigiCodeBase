@@ -11,7 +11,7 @@ namespace TriviaContestApi.Services.Question_
         Task<BaseResponse<int>> Add (QuestionDto question);
         Task<BaseResponse<List<int>>> AddRange (List<QuestionDto> questions);
         Task<BaseResponse<bool>> Update(QuestionDto question);
-        Task<BaseResponse<bool>> ChangeStatus(QuestionDto question);
-        Task<BaseResponse<bool>> Archive(QuestionDto question);
+        Task<BaseResponse<bool>> ChangeStatus(int id);
+        Task<BaseResponse<bool>> Archive(int id);
     }
 }

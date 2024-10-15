@@ -133,11 +133,11 @@ namespace TriviaContestApi.Services.Question_
                 return new BaseResponse<bool>(Get500(ex.Message));
             }
         }
-        public async Task<BaseResponse<bool>> ChangeStatus(QuestionDto question)
+        public async Task<BaseResponse<bool>> ChangeStatus(int id)
         {
             try
             {
-                var entity = await _repository.GetById(question.Id);
+                var entity = await _repository.GetById(id);
                 entity.IsActive=!entity.IsActive;
                 entity.UpdatedOn = DateTime.Now;
                 var result = await _repository.Update(entity);
@@ -148,11 +148,11 @@ namespace TriviaContestApi.Services.Question_
                 return new BaseResponse<bool>(Get500(ex.Message));
             }
         }
-        public async Task<BaseResponse<bool>> Archive(QuestionDto question)
+        public async Task<BaseResponse<bool>> Archive(int id)
         {
             try
             {
-                var entity = await _repository.GetById(question.Id);
+                var entity = await _repository.GetById(id);
                 entity.IsArchived = !entity.IsArchived;
                 entity.UpdatedOn = DateTime.Now;
                 var result = await _repository.Update(entity);

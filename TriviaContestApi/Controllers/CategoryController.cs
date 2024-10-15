@@ -7,7 +7,7 @@ namespace TriviaContestApi.Controllers
 {
     [Route("api/category")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class CategoryController : BaseController
     {
         private readonly ICategoryService _service;
 
@@ -16,20 +16,20 @@ namespace TriviaContestApi.Controllers
             _service = service;
         }
         [HttpGet("getall")]
-        public async Task<BaseResponse<List<CategoryDto>>> GetAll()=> await _service.GetAll();    
+        public async Task<IActionResult> GetAll()=> GetHttpResult(  await _service.GetAll());    
         [HttpGet("getbyid")]
-        public async Task<BaseResponse<CategoryDto>> GetById(int id)=> await _service.GetById(id);    
+        public async Task<IActionResult> GetById(int id)=> GetHttpResult( await _service.GetById(id));    
         [HttpGet("getbyname")]
-        public async Task<BaseResponse<CategoryDto>> GetByName(string name)=> await _service.GetByName(name);    
+        public async Task<IActionResult> GetByName(string name)=> GetHttpResult( await _service.GetByName(name));    
         [HttpPost("add")]
-        public async Task<BaseResponse<int>> Add(CategoryDto request) => await _service.Add(request);    
+        public async Task<IActionResult> Add(CategoryDto request) => GetHttpResult( await _service.Add(request));    
         [HttpPut("update")]
-        public async Task<BaseResponse<bool>> Update(CategoryDto request) => await _service.Update(request);    
+        public async Task<IActionResult> Update(CategoryDto request) => GetHttpResult( await _service.Update(request));    
         [HttpPut("archive")]
-        public async Task<BaseResponse<bool>> Archive(int id) => await _service.Archive(id);    
+        public async Task<IActionResult> Archive(int id) => GetHttpResult( await _service.Archive(id));    
         [HttpPut("archivebyname")]
-        public async Task<BaseResponse<bool>> ArchiveByName(string name) => await _service.ArchiveByName(name);    
+        public async Task<IActionResult> ArchiveByName(string name) => GetHttpResult( await _service.ArchiveByName(name));    
         [HttpPut("changestatus")]
-        public async Task<BaseResponse<bool>> ChangeStatus(int id) => await _service.ChangeStatus(id);    
+        public async Task<IActionResult> ChangeStatus(int id) => GetHttpResult( await _service.ChangeStatus(id));    
     }
 }
