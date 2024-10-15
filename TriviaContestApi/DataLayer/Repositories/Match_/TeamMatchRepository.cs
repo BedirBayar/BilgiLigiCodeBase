@@ -19,6 +19,8 @@ namespace TriviaContestApi.DataAccess.Repositories.Match_
         }
 
         public async Task<List<TeamMatch>> GetAll() => await _context.TeamMatches.ToListAsync();
+        public async Task<List<TeamMatch>> GetByContest(int contestId) => await _context.TeamMatches.Where(m => m.ContestId == contestId).ToListAsync();
+        public async Task<List<TeamMatch>> GetByTeam(int teamId) => await _context.TeamMatches.Where(m => m.Team1Id == teamId || m.Team2Id == teamId).ToListAsync();
 
         public async Task<TeamMatch> GetById(int id) => await _context.TeamMatches.FindAsync(id);
         public async Task<List<TeamMatch>> GetByIdList(List<int> ids) => await _context.TeamMatches.Where(m=>ids.Contains(m.Id)).ToListAsync();

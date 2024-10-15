@@ -1,5 +1,5 @@
 ﻿
-namespace TriciaContestApi.DTOs
+namespace TriviaContestApi.DTOs
 {
  
     public class BaseResponse<T>
@@ -12,7 +12,7 @@ namespace TriciaContestApi.DTOs
         {
             Success = false;
             Error = error;
-            Data = default(T);
+            Data = default;
         }
         public BaseResponse(T data) {
             Success = true;

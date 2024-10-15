@@ -21,6 +21,7 @@ namespace TriviaContestApi.DataAccess.Repositories.ContestType_
         public async Task<List<ContestType>> GetAll() => await _context.ContestTypes.ToListAsync();
 
         public async Task<ContestType> GetById(int id) => await _context.ContestTypes.FindAsync(id);
+        public async Task<ContestType> GetByName(string name) => await _context.ContestTypes.FirstOrDefaultAsync(t=>t.Name.ToLower()==name.ToLower());
 
         public async Task<bool> Update(ContestType ctype)
         {

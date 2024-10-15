@@ -8,10 +8,9 @@ namespace TriviaContestApi.DataAccess.Relationships
         [Key]
         [Column("Id")]
         public int Id { get; set; }
-        [Column("MatchId")]
+        [Column("UserMatchId")]
         public int UserMatchId { get; set; }
         [Column("QuestionId")]
         public int QuestionId { get; set; }
-
     }
 }

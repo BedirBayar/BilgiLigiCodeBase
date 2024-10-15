@@ -1,19 +1,16 @@
 ﻿using AutoMapper;
-using TriciaContestApi.DTOs;
 using TriviaContestApi.DataAccess.Entities;
 using TriviaContestApi.DataAccess.Repositories.Contest_;
 using TriviaContestApi.DTOs;
 
 namespace TriviaContestApi.Services.Contest_
 {
-    public class ContestService : IContestService
+    public class ContestService : BaseService, IContestService
     {
         private readonly IContestRepository _contestRep;
-        private readonly IMapper _mapper;
-        public ContestService(IContestRepository contestRep, IMapper mapper)
+        public ContestService(IContestRepository contestRep, IMapper _mapper) : base(_mapper)
         {
             _contestRep = contestRep;
-            _mapper = mapper;
         }
         public async Task<BaseResponse<int>> Add(ContestDto cont)
         {
@@ -39,11 +36,7 @@ namespace TriviaContestApi.Services.Contest_
                     {
                         Data = -1,
                         Success = false,
-                        Error = new ErrorResponse
-                        {
-                            Code = "500",
-                            Message = ex.Message,
-                        }
+                        Error = Get500(ex.Message)
                     };
                 }
             }
@@ -51,11 +44,7 @@ namespace TriviaContestApi.Services.Contest_
             {
                 Data = -1,
                 Success = false,
-                Error = new ErrorResponse
-                {
-                    Code = "400",
-                    Message = "Aynı isimde bir kategori mevcut",
-                }
+                Error = Get400("Aynı isimde bir yarışma mevcut")
             };
         }
 

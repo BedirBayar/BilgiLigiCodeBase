@@ -2,6 +2,7 @@
 
 namespace TriviaContestApi.DataAccess.Entities
 {
+  
     public class TeamMatch : BaseMatch
     {
         [Column("Team1Id")]

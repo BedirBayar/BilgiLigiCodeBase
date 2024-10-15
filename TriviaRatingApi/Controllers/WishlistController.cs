@@ -7,6 +7,7 @@ namespace TriviaRatingApi.Controllers
     [ApiController]
     public class WishlistController : ControllerBase
     {
+
         public class WishListItem
         {
             public int Id { get; set; }

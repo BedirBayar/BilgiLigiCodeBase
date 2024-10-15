@@ -21,6 +21,12 @@ namespace TriviaContestApi.DataAccess.Repositories.LeaderBoard_
 
         public async Task<List<LeaderBoard>> GetAll() => await _context.LeaderBoards.ToListAsync();
         public async Task<List<LeaderBoard>> GetAllIncomplete() => await _context.LeaderBoards.Where(l=>l.IsComplete==false).ToListAsync();
+        public async Task<List<LeaderBoard>> GetAllComplete(DateTime startDate,DateTime endDate) => await
+            _context.LeaderBoards.Where(
+            l=>l.IsComplete==true && 
+            l.CompletedOn>startDate && 
+            l.CompletedOn<endDate)
+            .ToListAsync();
 
         public async Task<LeaderBoard> GetById(int id) => await _context.LeaderBoards.FindAsync(id);
 

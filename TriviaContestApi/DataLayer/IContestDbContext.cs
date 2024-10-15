@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TriviaContestApi.DataAccess.Entities;
 using TriviaContestApi.DataAccess.Relationships;
+using TriviaContestApi.DataLayer.Relationships;
 
 namespace TriviaContestApi.DataAccess
 {
@@ -16,6 +17,7 @@ namespace TriviaContestApi.DataAccess
         public DbSet<ContestType> ContestTypes { get; set; }
         public DbSet<ContestRule> ContestRules { get; set; }
         public DbSet<ContestTeam> ContestTeams { get; set; }
+        public DbSet<ContestUser> ContestUsers { get; set; }
         public DbSet<LeaderBoardTeam> LeaderBoardTeams { get; set; }
         public DbSet<LeaderBoardUser> LeaderBoardUsers { get; set; }
         public DbSet<UserMatchQuestion> UserMatchQuestions { get; set; }

@@ -1,4 +1,4 @@
-﻿using TriciaContestApi.DTOs;
+﻿
 using TriviaContestApi.DTOs;
 namespace TriviaContestApi.Services.Category_
 {

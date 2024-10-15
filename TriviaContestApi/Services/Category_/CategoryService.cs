@@ -1,5 +1,4 @@
 ﻿using Microsoft.IdentityModel.Logging;
-using TriciaContestApi.DTOs;
 using TriviaContestApi.DataAccess.Repositories.Category_;
 using TriviaContestApi.DTOs;
 using TriviaContestApi.DataAccess.Entities;
@@ -7,13 +6,11 @@ using AutoMapper;
 
 namespace TriviaContestApi.Services.Category_
 {
-    public class CategoryService : ICategoryService
+    public class CategoryService : BaseService, ICategoryService
     {
         private readonly ICategoryRepository _categoryRep;
-        private IMapper _mapper;
-        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper) {
+        public CategoryService(ICategoryRepository categoryRepository, IMapper _mapper):base(_mapper) {
             _categoryRep = categoryRepository;
-            _mapper = mapper;
         }
         public async Task<BaseResponse<int>> Add(CategoryDto cat)
         {
@@ -39,11 +36,7 @@ namespace TriviaContestApi.Services.Category_
                     {
                         Data = -1,
                         Success = false,
-                        Error = new ErrorResponse
-                        {
-                            Code = "500",
-                            Message = ex.Message,
-                        }
+                        Error = Get500(ex.Message)
                     };
                 }
             }
@@ -51,11 +44,7 @@ namespace TriviaContestApi.Services.Category_
             {
                 Data = -1,
                 Success = false,
-                Error = new ErrorResponse
-                {
-                    Code = "400",
-                    Message = "Aynı isimde bir kategori mevcut",
-                }
+                Error = Get400("Aynı isimde bir kategori mevcut")
             };
         }
 
@@ -67,13 +56,9 @@ namespace TriviaContestApi.Services.Category_
                 var data = _mapper.Map<List<CategoryDto>>(entities);
                 return new BaseResponse<List<CategoryDto>>(data);
             }
-            catch(Exception Ex) 
+            catch(Exception ex) 
             {
-                var error = new ErrorResponse
-                {
-                    Code = "500",
-                    Message = Ex.Message
-                };
+                var error = Get500(ex.Message);
                 return new BaseResponse<List<CategoryDto>> (error);
             }
         }
@@ -86,13 +71,9 @@ namespace TriviaContestApi.Services.Category_
                 var data = _mapper.Map<CategoryDto>(entity);
                 return new BaseResponse<CategoryDto>(data);
             }
-            catch (Exception Ex)
+            catch (Exception ex)
             {
-                var error = new ErrorResponse
-                {
-                    Code = "500",
-                    Message = Ex.Message
-                };
+                var error = Get500(ex.Message);
                 return new BaseResponse<CategoryDto>(error);
             }
         }
@@ -105,13 +86,9 @@ namespace TriviaContestApi.Services.Category_
                 var data = _mapper.Map<CategoryDto>(entity);
                 return new BaseResponse<CategoryDto>(data);
             }
-            catch (Exception Ex)
+            catch (Exception ex)
             {
-                var error = new ErrorResponse
-                {
-                    Code = "500",
-                    Message = Ex.Message
-                };
+                var error = Get500(ex.Message);
                 return new BaseResponse<CategoryDto>(error);
             }
         }
@@ -139,11 +116,7 @@ namespace TriviaContestApi.Services.Category_
                     {
                         Data = false,
                         Success = false,
-                        Error = new ErrorResponse
-                        {
-                            Code = "500",
-                            Message = ex.Message,
-                        }
+                        Error = Get500(ex.Message)
                     };
                 }
             }
@@ -151,11 +124,7 @@ namespace TriviaContestApi.Services.Category_
             {
                 Data = false,
                 Success = false,
-                Error = new ErrorResponse
-                {
-                    Code = "400",
-                    Message = "Aynı isimde bir kategori mevcut",
-                }
+                Error = Get404("Kategori bulunamadı")
             };
         }
 
@@ -180,11 +149,7 @@ namespace TriviaContestApi.Services.Category_
                     {
                         Data = false,
                         Success = false,
-                        Error = new ErrorResponse
-                        {
-                            Code = "500",
-                            Message = ex.Message,
-                        }
+                        Error = Get500(ex.Message)
                     };
                 }
             }
@@ -192,11 +157,7 @@ namespace TriviaContestApi.Services.Category_
             {
                 Data = false,
                 Success = false,
-                Error = new ErrorResponse
-                {
-                    Code = "400",
-                    Message = "Aynı isimde bir kategori mevcut",
-                }
+                Error = Get404("Kategori bulunamadı")
             };
         }
     
@@ -221,11 +182,7 @@ namespace TriviaContestApi.Services.Category_
                     {
                         Data = false,
                         Success = false,
-                        Error = new ErrorResponse
-                        {
-                            Code = "500",
-                            Message = ex.Message,
-                        }
+                        Error = Get500(ex.Message)
                     };
                 }
             }
@@ -233,11 +190,7 @@ namespace TriviaContestApi.Services.Category_
             {
                 Data = false,
                 Success = false,
-                Error = new ErrorResponse
-                {
-                    Code = "400",
-                    Message = "Aynı isimde bir kategori mevcut",
-                }
+                Error = Get404("Kategori bulunamadı")
             };
         }
         public async Task<BaseResponse<bool>> ChangeStatus(int id)
@@ -261,11 +214,7 @@ namespace TriviaContestApi.Services.Category_
                     {
                         Data = false,
                         Success = false,
-                        Error = new ErrorResponse
-                        {
-                            Code = "500",
-                            Message = ex.Message,
-                        }
+                        Error = Get500(ex.Message)
                     };
                 }
             }
@@ -273,11 +222,7 @@ namespace TriviaContestApi.Services.Category_
             {
                 Data = false,
                 Success = false,
-                Error = new ErrorResponse
-                {
-                    Code = "400",
-                    Message = "Aynı isimde bir kategori mevcut",
-                }
+                Error = Get404("Kategori bulunamadı")
             };
         }
     }

@@ -8,6 +8,10 @@ namespace TriviaContestApi.DataAccess.Entities
         public string Name { get; set; }
         [Column("IsComplete")]
         public bool IsComplete { get; set; }
+        [Column("CompletedOn")]
+        public DateTime CompletedOn { get; set; }
+        [Column("IsRunning")]
+        public bool IsRunning { get; set; }
         [Column("IsTeamLeaderBoard")]
         public bool IsTeamLeaderBoard { get; set; }
         [Column("Notes")]

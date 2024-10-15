@@ -97,10 +97,6 @@ namespace TriviaContestApi.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("ArchivedOn");
 
-                    b.Property<int>("AwardId")
-                        .HasColumnType("int")
-                        .HasColumnName("AwardId");
-
                     b.Property<int>("ContestTypeId")
                         .HasColumnType("int")
                         .HasColumnName("ContestTypeId");
@@ -170,10 +166,6 @@ namespace TriviaContestApi.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("PeriodType");
 
-                    b.Property<decimal>("PrizeRating")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("PrizeRating");
-
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("StartDate");
@@ -220,6 +212,10 @@ namespace TriviaContestApi.Migrations
                         .HasColumnType("int")
                         .HasColumnName("AwardRating");
 
+                    b.Property<int>("ContestId")
+                        .HasColumnType("int")
+                        .HasColumnName("ContestId");
+
                     b.Property<int>("CreatedBy")
                         .HasColumnType("int")
                         .HasColumnName("CreatedBy");
@@ -227,12 +223,6 @@ namespace TriviaContestApi.Migrations
                     b.Property<DateTime?>("CreatedOn")
                         .HasColumnType("datetime2")
                         .HasColumnName("CreatedOn");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)")
-                        .HasColumnName("Description");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit")
@@ -245,12 +235,6 @@ namespace TriviaContestApi.Migrations
                     b.Property<int>("LeaderBoardRank")
                         .HasColumnType("int")
                         .HasColumnName("LeaderBoardRank");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("Name");
 
                     b.Property<int>("UpdatedBy")
                         .HasColumnType("int")

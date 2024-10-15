@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TriviaContestApi.DataAccess.Entities;
 using TriviaContestApi.DataAccess.Relationships;
+using TriviaContestApi.DataLayer.Relationships;
 
 namespace TriviaContestApi.DataAccess
 {
@@ -20,6 +21,7 @@ namespace TriviaContestApi.DataAccess
         public DbSet<ContestType> ContestTypes { get; set; }
         public DbSet<ContestRule> ContestRules { get; set; }
         public DbSet<ContestTeam> ContestTeams { get; set; }
+        public DbSet<ContestUser> ContestUsers { get; set; }
         public DbSet<LeaderBoardTeam> LeaderBoardTeams { get; set; }
         public DbSet<LeaderBoardUser> LeaderBoardUsers { get; set; }
         public DbSet<UserMatchQuestion> UserMatchQuestions { get; set; }
@@ -55,9 +57,9 @@ namespace TriviaContestApi.DataAccess
             modelBuilder.Entity<Contest>(entity =>
             {
                 entity.HasKey(e => e.Id);
+
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(255);
                 entity.Property(e => e.Description).HasMaxLength(500);
-                entity.Property(e => e.PrizeRating).HasColumnType("decimal(18,2)");
                 entity.Property(e => e.StartDate).IsRequired();
                 entity.Property(e => e.EndDate).IsRequired();
                 entity.Property(e => e.MinimumRank).IsRequired();
@@ -77,8 +79,6 @@ namespace TriviaContestApi.DataAccess
             modelBuilder.Entity<ContestAward>(entity =>
             {
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.Name).IsRequired().HasMaxLength(255);
-                entity.Property(e => e.Description).HasMaxLength(500);
                 entity.Property(e => e.LeaderBoardRank).IsRequired();
                 entity.Property(e => e.AwardRating).IsRequired();
 
@@ -159,6 +159,17 @@ namespace TriviaContestApi.DataAccess
             });
 
             modelBuilder.Entity<ContestTeam>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne<Contest>()  // Contest reference
+                    .WithMany()
+                    .HasForeignKey(e => e.ContestId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+            });
+
+            modelBuilder.Entity<ContestUser>(entity =>
             {
                 entity.HasKey(e => e.Id);
 

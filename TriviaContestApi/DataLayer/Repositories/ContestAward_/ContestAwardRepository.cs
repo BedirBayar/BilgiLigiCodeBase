@@ -20,7 +20,7 @@ namespace TriviaContestApi.DataAccess.Repositories.ContestAward_
         public async Task<List<ContestAward>> GetAll() => await _context.ContestAwards.ToListAsync();
 
         public async Task<ContestAward> GetById(int id) => await _context.ContestAwards.FindAsync(id);
-        public async Task<ContestAward> GetByName(string name) => await _context.ContestAwards.FirstOrDefaultAsync(c=>c.Name==name);
+        public async Task<List<ContestAward>> GetByContest(int contestId) => await _context.ContestAwards.Where(a=>a.ContestId==contestId).ToListAsync();
 
         public async Task<bool> Update(ContestAward award)
         {
