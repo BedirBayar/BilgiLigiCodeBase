@@ -10,6 +10,8 @@ namespace TriviaContestApi.Services.Contest_
         Task<BaseResponse<ContestDto>> GetByName(string name);
         Task<BaseResponse<int>> Add(ContestDto cat);
         Task<BaseResponse<bool>> Update(ContestDto cat);
+        Task<BaseResponse<bool>> Start(int id);
+        Task<BaseResponse<bool>> End(int id);
         Task<BaseResponse<bool>> Archive(int id);
         Task<BaseResponse<bool>> ChangeStatus(int id);
     }
