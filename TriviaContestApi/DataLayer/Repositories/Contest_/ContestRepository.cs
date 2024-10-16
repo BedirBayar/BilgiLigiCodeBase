@@ -17,6 +17,7 @@ namespace TriviaContestApi.DataAccess.Repositories.Contest_
         }
 
         public async Task<List<Contest>> GetAll() => await _context.Contests.ToListAsync();
+        public async Task<List<Contest>> GetAllUnfinished() => await _context.Contests.Where(c=>c.EndDate>DateTime.Now).ToListAsync();
 
         public async Task<Contest> GetById(int id) => await _context.Contests.FindAsync(id);
         public async Task<Contest> GetByName(string name) => await _context.Contests.FirstOrDefaultAsync(c=>c.Name.ToLower()==name.ToLower());

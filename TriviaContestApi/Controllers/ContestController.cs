@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TriviaContestApi.DTOs;
+using TriviaContestApi.Models.ContestModels;
 using TriviaContestApi.Services.Contest_;
 
 namespace TriviaContestApi.Controllers
@@ -17,6 +18,8 @@ namespace TriviaContestApi.Controllers
 
         [HttpGet("getall")]
         public async Task<IActionResult> GetAll() => GetHttpResult(await  _contestService.GetAll());
+        [HttpGet("getallunfinished")]
+        public async Task<IActionResult> GetAllUnfinished() => GetHttpResult(await  _contestService.GetAllUnfinished());
         [HttpGet("getbyid")]
         public async Task<IActionResult> GetById(int id) => GetHttpResult(await _contestService.GetById(id));
         [HttpGet("getbyname")]
@@ -33,5 +36,13 @@ namespace TriviaContestApi.Controllers
         public async Task<IActionResult> Archive(int id) => GetHttpResult(await _contestService.Archive(id));
         [HttpPut("changestatus")]
         public async Task<IActionResult> ChangeStatus(int id) => GetHttpResult(await _contestService.ChangeStatus(id));
+        [HttpPost("registeruser")]
+        public async Task<IActionResult> RegisterUser(RegisterUserToContestRequest request) => GetHttpResult(await _contestService.RegisterUser(request));
+        [HttpPost("registerteam")]
+        public async Task<IActionResult> RegisterTeam(RegisterTeamToContestRequest request) => GetHttpResult(await _contestService.RegisterTeam(request));
+        [HttpDelete("withdrawuser")]
+        public async Task<IActionResult> WithdrawUser(RegisterUserToContestRequest request) => GetHttpResult(await _contestService.WithdrawUser(request));
+        [HttpDelete("withdrawteam")]
+        public async Task<IActionResult> WithDrawTeam(RegisterTeamToContestRequest request) => GetHttpResult(await _contestService.WithdrawTeam(request));
     }
 }

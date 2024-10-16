@@ -18,6 +18,8 @@ using TriviaContestApi.Services.ContestType_;
 using TriviaContestApi.Services.LeaderBoard_;
 using TriviaContestApi.Services.Question_;
 using TriviaContestApi.Services.Match_;
+using TriviaContestApi.DataLayer.Repositories.ContestUser_;
+using TriviaContestApi.DataLayer.Repositories.ContestTeam_;
 
 namespace TriviaSecurityApi.Extensions
 {
@@ -39,6 +41,8 @@ namespace TriviaSecurityApi.Extensions
             services.AddTransient<ITeamMatchRepository, TeamMatchRepository>();
             services.AddTransient<IQuestionRepository, QuestionRepository>();
             services.AddTransient<IUserMatchQuestionRepository, UserMatchQuestionRepository>();
+            services.AddTransient<IContestUserRepository, ContestUserRepository>();
+            services.AddTransient<IContestTeamRepository, ContestTeamRepository>();
             //service layer
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IContestService, ContestService>();

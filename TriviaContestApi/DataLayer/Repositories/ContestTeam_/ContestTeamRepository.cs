@@ -31,14 +31,18 @@ namespace TriviaContestApi.DataLayer.Repositories.ContestTeam_
            return await _context.ContestTeams.Where(t=>t.ContestId == contestId).ToListAsync();
         }
 
-        public async Task<ContestTeam> GetById(int id)
+        public async Task<ContestTeam> GetByTeamAndContest(int teamId, int contestId)
         {
-            return await _context.ContestTeams.FindAsync(id);
+            return await _context.ContestTeams.FirstOrDefaultAsync(u => u.TeamId == teamId && u.ContestId == contestId);
         }
-
         public async Task<List<ContestTeam>> GetByTeam(int teamId)
         {
             return await _context.ContestTeams.Where(t => t.TeamId == teamId).ToListAsync();
+        }
+        public async Task<int> Delete(ContestTeam ct)
+        {
+            _context.ContestTeams.Remove(ct);
+            return await _context.SaveChangesAsync();
         }
     }
 }

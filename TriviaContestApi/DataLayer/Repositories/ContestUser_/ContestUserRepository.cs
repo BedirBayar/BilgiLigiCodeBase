@@ -32,14 +32,19 @@ namespace TriviaContestApi.DataLayer.Repositories.ContestUser_
             return await _context.ContestUsers.Where(t => t.ContestId == contestId).ToListAsync();
         }
 
-        public async Task<ContestUser> GetById(int id)
+        public async Task<ContestUser> GetByUserAndContest(int userId, int contestId)
         {
-            return await _context.ContestUsers.FindAsync(id);
+            return await _context.ContestUsers.FirstOrDefaultAsync(u=>u.UserId==userId&&u.ContestId==contestId);
         }
 
         public async Task<List<ContestUser>> GetByUser(int userId)
         {
             return await _context.ContestUsers.Where(t => t.UserId == userId).ToListAsync();
+        }
+        public async Task<int> Delete(ContestUser ct)
+        {
+            _context.ContestUsers.Remove(ct);
+            return await _context.SaveChangesAsync();
         }
     }
 }

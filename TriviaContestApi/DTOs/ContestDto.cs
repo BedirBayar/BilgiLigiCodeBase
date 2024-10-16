@@ -18,5 +18,6 @@ namespace TriviaContestApi.DTOs
         public bool IsActive { get; set; }
         public bool IsPeriodic { get; set; }
         public bool IsRunning { get; set; }
+        public List<ContestAwardDto> Awards { get; set; }
     }
 }

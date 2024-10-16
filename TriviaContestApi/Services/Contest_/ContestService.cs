@@ -1,16 +1,34 @@
 ﻿using AutoMapper;
+using System.Collections.Generic;
 using TriviaContestApi.DataAccess.Entities;
+using TriviaContestApi.DataAccess.Relationships;
 using TriviaContestApi.DataAccess.Repositories.Contest_;
+using TriviaContestApi.DataAccess.Repositories.ContestAward_;
+using TriviaContestApi.DataLayer.Relationships;
+using TriviaContestApi.DataLayer.Repositories.ContestTeam_;
+using TriviaContestApi.DataLayer.Repositories.ContestUser_;
 using TriviaContestApi.DTOs;
+using TriviaContestApi.Models.ContestModels;
 
 namespace TriviaContestApi.Services.Contest_
 {
     public class ContestService : BaseService, IContestService
     {
         private readonly IContestRepository _contestRep;
-        public ContestService(IContestRepository contestRep, IMapper _mapper) : base(_mapper)
+        private readonly IContestAwardRepository _contestAwardRep;
+        private readonly IContestUserRepository _contestUserRep;
+        private readonly IContestTeamRepository _contestTeamRep;
+        public ContestService(
+            IContestRepository contestRep,
+            IContestAwardRepository car, 
+            IContestUserRepository contestUserRep,
+            IContestTeamRepository contestTeamRep,
+            IMapper _mapper) : base(_mapper)
         {
             _contestRep = contestRep;
+            _contestUserRep = contestUserRep;
+            _contestTeamRep = contestTeamRep;
+            _contestAwardRep = car;
         }
         public async Task<BaseResponse<int>> Add(ContestDto cont)
         {
@@ -47,7 +65,6 @@ namespace TriviaContestApi.Services.Contest_
                 Error = Get400("Aynı isimde bir yarışma mevcut")
             };
         }
-
         public async Task<BaseResponse<bool>> Archive(int id)
         {
             try
@@ -63,7 +80,6 @@ namespace TriviaContestApi.Services.Contest_
                 return new BaseResponse<bool>(Get500(ex.Message));
             }
         }
-
         public async Task<BaseResponse<bool>> ChangeStatus(int id)
         {
             try
@@ -109,7 +125,6 @@ namespace TriviaContestApi.Services.Contest_
                 return new BaseResponse<bool>(Get500(ex.Message));
             }
         }
-
         public async Task<BaseResponse<List<ContestDto>>> GetAll()
         {
             try
@@ -124,7 +139,25 @@ namespace TriviaContestApi.Services.Contest_
                 return new BaseResponse<List<ContestDto>>(Get500(ex.Message));
             }
         }
-
+        public async Task<BaseResponse<List<ContestDto>>> GetAllUnfinished()
+        {
+            try
+            {
+                var data = await _contestRep.GetAllUnfinished();
+                if (data == null || data.Count == 0) return new BaseResponse<List<ContestDto>>(Get404());
+                var list = _mapper.Map<List<ContestDto>>(data);
+                foreach (var item in list)
+                {
+                    var awards= await _contestAwardRep.GetByContest(item.Id);
+                    item.Awards= _mapper.Map<List<ContestAwardDto>>(awards);
+                }
+                return new BaseResponse<List<ContestDto>>(list);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<List<ContestDto>>(Get500(ex.Message));
+            }
+        }
         public async Task<BaseResponse<ContestDto>> GetById(int id)
         {
             try
@@ -132,6 +165,8 @@ namespace TriviaContestApi.Services.Contest_
                 var data = await _contestRep.GetById(id);
                 if (data == null) return new BaseResponse<ContestDto>(Get404());
                 var dto = _mapper.Map<ContestDto>(data);
+                var award = await _contestAwardRep.GetByContest(dto.Id);
+                dto.Awards = _mapper.Map<List<ContestAwardDto>>(award);
                 return new BaseResponse<ContestDto>(dto);
             }
             catch (Exception ex)
@@ -139,7 +174,6 @@ namespace TriviaContestApi.Services.Contest_
                 return new BaseResponse<ContestDto>(Get500(ex.Message));
             }
         }
-
         public async Task<BaseResponse<ContestDto>> GetByName(string name)
         {
             try
@@ -147,6 +181,8 @@ namespace TriviaContestApi.Services.Contest_
                 var data = await _contestRep.GetByName(name);
                 if (data == null) return new BaseResponse<ContestDto>(Get404());
                 var dto = _mapper.Map<ContestDto>(data);
+                var award = await _contestAwardRep.GetByContest(dto.Id);
+                dto.Awards = _mapper.Map<List<ContestAwardDto>>(award);
                 return new BaseResponse<ContestDto>(dto);
             }
             catch (Exception ex)
@@ -154,7 +190,6 @@ namespace TriviaContestApi.Services.Contest_
                 return new BaseResponse<ContestDto>(Get500(ex.Message));
             }
         }
-
         public async Task<BaseResponse<bool>> Update(ContestDto contest)
         {
 
@@ -174,6 +209,70 @@ namespace TriviaContestApi.Services.Contest_
                 entity.MatchFrequency = contest.MatchFrequency;
                 var result = await _contestRep.Update(entity);
                 return new BaseResponse<bool>(result);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<bool>(Get500(ex.Message));
+            }
+        }
+        public async Task<BaseResponse<bool>> RegisterUser(RegisterUserToContestRequest request)
+        {
+            try
+            {
+                var user = await _contestUserRep.GetByUserAndContest(request.UserId, request.ContestId);
+                if (user != null) return new BaseResponse<bool>(true);
+                var entity = new ContestUser { ContestId = request.ContestId, UserId = request.UserId };
+                var result = await _contestUserRep.Add(entity);
+                return new BaseResponse<bool>(true);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<bool>(Get500(ex.Message));
+            }
+        }
+        public async Task<BaseResponse<bool>> RegisterTeam(RegisterTeamToContestRequest request)
+        {
+            try
+            {
+                var user = await _contestTeamRep.GetByTeamAndContest(request.TeamId, request.ContestId);
+                if (user != null) return new BaseResponse<bool>(true);
+                var entity = new ContestTeam { ContestId = request.ContestId, TeamId = request.TeamId };
+                var result = await _contestTeamRep.Add(entity);
+                return new BaseResponse<bool>(true);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<bool>(Get500(ex.Message));
+            }
+        }
+        public async Task<BaseResponse<bool>> WithdrawUser(RegisterUserToContestRequest request)
+        {
+            try
+            {
+                var user = await _contestUserRep.GetByUserAndContest(request.UserId, request.ContestId);
+                if (user != null)
+                {
+                    var result = await _contestUserRep.Delete(user);
+                    return new BaseResponse<bool>(true);
+                }
+                return new BaseResponse<bool>(Get404());
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<bool>(Get500(ex.Message));
+            }
+        }
+        public async Task<BaseResponse<bool>> WithdrawTeam(RegisterTeamToContestRequest request)
+        {
+            try
+            {
+                var team = await _contestTeamRep.GetByTeamAndContest(request.TeamId, request.ContestId);
+                if (team != null)
+                {
+                    var result = await _contestTeamRep.Delete(team);
+                    return new BaseResponse<bool>(true);
+                }
+                return new BaseResponse<bool>(Get404());
             }
             catch (Exception ex)
             {

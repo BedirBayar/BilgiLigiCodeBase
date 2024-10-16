@@ -4,7 +4,7 @@ using TriviaContestApi.Services.Match_;
 
 namespace TriviaContestApi.Controllers
 {
-    [Route("api/usermatch")]
+    [Route("api/teammatch")]
     [ApiController]
     public class TeamMatchController : BaseController
     {
