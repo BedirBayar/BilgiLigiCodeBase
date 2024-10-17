@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using TriviaRatingApi.DataLayer;
+using TriviaRatingApi.DataLayer.Repositories.Award_;
 
 
 namespace TriviaSecurityApi.Extensions
@@ -11,6 +12,7 @@ namespace TriviaSecurityApi.Extensions
         public static void AddApplicationLayer(this IServiceCollection services)
         {
             services.AddTransient<IRatingDbContext, RatingDbContext>();
+            services.AddTransient<IAwardRepository, AwardRepository>();
            
         }
         public static void AddTheDbContext(this IServiceCollection services)
