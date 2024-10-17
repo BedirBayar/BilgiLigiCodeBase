@@ -32,9 +32,9 @@ namespace TriviaRatingApi.DataLayer.Repositories.Team_
             return await _context.Teams.FirstOrDefaultAsync(t=>t.Name.ToLower()==name.ToLower());
         }
 
-        public async Task<List<Team>> GetByRank(int rank)
+        public async Task<List<Team>> GetByRank(int min, int max)
         {
-            var teamIds = await _context.TeamRanks.Where(tr => tr.RankDegree == rank).Select(tr => tr.TeamId).ToListAsync();
+            var teamIds = await _context.TeamRanks.Where(tr => tr.RankDegree>=min && tr.RankDegree<=max).Select(tr => tr.TeamId).ToListAsync();
             return await _context.Teams.Where(t=>teamIds.Contains(t.Id)).ToListAsync();
         }
 

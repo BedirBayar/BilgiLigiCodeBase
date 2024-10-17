@@ -8,6 +8,7 @@ namespace TriviaRatingApi.DataLayer.Repositories.TeamRank_
         Task<List<TeamRank>> GetByRank(int rank);
         Task<TeamRank> GetByTeam(int id);
         Task<bool> Update(TeamRank tr);
+        Task<bool> Delete(TeamRank tr);
         Task<int> Add(TeamRank tr);
     }
 }

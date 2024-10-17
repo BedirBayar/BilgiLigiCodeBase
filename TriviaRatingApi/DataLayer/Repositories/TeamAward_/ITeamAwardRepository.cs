@@ -7,7 +7,9 @@ namespace TriviaRatingApi.DataLayer.Repositories.TeamAward_
         Task<int> Add(TeamAward tr);
         Task<List<TeamAward>> GetAll();
         Task<List<TeamAward>> GetByAward(int awardId);
-        Task<TeamAward> GetByTeam(int id);
+        Task<List<TeamAward>> GetByTeam(int id);
+        Task<TeamAward> GetByTeamAndAward(int teamId,int awardId);
         Task<bool> Update(TeamAward tr);
+        Task<bool> Delete(TeamAward tr);
     }
 }

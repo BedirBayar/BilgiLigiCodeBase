@@ -40,5 +40,11 @@ namespace TriviaRatingApi.DataLayer.Repositories.TeamRank_
             await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<bool> Delete(TeamRank tr)
+        {
+            _context.TeamRanks.Remove(tr);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

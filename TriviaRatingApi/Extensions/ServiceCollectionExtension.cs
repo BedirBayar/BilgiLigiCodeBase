@@ -3,6 +3,18 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using TriviaRatingApi.DataLayer;
 using TriviaRatingApi.DataLayer.Repositories.Award_;
+using TriviaRatingApi.DataLayer.Repositories.Rank_;
+using TriviaRatingApi.DataLayer.Repositories.Team_;
+using TriviaRatingApi.DataLayer.Repositories.TeamAward_;
+using TriviaRatingApi.DataLayer.Repositories.TeamRank_;
+using TriviaRatingApi.DataLayer.Repositories.TeamRating_;
+using TriviaRatingApi.DataLayer.Repositories.UserAward_;
+using TriviaRatingApi.DataLayer.Repositories.UserRank_;
+using TriviaRatingApi.DataLayer.Repositories.UserRating_;
+using TriviaRatingApi.DataLayer.Repositories.UserTeam_;
+using TriviaRatingApi.Services.Award_;
+using TriviaRatingApi.Services.Rank_;
+using TriviaRatingApi.Services.Team_;
 
 
 namespace TriviaSecurityApi.Extensions
@@ -11,9 +23,23 @@ namespace TriviaSecurityApi.Extensions
     {
         public static void AddApplicationLayer(this IServiceCollection services)
         {
+            //data layer
             services.AddTransient<IRatingDbContext, RatingDbContext>();
             services.AddTransient<IAwardRepository, AwardRepository>();
-           
+            services.AddTransient<IRankRepository, RankRepository>();
+            services.AddTransient<ITeamRepository, TeamRepository>();
+            services.AddTransient<ITeamAwardRepository, TeamAwardRepository>();
+            services.AddTransient<ITeamRankRepository, TeamRankRepository>();
+            services.AddTransient<ITeamRatingRepository, TeamRatingRepository>();
+            services.AddTransient<IUserRankRepository, UserRankRepository>();
+            services.AddTransient<IUserRatingRepository, UserRatingRepository>();
+            services.AddTransient<IUserAwardRepository, UserAwardRepository>();
+            services.AddTransient<IUserTeamRepository, UserTeamRepository>();
+            //service layer
+            services.AddTransient<ITeamService, TeamService>();
+            services.AddTransient<IRankService, RankService>();
+            services.AddTransient<IAwardService, AwardService>();
+
         }
         public static void AddTheDbContext(this IServiceCollection services)
         {

@@ -26,6 +26,10 @@ namespace TriviaRatingApi.DataLayer.Repositories.Award_
         {
             return await _context.Awards.FindAsync(id);
         }
+        public async Task<Award> GetByNameAndType(string name, string type)
+        {
+            return await _context.Awards.FirstOrDefaultAsync(a=>a.Name.ToLower()==name.ToLower() && a.UserOrTeam==type);
+        }
 
         public async Task<List<Award>> GetByIdList(List<int> ids)
         {

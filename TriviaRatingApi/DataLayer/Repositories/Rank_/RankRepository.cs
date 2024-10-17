@@ -42,9 +42,9 @@ namespace TriviaRatingApi.DataLayer.Repositories.Rank_
             return await _context.Ranks.FindAsync(id);
         }
 
-        public async Task<Rank> GetByName(string name)
+        public async Task<Rank> GetByDegreeAndType(int degree, string type)
         {
-            return await _context.Ranks.FirstOrDefaultAsync(r => r.Name.ToLower() == name.ToLower());
+            return await _context.Ranks.FirstOrDefaultAsync(r => r.Degree == degree && r.UserOrTeam==type);
         }
 
         public async Task<bool> Update(Rank rank)
