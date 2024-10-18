@@ -28,7 +28,7 @@ namespace TriviaRatingApi.DataLayer.Repositories.UserRank_
             return await _context.UserRanks.Where(t => t.RankDegree == rank).ToListAsync();
         }
 
-        public async Task<UserRank> GetByTeam(int id)
+        public async Task<UserRank> GetByUser(int id)
         {
             return await _context.UserRanks.FirstOrDefaultAsync(t => t.UserId == id);
         }
@@ -36,6 +36,12 @@ namespace TriviaRatingApi.DataLayer.Repositories.UserRank_
         public async Task<bool> Update(UserRank tr)
         {
             _context.UserRanks.Update(tr);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public async Task<bool> Delete(UserRank tr)
+        {
+            _context.UserRanks.Remove(tr);
             await _context.SaveChangesAsync();
             return true;
         }

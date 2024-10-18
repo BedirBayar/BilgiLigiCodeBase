@@ -23,12 +23,12 @@ namespace TriviaRatingApi.DataLayer.Repositories.UserRating_
             return await _context.UserRatings.ToListAsync();
         }
 
-        public async Task<List<UserRating>> GetByRating(int min, int max)
+        public async Task<List<UserRating>> GetByRatingInterval(int min, int max)
         {
             return await _context.UserRatings.Where(t => t.Rating >= min && t.Rating <= max).ToListAsync();
         }
 
-        public async Task<UserRating> GetByTeam(int id)
+        public async Task<UserRating> GetByUser(int id)
         {
             return await _context.UserRatings.FirstOrDefaultAsync(t => t.UserId == id);
         }
@@ -36,6 +36,12 @@ namespace TriviaRatingApi.DataLayer.Repositories.UserRating_
         public async Task<bool> Update(UserRating tr)
         {
             _context.UserRatings.Update(tr);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public async Task<bool> Delete(UserRating tr)
+        {
+            _context.UserRatings.Remove(tr);
             await _context.SaveChangesAsync();
             return true;
         }

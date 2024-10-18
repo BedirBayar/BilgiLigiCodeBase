@@ -28,14 +28,24 @@ namespace TriviaRatingApi.DataLayer.Repositories.UserAward_
             return await _context.UserAwards.Where(t => t.AwardId == awardId).ToListAsync();
         }
 
-        public async Task<UserAward> GetByUser(int id)
+        public async Task<List<UserAward>> GetByUser(int id)
         {
-            return await _context.UserAwards.FirstOrDefaultAsync(t => t.UserId == id);
+            return await _context.UserAwards.Where(t => t.UserId == id).ToListAsync();
+        }
+        public async Task<UserAward> GetByUserAndAward(int userId, int awardId)
+        {
+            return await _context.UserAwards.FirstOrDefaultAsync(t => t.UserId == userId && t.AwardId==awardId);
         }
 
         public async Task<bool> Update(UserAward tr)
         {
             _context.UserAwards.Update(tr);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public async Task<bool> Delete(UserAward tr)
+        {
+            _context.UserAwards.Remove(tr);
             await _context.SaveChangesAsync();
             return true;
         }

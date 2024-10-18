@@ -29,6 +29,10 @@ namespace TriviaRatingApi.DataLayer.Repositories.UserTeam_
             return await _context.UserTeams.ToListAsync();
         }
 
+        public async Task<UserTeam> GetByUserAndTeam(int userId, int teamId)
+        {
+            return await _context.UserTeams.FirstOrDefaultAsync(t=>t.UserId==userId && t.TeamId==teamId);
+        }
         public async Task<List<UserTeam>> GetByTeam(int id)
         {
             return await _context.UserTeams.Where(t=>t.TeamId==id).ToListAsync();
@@ -39,9 +43,9 @@ namespace TriviaRatingApi.DataLayer.Repositories.UserTeam_
             return await _context.UserTeams.Where(t => t.UserId == id).ToListAsync();
         }
 
-        public async Task<bool> Update(UserTeam ut)
+        public async Task<bool> DeleteTeam(List<UserTeam> ut)
         {
-            _context.UserTeams.Update(ut);
+            _context.UserTeams.RemoveRange(ut);
             await _context.SaveChangesAsync();
             return true;
         }

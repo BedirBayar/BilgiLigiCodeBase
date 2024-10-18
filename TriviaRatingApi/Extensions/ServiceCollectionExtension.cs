@@ -15,6 +15,13 @@ using TriviaRatingApi.DataLayer.Repositories.UserTeam_;
 using TriviaRatingApi.Services.Award_;
 using TriviaRatingApi.Services.Rank_;
 using TriviaRatingApi.Services.Team_;
+using TriviaRatingApi.Services.TeamAward_;
+using TriviaRatingApi.Services.TeamRank_;
+using TriviaRatingApi.Services.TeamRating_;
+using TriviaRatingApi.Services.UserAward_;
+using TriviaRatingApi.Services.UserRank_;
+using TriviaRatingApi.Services.UserRating_;
+using TriviaRatingApi.Services.UserTeam_;
 
 
 namespace TriviaSecurityApi.Extensions
@@ -39,6 +46,13 @@ namespace TriviaSecurityApi.Extensions
             services.AddTransient<ITeamService, TeamService>();
             services.AddTransient<IRankService, RankService>();
             services.AddTransient<IAwardService, AwardService>();
+            services.AddTransient<ITeamAwardService, TeamAwardService>();
+            services.AddTransient<ITeamRankService, TeamRankService>();
+            services.AddTransient<ITeamRatingService, TeamRatingService>();
+            services.AddTransient<IUserAwardService, UserAwardService>();
+            services.AddTransient<IUserRankService, UserRankService>();
+            services.AddTransient<IUserRatingService, UserRatingService>();
+            services.AddTransient<IUserTeamService, UserTeamService>();
 
         }
         public static void AddTheDbContext(this IServiceCollection services)

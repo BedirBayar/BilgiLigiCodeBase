@@ -7,9 +7,10 @@ namespace TriviaRatingApi.DataLayer.Repositories.UserTeam_
         Task<List<UserTeam>> GetAll();
         Task<List<UserTeam>> GetByTeam(int id);
         Task<List<UserTeam>> GetByUser(int id);
-        Task<bool> Update(UserTeam tr);
+        Task<UserTeam> GetByUserAndTeam(int userId, int teamId);
         Task<int> Add(UserTeam tr);
         Task<bool> Delete(UserTeam tr);
+        Task<bool> DeleteTeam(List<UserTeam> tr);
         
     }
 }
