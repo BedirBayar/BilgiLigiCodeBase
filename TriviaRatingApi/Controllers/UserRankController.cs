@@ -2,38 +2,32 @@
 using Microsoft.AspNetCore.Mvc;
 using TriviaRatingApi.Models;
 using TriviaRatingApi.Models.RankModels;
+using TriviaRatingApi.Models.UserModels;
+using TriviaRatingApi.Services.UserRank_;
 
 namespace TriviaRatingApi.Controllers
 {
     [Route("api/userrank")]
     [ApiController]
-    public class UserRankController : ControllerBase
+    public class UserRankController : BaseController
     {
-        private List<UserRankResponse> Ranks = new List<UserRankResponse>
+        private readonly IUserRankService _service;
+        public UserRankController(IUserRankService service)
         {
-            new UserRankResponse{ RankNumber=1, RankName= "Acemi" },
-            new UserRankResponse{ RankNumber=2, RankName= "Tecrubeli" },
-            new UserRankResponse{ RankNumber=3, RankName= "Öğretmen" },
-            new UserRankResponse{ RankNumber=4, RankName= "Bilge" },
-            new UserRankResponse{ RankNumber=5, RankName= "Profesör" },
-            new UserRankResponse{ RankNumber=6, RankName= "Alim" },
-            new UserRankResponse{ RankNumber=7, RankName= "Ansiklopedi" },
-            new UserRankResponse{ RankNumber=8, RankName= "Kütüphane" },
-            new UserRankResponse{ RankNumber=9, RankName= "Veritabanı" },
-            new UserRankResponse{ RankNumber=10, RankName= "Enerji" },
-        };
-        [HttpGet("getuserrank")]
-        public IActionResult Get(int id)
-        {
-            var data= Ranks[id % 10];
-
-            return Ok(new BaseResponse<UserRankResponse> { Data = data });
+            _service = service;
         }
         [HttpGet("getall")]
-        public IActionResult GetAll()
-        {
-            return Ok(new BaseResponse<List<UserRankResponse>>(Ranks));
-        }
+        public async Task<IActionResult> GetAll()=>GetHttpResult(await _service.GetAll());
+        [HttpGet("getbyrank")]
+        public async Task<IActionResult> GetByRank(int rank)=>GetHttpResult(await _service.GetByRank(rank));
+        [HttpGet("getbyuser")]
+        public async Task<IActionResult> GetByUser(int userId)=>GetHttpResult(await _service.GetByUser(userId));
+        [HttpPost("add")]
+        public async Task<IActionResult> Add(AddUserRankRequest request) =>GetHttpResult(await _service.Add(request));
+        [HttpPut("update")]
+        public async Task<IActionResult> Update(AddUserRankRequest request) =>GetHttpResult(await _service.Update(request));
+        [HttpDelete("delete")]
+        public async Task<IActionResult> Delete(int request) =>GetHttpResult(await _service.Delete(request));
     }
 }
 

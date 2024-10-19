@@ -81,6 +81,27 @@ namespace TriviaRatingApi.Services.Rank_
                 return new BaseResponse<RankDto>(Get500(ex.Message));
             }
         }
+        public async Task<BaseResponse<int>> Add(RankDto rankDto)
+        {
+            try
+            {
+                var exist = await _repository.GetByDegreeAndType(rankDto.Degree, rankDto.UserOrTeam);
+                if (exist != null) return new BaseResponse<int>(Get400("Aynı tip ve derecede başka bir rütbe var"));
+                var entity = new DataLayer.Entities.Rank();
+                entity.Name = rankDto.Name;
+                entity.Degree = rankDto.Degree;
+                entity.Description = rankDto.Description;
+                entity.Insignia = rankDto.Insignia;
+                entity.CreatedOn = DateTime.Now;
+                entity.IsActive = true;
+                var result = await _repository.Add(entity);
+                return new BaseResponse<int>(result);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<int>(Get500(ex.Message));
+            }
+        }
         public async Task<BaseResponse<bool>> Update(RankDto rankDto)
         {
             try
@@ -88,7 +109,7 @@ namespace TriviaRatingApi.Services.Rank_
                 var entity = await _repository.GetById(rankDto.Id);
                 if (entity == null) return new BaseResponse<bool>(Get404());
                 var exist = await _repository.GetByDegreeAndType(rankDto.Degree, rankDto.UserOrTeam);
-                if (exist != null) return new BaseResponse<bool>(Get400("Aynı tip ve derecede başka bir rütbe var"));
+                if (exist != null && exist.Id!=entity.Id) return new BaseResponse<bool>(Get400("Aynı tip ve derecede başka bir rütbe var"));
                 entity.Name = rankDto.Name;
                 entity.Degree = rankDto.Degree;
                 entity.Description = rankDto.Description;

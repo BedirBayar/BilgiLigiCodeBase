@@ -9,6 +9,6 @@ namespace TriviaRatingApi.Services.TeamRank_
         Task<BaseResponse<TeamRankDto>> GetTeamRank(int teamId);
         Task<BaseResponse<bool>>Update(TeamRankDto teamRankDto);
         Task<BaseResponse<int>>Add(TeamRankDto teamRankDto);
-        Task<BaseResponse<bool>>Delete(TeamRankDto teamRankDto);
+        Task<BaseResponse<bool>>Delete(int teamId);
     }
 }

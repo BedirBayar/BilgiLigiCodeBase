@@ -70,11 +70,11 @@ namespace TriviaRatingApi.Services.TeamRank_
                 return new BaseResponse<int>(Get500(ex.Message));
             }
         }
-        public async Task<BaseResponse<bool>> Delete(TeamRankDto teamRankDto)
+        public async Task<BaseResponse<bool>> Delete(int teamId)
         {
             try
             {
-                var data = await _repository.GetByTeam(teamRankDto.TeamId);
+                var data = await _repository.GetByTeam(teamId);
                 if (data == null) return new BaseResponse<bool>(Get404());
                 var result = await _repository.Delete(data);
                 return new BaseResponse<bool>(result);

@@ -1,17 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
+using TriviaRatingApi.DTOs;
 using TriviaRatingApi.Models;
+using TriviaRatingApi.Services.UserRating_;
 
 namespace TriviaRatingApi.Controllers
 {
     [ApiController]
     [Route("api/userrating")]
-    public class UserRatingController : ControllerBase
+    public class UserRatingController : BaseController
     {
-        [HttpGet("getuserrating")]
-        public IActionResult Get(int id)
+        private readonly IUserRatingService _service;
+        public UserRatingController(IUserRatingService service)
         {
-            var data = (decimal)Math.Round(id * Math.PI, 2);
-            return Ok(new BaseResponse<decimal>(data));
+            _service = service;
         }
+        [HttpGet("getall")]
+        public async Task<IActionResult> GetAll()=> GetHttpResult(await _service.GetAll());
+        [HttpGet("getuserrating")]
+        public async Task<IActionResult> GetUserRating(int userId)=> GetHttpResult(await _service.GetByUser(userId));
+        [HttpGet("getbyratinginterval")]
+        public async Task<IActionResult> GetByRatingInterval(int min, int max)=> GetHttpResult(await _service.GetByRatingInterval(min, max));
+        [HttpGet("add")]
+        public async Task<IActionResult> Add(UserRatingDto request)=> GetHttpResult(await _service.Add(request));
+        [HttpGet("update")]
+        public async Task<IActionResult> Update(UserRatingDto request) => GetHttpResult(await _service.Update(request));
+        [HttpGet("delete")]
+        public async Task<IActionResult> Delete(int userId)=> GetHttpResult(await _service.Delete(userId));
     }
 }
