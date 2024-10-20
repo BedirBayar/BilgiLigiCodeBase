@@ -34,7 +34,7 @@ app.UseSwaggerUI();
 //}
 
 app.UseCors(allowedOrigins);
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

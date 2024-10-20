@@ -6,7 +6,8 @@
       "serviceActions": {
         "triviacontestapi": "StartDebugging",
         "triviasecurityapi": "StartDebugging",
-        "triviaratingapi": "StartDebugging"
+        "triviaratingapi": "StartDebugging",
+        "triviacontributionapi": "StartDebugging"
       }
     }
   }

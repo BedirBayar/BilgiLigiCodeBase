@@ -5,21 +5,42 @@ services:
   triviasecurityapi:
     image: ${DOCKER_REGISTRY-}triviasecurityapi
     ports:
-        - 44312:8081
+        - 44312:8080
     build:
       context: TriviaSecurityApi
       dockerfile: Dockerfile
   triviacontestapi:
     image: ${DOCKER_REGISTRY-}triviacontestapi
     ports:
-        - 44313:8081
+        - 44313:8080
     build:
       context: TriviaContestApi
       dockerfile: Dockerfile
   triviaratingapi:
     image: ${DOCKER_REGISTRY-}triviaratingapi
     ports:
-        - 44314:8081
+        - 44314:8080
     build:
       context: TriviaRatingApi
       dockerfile: Dockerfile
+  triviacontributionapi:
+    image: ${DOCKER_REGISTRY-}triviacontributionapi
+    ports:
+        - 44315:8080
+    build:
+      context: TriviaContributionApi
+      dockerfile: Dockerfile
+  apigateway:
+    image: ${DOCKER_REGISTRY-}apigateway
+    ports:
+       - 44311:8080
+    build:
+      context: ApiGateway
+      dockerfile: Dockerfile
+    depends_on:
+      - triviasecurityapi
+      - triviacontestapi
+      - triviaratingapi
+      - triviacontributionapi
+
+     

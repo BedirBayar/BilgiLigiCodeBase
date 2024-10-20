@@ -16,9 +16,9 @@ namespace TriviaRatingApi.Controllers
         }
         [HttpGet("getteamawards")]
         public async Task<IActionResult> GetTeamAwards(int teamId) => GetHttpResult(await _service.GetTeamAwards(teamId));
-        [HttpGet("add")]
+        [HttpPost("add")]
         public async Task<IActionResult> Add(AddTeamAwardRequest request) => GetHttpResult(await _service.Add(request));
-        [HttpGet("delete")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> Delete(AddTeamAwardRequest request) => GetHttpResult(await _service.Delete(request));
     }
 }
