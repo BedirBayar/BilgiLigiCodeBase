@@ -12,7 +12,7 @@
 			-UpdatedOn (DateTime)
 			-ArchivedBy (int)
 			-ArchivedOn (DateTime)
-		1-User
+		-User
 			-Id (int)
 			-Email (string)
 			-UserName (string)
@@ -21,39 +21,121 @@
 			-PasswordHash (string)
 			-SecurityStamp (string)
 			-RoleId (int)
-			-RankId (int)
-			-Rating (decimal)
-			-ContributionRating (decimal)
 			-ReportedRating (int)
 			-IsBanned (bool)
 			-BanReason (string)
 			-Avatar (string)
 			-IsEmailConfirmed (bool)
-			-IsArchived (bool)
-			-IsActive (bool)
 			-BannedUntil (DateTime)
-			-CreatedBy (int)
-			-CreatedOn (DateTime)
-			-UpdatedBy (int)
-			-UpdatedOn (DateTime)
-			-ArchivedBy (int)
-			-ArchivedOn (DateTime)
-		2-Role
+		-Role
 			-Id (int)
 			-Name (string)
 			-Description (string)
-			-IsActive (bool)
-			-IsArchived (bool)
+			
+	--Tablolar (RATINGDB)		
+		-Rank
+			-Id (int)
+			-Name (string)
+			-Degree (int)
+			-Description (string)
+			-UserOrTeam (string)
+		-Award
+			-Id (int)
+			-Name (string)
+			-Description (string)
+			-Badge (string)
+			-UserOrTeam (string)
+		-Team
+			-Id (int)
+			-Name (string)
+			-Slogan (string)
+			-LeaderId (int)
+			-IsBanned (bool)
+			-BannedUntil (DateTime)
+			-BanReason (string)
+		-UserRank
+			-UserId (int)
+			-RankDegree (int)
+		-TeamRank
+			-TeamId (int)
+			-RankDegree (int)
+		-UserRating
+			-UserId (int)
+			-Rating (int)
+		-TeamRating
+			-TeamId (int)
+			-Rating (int)
+		-UserTeam 
+			-Id (int)
+			-TeamId (int)
+			-UserId (int)
+		-UserAward
+			-Id (int)
+			-UserId (int)
+			-AwardId (int)
+		-TeamAward
+			-Id (int)
+			-TeamId (int)
+			-AwardId (int)
 			
 	--Tablolar (CONTESTDB)		
-		3-Category
+		-Category
+			-Id (int)
+			-Popularity (decimal)
+			-Name (string)
+			-Description (string)
+			-IsActive (bool)
+			-IsArchived (bool)
+		-Question
+			-Id (int)
+			-CategoryId (int)
+			-Difficulty (int)
+			-Text (string)
+			-Answer (string)
+			-Choice1 (string)
+			-Choice2 (string)
+			-Choice3 (string)
+			-Choice4 (string)
+			-IsActive (bool)
+			-IsArchived (bool)
+		-Contest
+			-Id (int)
+			-Name (string)
+			-Prize (decimal)
+			-StartDate (DateTime)
+			-EndDate (DateTime)
+			-ContestTypeId (int)
+			-IsActive (bool)
+			-IsArchived (bool)
+			-MinimumRank (int)
+		-ContestType
 			-Id (int)
 			-Name (string)
 			-Description (string)
 			-IsActive (bool)
 			-IsArchived (bool)
-		4-Question
-			-Id (int)
+		-ContestTeam
+			-Id
+			-ContestId
+			-TeamId
+		-ContestUser
+			-Id
+			-ContestId
+			-UserId
+		
+		-AuditLog
+			-Id
+			-UserId
+			-AuditTypeId
+			-Date
+			-NewData
+		-AuditType
+			-Id
+			-Name
+			-IsActive (bool)
+			-IsArchived (bool)
+	-- Tablolar (ContributionDB)
+		- QuestionDraft
 			-CategoryId (int)
 			-Difficulty (int)
 			-Text (string)
@@ -63,166 +145,29 @@
 			-Choice2 (string)
 			-Choice3 (string)
 			-Choice4 (string)
-			-IsActive (bool)
-			-IsArchived (bool)
-		5-Contest
-			-Id (int)
-			-Name (string)
-			-Description (string)
-			-PrizeRating (decimal)
-			-StartDate (DateTime)
-			-EndDate (DateTime)
-			-ContestTypeId (int)
-			-IsActive (bool)
-			-IsArchived (bool)
-			-MinimumRank (int)
-			-MaximumRank (int)
-			-LeaderBoardId (int)
-		6-ContestAward 
-			-Id (int)
-			-Name (string)
-			-Description (string)
-			-LeaderBoardRank (int)
-			-AwardRating (int)
-			-AwardId (int)
-		7-Match
-			-Id (int)
-			-StartDate (DateTime)
-			-EndDate (DateTime)
-			-User1Id (int) 
-			-User2Id (int)
-			-Team1Id (int)
-			-Team2Id (int)
-			-IsTeamMatch (bool)
-			-IsLeagueMatch (bool)
-			-ContestId (int)
-		8-LeaderBoard
-			-Id (int)
-			-Name (string)
-			-IsComplete (bool)
-			-IsTeamLeaderBoard (bool)
-			-Notes (string)
-		9-LeaderBoardTeam
-			-Id (int)
-			-LeaderBoardId (int)
-			-TeamId (int)
-			-Points (int)
-		10-LeaderBoardUser
-			-Id (int)
-			-LeaderBoardId (int)
-			-UserId (int)
-			-Points (int)
-		11-ContestType
-			-Id (int)
-			-Name (string)
-			-Description (string)
-			-IsActive (bool)
-			-IsArchived (bool)
-		12-ContestRule
-			-Id (int)
-			-ContestTypeId (int)
-			-Order (int)
-			-Description (string)
-		13-ContestTeam
-			-Id (int)
-			-ContestId (int)
-			-TeamId (int)
-		14-MatchQuestion
-			-Id (int)
-			-MatchId (int)
-			-QuestionId (int)
+		- QuestionDraftDifficulty
+			-Id
+			-QuestionDraftId
+			-DifficultyPoint
+		- QuestionDraftQuality
+			-Id
+			-QuestionDraftId
+			-QualityPoint
+		- QuestionDifficulty
+			-Id
+			-QuestionId
+			-DifficultyPoint
+		- QuestionQuality
+			-Id
+			-QuestiontId
+			-QualityPoint
+		- UserContributionRating
+			-UserId
+			-ContributionRating
 
-	--Tablolar (RATINGDB)		
-		15-Rank
-			-Id (int)
-			-Name (string)
-			-Degree (int)
-			-Description (string)
-			-IsTeamRank (bool)
-		16-UserRank
-			-Id (int)
-			-UserId (int)
-			-RankId (int)
-		17-TeamRank
-			-Id (int)
-			-TeamId (int)
-			-RankId (int)
-		18-UserRating
-			-UserId (int)
-			-Rating (int)
-		19-TeamRating
-			-TeamId (int)
-			-Rating (int)
-		20-Award
-			-Id (int)
-			-Name (string)
-			-Description (string)
-			-Badge (string)
-			-AwardType (string)
-			-IsActive (bool)
-			-IsArchived (bool)
-		21-Team
-			-Id (int)
-			-Name (string)
-			-Rating (decimal)
-			-LeaderId (int)
-			-TeamRankId (int)
-			-IsBanned (bool)
-			-BannedUntil (DateTime)
-			-BanReason (string)
-			-IsActive (bool)
-			-IsArchived (bool)
-		22-UserTeam 
-			-Id
-			-TeamId
-			-UserId
-		23-UserAward
-			-Id
-			-UserId
-			-AwardId
-		24-TeamAward
-			-Id
-			-TeamId
-			-AwardId
-					
-	--Tablolar (CONTRIBUTIONDB)		
-		25-QuestionDraft
-			-Id (int)
-			-CategoryId (int)
-			-Difficulty (int)
-			-Rating (decimal)
-			-AssessmentCount (int)
-			-Text (string)
-			-Answer (string)
-			-Choice1 (string)
-			-Choice2 (string)
-			-Choice3 (string)
-			-Choice4 (string)
-		26-QuestionAssessment
-			-Id (int)
-			-UserId (int)
-			-QuestionDraftId (int)
-			-QualityAssessment (string)
-			-DifficultyAssessment (string)
-			-QualityRating (int)
-			-DifficultyRating (int)
-		27-UserContributionRating (int)
-			- UserId (int)
-			- ContributionRating (decimal)
-
-	-Tablolar (GATEWAYDB)	
-		28-AuditLog
-			-Id
-			-UserId
-			-AuditTypeId
-			-Date
-			-NewData
-		29-AuditType
-			-Id
-			-Name
-			-IsActive (bool)
-			-IsArchived (bool)
 			
+		
+	
 		
 
 -API : .NET 8 RestAPI / Microservices
@@ -239,27 +184,13 @@
 			-Category
 			-Question
 			-Contest
-			-League
-			-Match
-			-LeaderBoard
-	- RatingApi
-		--Controller
-			-Rating
-			-Ranking
-			-Award
-			-Team
-	- ContributionApi
-		--Controller
-			-QuestionDraft
-			-QuestionAssessment
-			-ContributionRating
-	- ApiGateway
-		--Controller
-			-AuthController
-			-ProxyController
-		--Services
-			-NLog
-			-Caching
+	--Services
+		-NLog
+		-Caching
+		-Swagger
+
+
+		-
 
 		
 		
@@ -319,3 +250,98 @@ Terimler
 	--havuza ekleme öncesi kalite kontrol
 	--kalite deðerlendirme geri bildirimi
 	
+ ------------- Akýþlar --------------------------
+ 1- Yarýþmaya Katýlma ------------------------------
+ 
+1- Kullanýcý login olur
+2- Kullanýcý yarýþmalarý görüntüler
+3- Kullanýcý yarýþmaya katýlýr
+4- Yarýþma baþvurularý biter
+5- Fikstür oluþturulur
+6- Liderlik tablosu oluþturulur
+7- Yarýþma baþlar
+8- Maçlar oynanýr
+9- Kullanýcý fikstürü görüntüler
+10-Kullanýcý liderlik tablosunu görüntüler
+11-Kullanýcý maç sonuçlarýný görüntüler
+12-Puanlar liderlik tablosuna yazýlýr
+13-Maçlar biter
+14-Yarýþma biter
+15-Puanlar daðýtýlýr
+16-Ödüller daðýtýlýr
+
+
+
+Bu projede, her bir API, gateway, cache ve message queue gibi bileþenlerin nasýl yapýlandýrýlacaðýný anlamak ve organize etmek zorlayýcý olabilir. Ýþleri sýraya koymak ve yol haritasý oluþturmak için adým adým bir rehber hazýrlayalým:
+
+### 1. **Projenin Genel Yapýsýný ve Mimariyi Anlamak**
+   Ýlk olarak, projenin genel mimarisini netleþtirmek gerekiyor. Burada, **API'ler**, **API Gateway**, **cache**, **message queue**, ve **authentication** gibi bileþenlerin nasýl etkileþimde bulunacaðýný belirlemek önemli. Bunun için bir **mimari diagram** oluþturmak iþinize yarayabilir.
+
+### 2. **API'lerin Tanýmlanmasý**
+   - Her API’nin rolü ve ne tür verilerle çalýþacaðýný netleþtirin (örneðin, kullanýcý yönetimi API, ürün yönetimi API, ödeme API vb.).
+   - API endpoint’lerinin taslaðýný çýkarýn.
+
+### 3. **Authentication Mekanizmasý**
+   Her bir API'nin authentication mekanizmasý, güvenlik açýsýndan önemli bir aþamadýr. Önerilen yaklaþým:
+   - **API Gateway'de JWT tabanlý Authentication**: Tüm authentication iþlemleri gateway üzerinden yapýlabilir. Kullanýcý, gateway’e bir kez kimlik doðrulamasý yaptýðýnda, gateway JWT token üretir ve tüm API'lere yönlendirmelerde bu token'ý ekler. Böylece her API, ayrý bir authentication mekanizmasý kurmadan JWT token'ý doðrular.
+   - **Identity Server (Opsiyonel)**: Eðer kompleks bir kullanýcý yönetimi gerekecekse, merkezi bir kimlik doðrulama servisi (IdentityServer gibi) kullanýlabilir.
+
+   **Yol Haritasý:**
+   - **Adým 1**: JWT token tabanlý bir authentication yapýsý kurun.
+   - **Adým 2**: API Gateway'de kimlik doðrulamasý iþlemlerini yapýn, token'ý API'lere yönlendirin.
+   - **Adým 3**: Her API'de JWT doðrulama mekanizmasýný kurun.
+
+### 4. **Logging**
+   Her API’nin, yanýtlarý ve önemli olaylarý loglamasý gerekecek. Merkezi bir logging mekanizmasý önerilir:
+   - **NLog veya Serilog gibi bir kütüphane** kullanarak her API’de loglama yapabilirsiniz.
+   - API'ler bir merkezi log sunucusuna (örneðin **ELK Stack** veya **Azure Application Insights**) loglarý gönderebilir.
+   
+   **Yol Haritasý:**
+   - **Adým 1**: API'lere loglama kütüphanesini ekleyin (örn: NLog).
+   - **Adým 2**: Yanýtlarý ve önemli olaylarý loglayýn.
+   - **Adým 3**: Merkezi bir log sunucusuna (ELK, Application Insights) entegre edin.
+
+### 5. **API Gateway Yönlendirmesi**
+   Gateway, tüm dýþ istekleri alacak ve ilgili API’ye yönlendirecek. Burada önemli olan, her API'nin doðru endpoint’ine yönlendirilmesini saðlamaktýr:
+   - **API Gateway (örn: Ocelot, NGINX)** ile her API’nin route'larýný tanýmlayýn.
+   - Her endpoint için gateway’de doðru route'larý ayarlayýn.
+
+   **Yol Haritasý:**
+   - **Adým 1**: API Gateway seçin (Ocelot gibi).
+   - **Adým 2**: Gateway'de her API'nin route'larýný tanýmlayýn.
+   - **Adým 3**: Gateway ile endpoint’leri test edin.
+
+### 6. **Cache Mekanizmasý**
+   Caching, performansý artýrmak için sýk kullanýlan verileri daha hýzlý eriþilebilir hale getirir.
+   - **Gateway'de Cache**: Eðer tüm API isteklerini cache’lemek istiyorsanýz, API Gateway üzerine cache ekleyebilirsiniz.
+   - **API'de Cache**: Sadece belirli API isteklerini cache'lemek istiyorsanýz, her API içinde caching uygulanabilir.
+
+   **Yol Haritasý:**
+   - **Adým 1**: Hangi verilerin cache'lenmesi gerektiðini belirleyin.
+   - **Adým 2**: Gateway üzerinden cache uygulayýn (örn: Redis cache).
+   - **Adým 3**: Eðer API düzeyinde cache gerekiyorsa, API’lere cache ekleyin.
+
+### 7. **Message Queue Yapýsý**
+   Message queue, API’ler arasýnda asenkron mesajlaþmayý saðlamak için kullanýlýr. Örneðin, bir API, iþlenmesi gereken bir iþlemi queue’ya gönderir ve baþka bir servis bu iþlemi iþler.
+   - **RabbitMQ, Kafka veya Azure Service Bus** gibi message queue sistemlerinden birini seçin.
+   - API’lerin message queue’ya mesaj gönderecek ve alacak þekilde yapýlandýrýlmasý gerekir.
+
+   **Yol Haritasý:**
+   - **Adým 1**: Kullanýlacak message queue sistemini seçin (RabbitMQ gibi).
+   - **Adým 2**: API’leri bu queue’ya mesaj gönderecek ve alacak þekilde yapýlandýrýn.
+   - **Adým 3**: Queue'nun mesajlarý nasýl iþleyeceðini belirleyin (örn: iþ kuyruðu).
+
+### 8. **Test ve Daðýtým**
+   - Tüm bileþenlerin düzgün çalýþtýðýndan emin olmak için entegrasyon testleri yapýn.
+   - CI/CD süreçlerine API’lerinizi dahil edin ve sürekli daðýtým yapacak þekilde yapýlandýrýn.
+
+### Yol Haritasý (Genel Bakýþ):
+1. **API Mimarisini Netleþtirme**: Hangi API’lerin ne yapacaðýný ve ne tür endpoint’ler sunacaðýný belirleyin.
+2. **Authentication Yapýsý**: API Gateway üzerinden JWT authentication mekanizmasýný kurun.
+3. **Logging Yapýsý**: Her API için loglama mekanizmasýný kurun ve merkezi bir log sunucusuna entegre edin.
+4. **API Gateway Yönlendirmesi**: Gateway üzerinden her API’nin route’larýný ayarlayýn.
+5. **Caching Yapýsý**: Gateway’de veya API’lerde cache mekanizmasýný uygulayýn.
+6. **Message Queue**: API’lerin mesaj kuyruðu sistemiyle haberleþmesini saðlayýn.
+7. **Test ve Daðýtým**: Tüm bileþenleri test edin ve CI/CD süreçlerine entegre edin.
+
+Bu adýmlarý takip ederek, her bir bileþeni mantýklý bir sýrayla yapýlandýrabilir ve backend sisteminizi sorunsuz þekilde kurabilirsiniz.

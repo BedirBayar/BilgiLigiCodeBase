@@ -1,0 +1,14 @@
+- Contribution Api'nin tamamlanmasý
+- Refactoring: IsActive - IsArchived - IsBanned kontrollerinin eklenmesi
+- Refactoring: Entity - Dto - Request validasyonlarýnýn eklenmesi
+- Refactoring: Gereksiz interface'lerin kaldýrýlmasý
+- Yeterli test datasý girilmesi
+- Monitoring uyumlu Logging mimarisi - apigateway
+- mikroservislerin dýþarýya kapatýlmasý
+- backend'in https'e alýnmasý
+- resimler için cdn sunucusu ya da makul dosya çözümü
+- ui ekran boyutlarýnýn ve responsive desig'ýn gözden geçirilmesi
+- tüm ui ekranlarýnýn yapýlýp endpointlere baðlanmasý
+
+- Caching with Redis - apigateway
+- Servis katmaný jenerikleþtirme
