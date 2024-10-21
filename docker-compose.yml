@@ -9,6 +9,8 @@ services:
     build:
       context: TriviaSecurityApi
       dockerfile: Dockerfile
+    networks: 
+        - backend-network
   triviacontestapi:
     image: ${DOCKER_REGISTRY-}triviacontestapi
     ports:
@@ -16,6 +18,8 @@ services:
     build:
       context: TriviaContestApi
       dockerfile: Dockerfile
+    networks: 
+        - backend-network
   triviaratingapi:
     image: ${DOCKER_REGISTRY-}triviaratingapi
     ports:
@@ -23,6 +27,8 @@ services:
     build:
       context: TriviaRatingApi
       dockerfile: Dockerfile
+    networks: 
+        - backend-network
   triviacontributionapi:
     image: ${DOCKER_REGISTRY-}triviacontributionapi
     ports:
@@ -30,6 +36,8 @@ services:
     build:
       context: TriviaContributionApi
       dockerfile: Dockerfile
+    networks: 
+        - backend-network
   apigateway:
     image: ${DOCKER_REGISTRY-}apigateway
     ports:
@@ -42,5 +50,9 @@ services:
       - triviacontestapi
       - triviaratingapi
       - triviacontributionapi
+    networks: 
+        - backend-network
+networks:
+     backend-network:
 
      

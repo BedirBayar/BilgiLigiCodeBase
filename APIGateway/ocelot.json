@@ -5,8 +5,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44312
+          "Host": "triviasecurityapi",
+          "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/securityapi/{everything}",
@@ -17,8 +17,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44313
+          "Host": "triviacontestapi",
+          "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/contestapi/{everything}",
@@ -29,8 +29,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44314
+          "Host": "triviaratingapi",
+          "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/ratingapi/{everything}",
@@ -41,8 +41,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44315
+          "Host": "triviacontributionapi",
+          "Port": 8080
         }
       ],
       "UpstreamPathTemplate": "/contributionapi/{everything}",
