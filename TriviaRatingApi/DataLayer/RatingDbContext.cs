@@ -24,7 +24,11 @@ namespace TriviaRatingApi.DataLayer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Fluent API configurations
+            //QueryFilters
+            modelBuilder.Entity<Rank>().HasQueryFilter(e => !e.IsArchived);
+            modelBuilder.Entity<Award>().HasQueryFilter(e =>  !e.IsArchived);
+            modelBuilder.Entity<Team>().HasQueryFilter(e =>  !e.IsArchived);
+            //
 
             // Rank entity configuration
             modelBuilder.Entity<Rank>(entity =>

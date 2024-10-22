@@ -18,7 +18,8 @@ namespace TriviaContestApi.DataAccess.Repositories.ContestType_
             return ctype.Id;
         }
 
-        public async Task<List<ContestType>> GetAll() => await _context.ContestTypes.ToListAsync();
+        public async Task<List<ContestType>> GetAll() => await _context.ContestTypes.IgnoreQueryFilters().ToListAsync();
+        public async Task<List<ContestType>> GetAllActive() => await _context.ContestTypes.Where(t=>t.IsActive).ToListAsync();
 
         public async Task<ContestType> GetById(int id) => await _context.ContestTypes.FindAsync(id);
         public async Task<ContestType> GetByName(string name) => await _context.ContestTypes.FirstOrDefaultAsync(t=>t.Name.ToLower()==name.ToLower());

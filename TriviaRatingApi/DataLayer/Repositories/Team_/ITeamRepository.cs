@@ -5,6 +5,7 @@ namespace TriviaRatingApi.DataLayer.Repositories.Team_
     public interface ITeamRepository
     {
         Task<List<Team>> GetAll();
+        Task<List<Team>> GetAllActive();
         Task<List<Team>> GetByRank(int min, int max);
         Task<Team> GetById(int id);
         Task<Team> GetByName(string name);

@@ -5,6 +5,7 @@ namespace TriviaContestApi.Services.Question_
     public interface IQuestionService
     {
         Task<BaseResponse<List<QuestionDto>>> GetAll();
+        Task<BaseResponse<List<QuestionDto>>> GetAllActive();
         Task<BaseResponse<List<QuestionDto>>> GetByCategory(int categoryId);
         Task<BaseResponse<List<QuestionDto>>> GetByDifficulty(int easy, int hard);
         Task<BaseResponse<QuestionDto>> GetById(int id);

@@ -27,6 +27,12 @@ namespace TriviaSecurityApi.DataLayer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //QueryFilters
+            modelBuilder.Entity<User>().HasQueryFilter(e=>!e.IsArchived);
+            modelBuilder.Entity<Role>().HasQueryFilter(e=>!e.IsArchived);
+            //
+
+
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasKey(u => u.Id);

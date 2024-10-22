@@ -98,6 +98,23 @@ namespace TriviaContestApi.Services.ContestRule_
                 return new BaseResponse<List<ContestRuleDto>> { Success = false, Error = Get500(ex.Message) };
             }
         }
+        public async Task<BaseResponse<List<ContestRuleDto>>> GetAllActive()
+        {
+            try
+            {
+                var data = await _repository.GetAllActive();
+                if (data != null)
+                {
+                    var list = _mapper.Map<List<ContestRuleDto>>(data);
+                    return new BaseResponse<List<ContestRuleDto>> { Data = list, Success = true };
+                }
+                return new BaseResponse<List<ContestRuleDto>> { Success = false, Error = Get404() };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<List<ContestRuleDto>> { Success = false, Error = Get500(ex.Message) };
+            }
+        }
 
         public async Task<BaseResponse<List<ContestRuleDto>>> GetByContestType(int cTypeId)
         {

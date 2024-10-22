@@ -25,6 +25,14 @@ namespace TriviaContributionApi.DataLayer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            //QueryFilters
+            modelBuilder.Entity<QuestionDraft>().HasQueryFilter(e => !e.IsArchived);
+            modelBuilder.Entity<QuestionDraftQuality>().HasQueryFilter(e => !e.IsArchived);
+            modelBuilder.Entity<QuestionDraftDifficulty>().HasQueryFilter(e => !e.IsArchived);
+            modelBuilder.Entity<QuestionQuality>().HasQueryFilter(e => !e.IsArchived);
+            modelBuilder.Entity<QuestionDifficulty>().HasQueryFilter(e => !e.IsArchived);
+
             // QuestionDraft Configuration
             modelBuilder.Entity<QuestionDraft>(entity =>
             {

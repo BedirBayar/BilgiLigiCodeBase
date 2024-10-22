@@ -99,6 +99,23 @@ namespace TriviaRatingApi.Services.Award_
                 return new BaseResponse<List<AwardDto>>(Get500(ex.Message));
             }
         }
+        public async Task<BaseResponse<List<AwardDto>>> GetAllActive()
+        {
+            try
+            {
+                var data = await _repository.GetAllActive();
+                if (data != null && data.Count>0)
+                {
+                    var list= _mapper.Map<List<AwardDto>>(data);
+                    return new BaseResponse<List<AwardDto>>(list);
+                }
+                return new BaseResponse<List<AwardDto>>(Get404());
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<List<AwardDto>>(Get500(ex.Message));
+            }
+        }
 
         public async Task<BaseResponse<AwardDto>> GetById(int id)
         {

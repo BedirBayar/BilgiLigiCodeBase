@@ -17,6 +17,8 @@ namespace TriviaRatingApi.Controllers
         }
         [HttpGet("getall")]
         public async Task<IActionResult>GetAll() =>GetHttpResult(await _service.GetAll());
+        [HttpGet("getallactive")]
+        public async Task<IActionResult>GetAllActive() =>GetHttpResult(await _service.GetAllActive());
         [HttpGet("getbyid")]
         public async Task<IActionResult>GetById(int id) =>GetHttpResult(await _service.GetById(id));
         [HttpGet("getbyname")]

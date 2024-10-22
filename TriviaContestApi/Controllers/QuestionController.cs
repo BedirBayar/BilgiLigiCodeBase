@@ -16,6 +16,8 @@ namespace TriviaContestApi.Controllers
         }
         [HttpGet("getall")]
         public async Task<IActionResult> GetAll() => GetHttpResult(await _service.GetAll());
+        [HttpGet("getallactive")]
+        public async Task<IActionResult> GetAllActive() => GetHttpResult(await _service.GetAllActive());
         [HttpGet("getbycategory")]
         public async Task<IActionResult> GetByCategory(int id) => GetHttpResult(await _service.GetByCategory(id));
         [HttpGet("getbydifficulty")]

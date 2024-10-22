@@ -28,6 +28,22 @@ namespace TriviaContestApi.Services.Question_
                 return new BaseResponse<List<QuestionDto>>(Get500(ex.Message));
             }
         }
+        public async Task<BaseResponse<List<QuestionDto>>> GetAllActive()
+        {
+            try
+            {
+                var data = await _repository.GetAllActive();
+                if (data != null && data.Count > 0)
+                {
+                    var list = _mapper.Map<List<QuestionDto>>(data);
+                    return new BaseResponse<List<QuestionDto>>(list);
+                }
+                return new BaseResponse<List<QuestionDto>>(Get404());
+            }
+            catch (Exception ex) {
+                return new BaseResponse<List<QuestionDto>>(Get500(ex.Message));
+            }
+        }
         public async Task<BaseResponse<List<QuestionDto>>> GetByCategory(int categoryId)
         {
             try

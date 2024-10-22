@@ -17,9 +17,10 @@ namespace TriviaContestApi.DataAccess.Repositories.Category_
             return cat.Id;
         }
 
-        public async Task<List<Category>> GetAll() => await _context.Categories.ToListAsync();
+        public async Task<List<Category>> GetAll() => await _context.Categories.IgnoreQueryFilters().ToListAsync();
+        public async Task<List<Category>> GetAllActive() => await _context.Categories.Where(c=>c.IsActive).ToListAsync();
 
-        public async Task<Category> GetById(int id) => await _context.Categories.FindAsync(id);
+        public async Task<Category> GetById(int id) => await _context.Categories.IgnoreQueryFilters().SingleOrDefaultAsync(c=>c.Id==id);
         public async Task<Category> GetByName(string name) => await _context.Categories.FirstOrDefaultAsync(c=>c.Name.ToLower()==name.ToLower());
 
         public async Task<bool> Update(Category cat)

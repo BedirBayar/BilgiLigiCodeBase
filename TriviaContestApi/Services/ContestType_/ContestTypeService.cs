@@ -97,7 +97,23 @@ namespace TriviaContestApi.Services.ContestType_
                 return new BaseResponse<List<ContestTypeDto>> { Success = false, Error = Get500(ex.Message) };
             }
         }
-
+        public async Task<BaseResponse<List<ContestTypeDto>>> GetAllActive()
+        {
+            try
+            {
+                var data = await _repository.GetAllActive();
+                if (data != null)
+                {
+                    var list = _mapper.Map<List<ContestTypeDto>>(data);
+                    return new BaseResponse<List<ContestTypeDto>> { Data = list, Success = true };
+                }
+                return new BaseResponse<List<ContestTypeDto>> { Success = false, Error = Get404() };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<List<ContestTypeDto>> { Success = false, Error = Get500(ex.Message) };
+            }
+        }
         
         public async Task<BaseResponse<ContestTypeDto>> GetById(int id)
         {

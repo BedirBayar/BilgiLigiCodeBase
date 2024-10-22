@@ -62,6 +62,20 @@ namespace TriviaContestApi.Services.Category_
                 return new BaseResponse<List<CategoryDto>> (error);
             }
         }
+        public async Task<BaseResponse<List<CategoryDto>>> GetAllActive()
+        {
+            try
+            {
+                var entities = await _categoryRep.GetAllActive();
+                var data = _mapper.Map<List<CategoryDto>>(entities);
+                return new BaseResponse<List<CategoryDto>>(data);
+            }
+            catch(Exception ex) 
+            {
+                var error = Get500(ex.Message);
+                return new BaseResponse<List<CategoryDto>> (error);
+            }
+        }
 
         public async Task<BaseResponse<CategoryDto>> GetById(int id)
         {

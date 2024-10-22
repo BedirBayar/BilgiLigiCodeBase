@@ -5,6 +5,7 @@ namespace TriviaRatingApi.DataLayer.Repositories.Rank_
     public interface IRankRepository
     {
         Task<List<Rank>> GetAll();
+        Task<List<Rank>> GetAllActive();
         Task<List<Rank>> GetAllUser();
         Task<List<Rank>> GetAllTeam();
         Task<Rank> GetById(int id); 

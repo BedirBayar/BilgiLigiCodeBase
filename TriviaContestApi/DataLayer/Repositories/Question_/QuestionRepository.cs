@@ -23,12 +23,13 @@ namespace TriviaContestApi.DataAccess.Repositories.Question_
             return qus.Select(q=>q.Id).ToList();
         }
 
-        public async Task<List<Question>> GetAll() => await _context.Questions.ToListAsync();
-        public async Task<List<Question>> GetByCategory(int categoryId) => await _context.Questions.Where(q=>q.CategoryId==categoryId).ToListAsync();
-        public async Task<List<Question>> GetByDifficulty(int easy, int hard) => await _context.Questions.Where(q=>q.Difficulty>=easy &&q.Difficulty<=hard).ToListAsync();
+        public async Task<List<Question>> GetAll() => await _context.Questions.IgnoreQueryFilters().ToListAsync();
+        public async Task<List<Question>> GetAllActive() => await _context.Questions.Where(q=>q.IsActive).ToListAsync();
+        public async Task<List<Question>> GetByCategory(int categoryId) => await _context.Questions.Where(q=>q.CategoryId==categoryId && q.IsActive).ToListAsync();
+        public async Task<List<Question>> GetByDifficulty(int easy, int hard) => await _context.Questions.Where(q=>q.Difficulty>=easy &&q.Difficulty<= hard && q.IsActive).ToListAsync();
 
-        public async Task<Question> GetById(int id) => await _context.Questions.FindAsync(id);
-        public async Task<List<Question>> GetByIdList(List<int> ids) => await _context.Questions.Where(m=>ids.Contains(m.Id)).ToListAsync();
+        public async Task<Question> GetById(int id) => await _context.Questions.IgnoreQueryFilters().SingleOrDefaultAsync(q=>q.Id==id);
+        public async Task<List<Question>> GetByIdList(List<int> ids) => await _context.Questions.IgnoreQueryFilters().Where(m=>ids.Contains(m.Id)).ToListAsync();
 
         public async Task<bool> Update(Question qu)
         {

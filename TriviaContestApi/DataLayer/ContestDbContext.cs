@@ -30,6 +30,18 @@ namespace TriviaContestApi.DataAccess
 
         protected override void OnModelCreating (ModelBuilder modelBuilder)
         {
+
+            //QueryFilters
+            modelBuilder.Entity<Category>().HasQueryFilter(e => !e.IsArchived);
+            modelBuilder.Entity<Contest>().HasQueryFilter(e => !e.IsArchived);
+            modelBuilder.Entity<LeaderBoard>().HasQueryFilter(e => !e.IsArchived);
+            modelBuilder.Entity<Question>().HasQueryFilter(e => !e.IsArchived);
+            modelBuilder.Entity<ContestAward>().HasQueryFilter(e => !e.IsArchived);
+            modelBuilder.Entity<ContestType>().HasQueryFilter(e => !e.IsArchived);
+            modelBuilder.Entity<ContestRule>().HasQueryFilter(e => !e.IsArchived);
+            modelBuilder.Entity<UserMatch>().HasQueryFilter(e => !e.IsArchived);
+            modelBuilder.Entity<TeamMatch>().HasQueryFilter(e => !e.IsArchived);
+
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.HasKey(e => e.Id);

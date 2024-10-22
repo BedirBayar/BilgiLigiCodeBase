@@ -5,6 +5,7 @@ namespace TriviaContestApi.DataAccess.Repositories.Question_
     public interface IQuestionRepository
     {
         Task<List<Question>> GetAll();
+        Task<List<Question>> GetAllActive();
         Task<List<Question>> GetByCategory(int categoryId);
         Task<List<Question>> GetByDifficulty(int easy, int hard);
         Task<Question> GetById(int id);

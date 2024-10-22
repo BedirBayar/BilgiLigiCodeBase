@@ -33,6 +33,23 @@ namespace TriviaRatingApi.Services.Team_
                 return new BaseResponse<List<TeamDto>>(Get500(ex.Message));
             }
         }
+        public async Task<BaseResponse<List<TeamDto>>> GetAllActive()
+        {
+            try
+            {
+                var data = await _repository.GetAllActive();
+                if (data != null && data.Count > 0)
+                {
+                    var list = _mapper.Map<List<TeamDto>>(data);
+                    return new BaseResponse<List<TeamDto>>(list);
+                }
+                return new BaseResponse<List<TeamDto>>(Get404());
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<List<TeamDto>>(Get500(ex.Message));
+            }
+        }
         public async Task<BaseResponse<TeamDto>> GetById(int id)
         {
             try

@@ -30,6 +30,23 @@ namespace TriviaRatingApi.Services.Rank_
                 return new BaseResponse<List<RankDto>>(Get500(ex.Message));
             }
         }
+        public async Task<BaseResponse<List<RankDto>>> GetAllActive()
+        {
+            try
+            {
+                var data = await _repository.GetAllActive();
+                if (data != null)
+                {
+                    var list = _mapper.Map<List<RankDto>>(data);
+                    return new BaseResponse<List<RankDto>>(list);
+                }
+                return new BaseResponse<List<RankDto>>(Get404());
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<List<RankDto>>(Get500(ex.Message));
+            }
+        }
         public async Task<BaseResponse<List<RankDto>>> GetUserRanks()
         {
             try

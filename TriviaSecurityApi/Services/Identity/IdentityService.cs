@@ -41,6 +41,8 @@ namespace TriviaSecurityApi.Services.Identity
                 }
                 else user = await _userRepository.GetUserByUsername(tokenRequest.UserName);
                 if (user == null) return new BaseResponse<TokenResponse>(Get404("Kullanıcı Bulunamadı"));
+                if (!user.IsActive) return new BaseResponse<TokenResponse>(Get404("Kullanıcı aktif değil"));
+                if (user.IsBanned) return new BaseResponse<TokenResponse>(Get404($"Kullanıcı Yasaklı - Yasak bitiş: {string.Format(user.BannedUntil.ToString(), "DD.MM.YYYY HH:mm")} , Yasak nedeni : {user.BanReason} "));
 
                 var password = _encryptionService.AESEncryptText(tokenRequest.Password, user.PasswordHash);
                 if (password != user.Password)

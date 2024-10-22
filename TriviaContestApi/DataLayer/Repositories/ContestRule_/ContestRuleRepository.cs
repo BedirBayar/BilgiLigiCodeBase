@@ -23,6 +23,10 @@ namespace TriviaContestApi.DataLayer.Repositories.ContestRule_
         {
             return await _context.ContestRules.ToListAsync();
         }
+        public async Task<List<ContestRule>> GetAllActive()
+        {
+            return await _context.ContestRules.Where(r=>r.IsActive).ToListAsync();
+        }
 
         public async Task<List<ContestRule>> GetByContestType(int cTypeId)
         {

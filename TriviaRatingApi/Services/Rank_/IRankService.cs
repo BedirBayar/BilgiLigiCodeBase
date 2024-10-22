@@ -6,6 +6,7 @@ namespace TriviaRatingApi.Services.Rank_
     public interface IRankService
     {
         Task<BaseResponse<List<RankDto>>> GetAll();
+        Task<BaseResponse<List<RankDto>>> GetAllActive();
         Task<BaseResponse<List<RankDto>>> GetUserRanks();
         Task<BaseResponse<List<RankDto>>> GetTeamRanks();
         Task<BaseResponse<RankDto>> GetById(int id);
