@@ -33,6 +33,10 @@ namespace TriviaContributionApi.DataLayer.Repositories.QuestionDraftDifficulty_
         {
             return await _context.QuestionDraftDifficulties.FindAsync(id);
         }
+        public async Task<QuestionDraftDifficulty> GetByUserAndQuestion(int userId, int questionId)
+        {
+            return await _context.QuestionDraftDifficulties.SingleOrDefaultAsync(q=>q.CreatedBy==userId&&q.QuestionDraftId==questionId);
+        }
 
         public async Task<List<QuestionDraftDifficulty>> GetByQuestion(int questionId)
         {

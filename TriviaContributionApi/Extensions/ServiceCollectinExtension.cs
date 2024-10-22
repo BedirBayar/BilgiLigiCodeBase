@@ -4,6 +4,9 @@ using TriviaContributionApi.DataLayer.Repositories.QuestionDifficulty_;
 using TriviaContributionApi.DataLayer.Repositories.QuestionDraft_;
 using TriviaContributionApi.DataLayer.Repositories.QuestionDraftDifficulty_;
 using TriviaContributionApi.DataLayer.Repositories.QuestionDraftQuality_;
+using TriviaContributionApi.DataLayer.Repositories.QuestionQuality_;
+using TriviaContributionApi.DataLayer.Repositories.UserContributionRating_;
+using TriviaContributionApi.Services;
 
 namespace TriviaContributionApi.Extensions
 {
@@ -12,13 +15,21 @@ namespace TriviaContributionApi.Extensions
         public static void AddApplicationLayer(this IServiceCollection services)
         {
             // data layer
-            services.AddTransient<IContributionDbContext, ContributionDbContext>();
-            services.AddTransient<IQuestionDraftRepository, QuestionDraftRepository>();
-            services.AddTransient<IQuestionDifficultyRepository, QuestionDifficultyRepository>();
-            services.AddTransient<IDraftDifficultyRepository, DraftDifficultyRepository>();
-            services.AddTransient<IDraftQualityRepository, DraftQualityRepository>();
-            services.AddTransient<IContributionDbContext, ContributionDbContext>();
-            services.AddTransient<IContributionDbContext, ContributionDbContext>();
+            services.AddScoped<IContributionDbContext, ContributionDbContext>();
+            services.AddScoped<IQuestionDraftRepository, QuestionDraftRepository>();
+            services.AddScoped<IQuestionDifficultyRepository, QuestionDifficultyRepository>();
+            services.AddScoped<IQuestionQualityRepository, QuestionQualityRepository>();
+            services.AddScoped<IDraftDifficultyRepository, DraftDifficultyRepository>();
+            services.AddScoped<IDraftQualityRepository, DraftQualityRepository>();
+            services.AddScoped<IUserContributionRatingRepository, UserContributionRatingRepository>();
+            //service layer
+            services.AddScoped<QuestionDraftService>();
+            services.AddScoped<DraftQualityService>();
+            services.AddScoped<DraftDifficultyService>();
+            services.AddScoped<QuestionQualityService>();
+            services.AddScoped<QuestionDifficultyService>();
+            services.AddScoped<UserContributionRatingService>();
+
 
         }
         public static void AddTheDbContext(this IServiceCollection services)

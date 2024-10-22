@@ -33,6 +33,11 @@ namespace TriviaContributionApi.DataLayer.Repositories.QuestionDraft_
         {
             return await _context.QuestionDrafts.Where(d=>d.CategoryId==categoryId).ToListAsync();
         }
+        
+        public async Task<List<QuestionDraft>> GetByContributor(int userId)
+        {
+            return await _context.QuestionDrafts.Where(d=>d.CreatedBy==userId).ToListAsync();
+        }
 
         public async Task<QuestionDraft> GetById(int id)
         {

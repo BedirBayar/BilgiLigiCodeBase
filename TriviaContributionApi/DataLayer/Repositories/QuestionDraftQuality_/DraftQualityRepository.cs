@@ -43,6 +43,10 @@ namespace TriviaContributionApi.DataLayer.Repositories.QuestionDraftQuality_
         {
             return await _context.QuestionDraftQualities.Where(q => q.CreatedBy == userId).ToListAsync();
         }
+        public async Task<QuestionDraftQuality> GetByUserAndQuestion(int userId,int questionId)
+        {
+            return await _context.QuestionDraftQualities.Where(q => q.CreatedBy == userId && q.Id==questionId).SingleOrDefaultAsync();
+        }
 
         public async Task<bool> Update(QuestionDraftQuality qu)
         {
