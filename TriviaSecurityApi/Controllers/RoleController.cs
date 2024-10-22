@@ -8,7 +8,7 @@ namespace TriviaSecurityApi.Controllers
 {
     [Route("api/role")]
     [ApiController]
-    public class RoleController : ControllerBase
+    public class RoleController : BaseController
     {
         private readonly IRoleService _service;
         public RoleController(IRoleService roleService)
@@ -17,17 +17,17 @@ namespace TriviaSecurityApi.Controllers
         }
 
         [HttpGet("getall")]
-        public async Task<BaseResponse<List<RoleDto>>> GetAll()=>await _service.GetAll();
+        public async Task<IActionResult> GetAll()=>GetHttpResult(await _service.GetAll());
         [HttpGet("getbyid")]
-        public async Task<BaseResponse<RoleDto>> GetById(int id)=>await _service.GetRoleById(id);
+        public async Task<IActionResult> GetById(int id)=> GetHttpResult(await _service.GetRoleById(id));
         [HttpPost("add")]
-        public async Task<BaseResponse<int>> AddRole(RoleDto role)=>await _service.AddRole(role);
+        public async Task<IActionResult> AddRole(RoleDto role)=> GetHttpResult(await _service.AddRole(role));
         [HttpPut("update")]
-        public async Task<BaseResponse<int>> UpdateRole(RoleDto role)=>await _service.UpdateRole(role);
+        public async Task<IActionResult> UpdateRole(RoleDto role)=> GetHttpResult(await _service.UpdateRole(role));
         [HttpPut("changestatus")]
-        public async Task<BaseResponse<bool>> ChangeStatus(int id)=>await _service.ChangeRoleStatus(id);
+        public async Task<IActionResult> ChangeStatus(int id)=> GetHttpResult(await _service.ChangeRoleStatus(id));
         [HttpPut("archive")]
-        public async Task<BaseResponse<bool>> Archive(int id) => await _service.ArchiveRole(id);
+        public async Task<IActionResult> Archive(int id) => GetHttpResult(await _service.ArchiveRole(id));
 
 
     }

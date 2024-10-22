@@ -1,104 +1,131 @@
 ﻿using AutoMapper;
+using TriviaContestApi.Services;
 using TriviaSecurityApi.DataLayer.Repositories;
 using TriviaSecurityApi.DTOs;
 using TriviaSecurityApi.DTOs.RoleModels;
 
 namespace TriviaSecurityApi.Services.Role
 {
-    public class RoleService :IRoleService
+    public class RoleService :BaseService,IRoleService
     {
         private readonly IRoleRepository _repository;
-        private readonly IMapper _mapper;
-        public RoleService( IRoleRepository repository, IMapper mapper) {
+        public RoleService( IRoleRepository repository, IMapper _mapper):base(_mapper) {
             _repository = repository;
-            _mapper = mapper;
         }
 
         public async Task<BaseResponse<List<RoleDto>>> GetAll()
         {
-            var data = await _repository.GetAll();
-            if (data != null)
+            try
             {
-                var roles= _mapper.Map<List<RoleDto>>(data);    
-                return new BaseResponse<List<RoleDto>> { Data = roles, Success = true };
+                var data = await _repository.GetAll();
+                if (data == null)
+                return new BaseResponse<List<RoleDto>>(Get404());
+                var roles = _mapper.Map<List<RoleDto>>(data);
+                return new BaseResponse<List<RoleDto>>(roles);
             }
-            return new BaseResponse<List<RoleDto>> { Error = new ErrorResponse { Code="404", Message="Veri Bulunamadı"}, Success = false };
+            catch (Exception ex) {
+                return new BaseResponse<List<RoleDto>>(Get500(ex.Message));
+            }
+            
         }
         public async Task<BaseResponse<RoleDto>> GetRoleById(int id)
         {
-            var data = await _repository.GetRoleById(id);
-            if (data != null)
+            try
             {
-                var roles = _mapper.Map<RoleDto>(data);
-                return new BaseResponse<RoleDto> { Data = roles, Success = true };
+                var data = await _repository.GetRoleById(id);
+                if (data == null) return new BaseResponse<RoleDto>(Get404());
+                var role = _mapper.Map<RoleDto>(data);
+                return new BaseResponse<RoleDto>(role);
             }
-            return new BaseResponse<RoleDto> { Error = new ErrorResponse { Code = "404", Message = "Veri Bulunamadı" }, Success = false };
-        }
-        public async Task<BaseResponse<int>> UpdateRole(RoleDto role)
-        {
-            var entity = await _repository.GetRoleById(role.Id);
-            if (entity != null)
+            catch (Exception ex)
             {
-                if (role.Name != entity.Name)
+                return new BaseResponse<RoleDto>(Get500(ex.Message));
+            }
+           
+        }
+        public async Task<BaseResponse<bool>> UpdateRole(RoleDto role)
+        {
+            try
+            {
+                var entity = await _repository.GetRoleById(role.Id);
+                if (entity == null)
+                return new BaseResponse<bool>(Get404());
+                if (role.Name != entity.Name) // Checking if new name is already in use
                 {
-                    var nameCheck= _repository.GetRoleByName(role.Name);    
-                    if (nameCheck != null)
-                    {
-                        return new BaseResponse<int> { Error = new ErrorResponse { Code = "400", Message = "Aynı isimde bir rol mevcut" }, Success = false };
-                    }
+                    var nameCheck = _repository.GetRoleByName(role.Name);
+                    if (nameCheck != null) return new BaseResponse<bool>(Get400("Aynı isimde bir rol mevcut"));
                 }
                 entity.Name = role.Name;
                 entity.Description = role.Description;
                 entity.UpdatedBy = 1;
-                entity.UpdatedOn=DateTime.Now;
-                await _repository.UpdateRole(entity);
-                return new BaseResponse<int> { Data = entity.Id, Success = true };
+                entity.UpdatedOn = DateTime.Now;
+                var result= await _repository.UpdateRole(entity);
+                return new BaseResponse<bool>(result);
             }
-            return new BaseResponse<int> { Error = new ErrorResponse { Code = "404", Message = "Veri Bulunamadı" }, Success = false };
+            catch(Exception ex)
+            {
+                return new BaseResponse<bool>(Get500(ex.Message));
+            }
         }
         public async Task<BaseResponse<bool>> ChangeRoleStatus(int id)
         {
-            var entity = await _repository.GetRoleById(id);
-            if (entity != null)
+            try
             {
+                var entity = await _repository.GetRoleById(id);
+                if (entity == null)
+                return new BaseResponse<bool>(Get404());
                 entity.IsActive = !entity.IsActive;
                 await _repository.UpdateRole(entity);
                 return new BaseResponse<bool> { Data = entity.IsActive, Success = true };
             }
-            return new BaseResponse<bool> { Error = new ErrorResponse { Code = "404", Message = "Veri Bulunamadı" }, Success = false };
+            catch (Exception ex)
+            {
+                return new BaseResponse<bool>(Get500(ex.Message));
+            }
+            
         }
 
         public async Task<BaseResponse<bool>> ArchiveRole(int id)
         {
-            var entity = await _repository.GetRoleById(id);
-            if (entity != null)
+            try
             {
+                var entity = await _repository.GetRoleById(id);
+                if (entity == null)
+                    return new BaseResponse<bool>(Get404());
                 entity.IsArchived = true;
                 entity.ArchivedOn = DateTime.Now;
                 entity.ArchivedBy = 1;
                 await _repository.UpdateRole(entity);
-                return new BaseResponse<bool> { Data = true, Success = true };
+                return new BaseResponse<bool>(true);
             }
-            return new BaseResponse<bool> { Error = new ErrorResponse { Code = "404", Message = "Veri Bulunamadı" }, Success = false };
+            catch (Exception ex)
+            {
+                return new BaseResponse<bool>(Get500(ex.Message));
+            }
         }
         public async Task<BaseResponse<int>> AddRole(RoleDto role)
         {
-            var nameCheck = await _repository.GetRoleByName(role.Name);
-            if (nameCheck != null)
+            try
             {
-                return new BaseResponse<int> { Error = new ErrorResponse { Code = "400", Message = "Aynı isimde bir rol mevcut" }, Success = false };    
+                var nameCheck = await _repository.GetRoleByName(role.Name);
+                if (nameCheck != null)return new BaseResponse<int>(Get400("Aynı isimde bir rol mevcut"));
+                
+                var entity = new DataLayer.Entities.Role();
+                entity.Name = role.Name;
+                entity.Description = role.Description;
+                entity.CreatedBy = 1;
+                entity.CreatedOn = DateTime.Now;
+                entity.IsArchived = false;
+                entity.IsActive = true;
+                var result = await _repository.AddRole(entity);
+                return new BaseResponse<int>(result);
             }
-            var entity = new DataLayer.Entities.Role();
-            entity.Name = role.Name;
-            entity.Description = role.Description;
-            entity.CreatedBy = 1;
-            entity.CreatedOn = DateTime.Now;
-            entity.IsArchived = false;
-            entity.IsActive = true;
-            var data= await _repository.AddRole(entity);
-            if(data>0)return new BaseResponse<int> { Data = data, Success = true };
+            catch (Exception ex)
+            {
+                return new BaseResponse<int>(Get500(ex.Message));
+            }
             
-            return new BaseResponse<int> { Error = new ErrorResponse { Code = "500", Message = "bir hata oluştu" }, Success = false };
+            
         }
 
     }

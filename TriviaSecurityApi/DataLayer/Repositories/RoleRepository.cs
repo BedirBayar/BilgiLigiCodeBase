@@ -38,10 +38,11 @@ namespace TriviaSecurityApi.DataLayer.Repositories
             return await _context.Roles.FirstOrDefaultAsync(r=>r.Name==name);
         }
 
-        public async Task<int> UpdateRole(Role role)
+        public async Task<bool> UpdateRole(Role role)
         {
             _context.Roles.Update(role);
-            return await _context.SaveChangesAsync();
+             await _context.SaveChangesAsync();
+            return true;
          }
     }
 }

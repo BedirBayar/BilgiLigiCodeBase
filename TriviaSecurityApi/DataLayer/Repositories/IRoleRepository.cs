@@ -7,7 +7,7 @@ namespace TriviaSecurityApi.DataLayer.Repositories
         Task<List<Role>> GetAll();
         Task<Role> GetRoleById(int id);
         Task<Role> GetRoleByName(string name);
-        Task<int> UpdateRole(Role user);
+        Task<bool> UpdateRole(Role user);
         Task<int> AddRole(Role user);
     }
 }

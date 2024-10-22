@@ -44,10 +44,11 @@ namespace TriviaSecurityApi.DataLayer.Repositories
             return await context.Users.FirstOrDefaultAsync(x => x.UserName == username);
         }
 
-        public async Task<int> UpdateUser(User user)
+        public async Task<bool> UpdateUser(User user)
         {
             context.Users.Update(user);
-            return await context.SaveChangesAsync();
+            await context.SaveChangesAsync();
+            return true;
         }
     }
 }

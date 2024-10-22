@@ -9,9 +9,9 @@ namespace TriviaSecurityApi.Services.User
         Task<BaseResponse<UserDto>> GetUserById(int id);
         Task<BaseResponse<UserDto>> GetUserByEmail(string email);
         Task<BaseResponse<UserDto>> GetUserByUsername(string username);
-        Task<BaseResponse<int>> UpdateUser(UserDto user);
+        Task<BaseResponse<bool>> UpdateUser(UserDto user);
         Task<BaseResponse<int>> AddUser(UserDto user);
-        Task<BaseResponse<int>> ArchiveUser(int id);
-        Task<BaseResponse<int>> BanUser(BanUserRequest request);
+        Task<BaseResponse<bool>> ArchiveUser(int id);
+        Task<BaseResponse<bool>> BanUser(BanUserRequest request);
     }
 }

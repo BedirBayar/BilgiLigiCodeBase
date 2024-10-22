@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using TriviaContestApi.Services;
 using TriviaSecurityApi.DataLayer.Repositories;
 using TriviaSecurityApi.DTOs;
 using TriviaSecurityApi.DTOs.IdentityModels;
@@ -14,92 +15,106 @@ using TriviaSecurityApi.DTOs.UserModels;
 
 namespace TriviaSecurityApi.Services.Identity
 {
-    public class IdentityService :IIdentityService
+    public class IdentityService :BaseService,IIdentityService
     {
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly IEncryptionService _encryptionService;
-        private readonly IMapper _mapper;
         public IdentityService(
             IUserRepository userRepository, 
             IRoleRepository roleRepository, 
             IEncryptionService encryptionService,
-            IMapper mapper)
+            IMapper _mapper) : base(_mapper)
         {
             _roleRepository = roleRepository;
             _userRepository = userRepository;
             _encryptionService = encryptionService;
-            _mapper = mapper;
         }
         public async Task<BaseResponse<TokenResponse>> GetToken(TokenRequest tokenRequest)
         {
-            var user = new DataLayer.Entities.User();
-            if (!string.IsNullOrEmpty(tokenRequest.Email))
+            try
             {
-               user= await _userRepository.GetUserByEmail(tokenRequest.Email);
-            }
-            else user = await _userRepository.GetUserByUsername(tokenRequest.UserName);
-
-            if (user == null) { return new BaseResponse<TokenResponse> { Error = new ErrorResponse { Code = "404", Message = "Kullanıcı Bulunamadı" }, Success = false }; }
-            else
-            {
-               var password= _encryptionService.AESEncryptText(tokenRequest.Password, user.PasswordHash);
-                if (password == user.Password)
+                var user = new DataLayer.Entities.User();
+                if (!string.IsNullOrEmpty(tokenRequest.Email))
                 {
-                    JwtSecurityToken jwtSecurityToken = await GenerateJWToken(user);
-                    var response = new TokenResponse();
-                    response.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-                    response.User = new UserDto();
-                    response.User.Id = user.Id;
-                    response.User.UserName = user.UserName;
-                    response.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-                    response.IssuedOn = jwtSecurityToken.ValidFrom.ToLocalTime();
-                    response.ExpiresOn = jwtSecurityToken.ValidTo.ToLocalTime();
-                    response.User.Email = user.Email;
-                    response.User.Avatar = user.Avatar;
-                    response.User.CreatedOn = user.CreatedOn;
-
-                    return new BaseResponse<TokenResponse> { Data = response,Success=true };
+                    user = await _userRepository.GetUserByEmail(tokenRequest.Email);
                 }
-                return new BaseResponse<TokenResponse> { Error = new ErrorResponse { Code = "400", Message = "Kullanıcı adı, e-posta veya şifre hatalı" }, Success = false };
-            }
+                else user = await _userRepository.GetUserByUsername(tokenRequest.UserName);
+                if (user == null) return new BaseResponse<TokenResponse>(Get404("Kullanıcı Bulunamadı"));
 
+                var password = _encryptionService.AESEncryptText(tokenRequest.Password, user.PasswordHash);
+                if (password != user.Password)
+                    return new BaseResponse<TokenResponse>(Get400("Kullanıcı adı, e-posta veya şifre hatalı"));
+
+                JwtSecurityToken jwtSecurityToken = await GenerateJWToken(user);
+                var response = new TokenResponse();
+                response.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+                response.User = new UserDto();
+                response.User.Id = user.Id;
+                response.User.UserName = user.UserName;
+                response.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+                response.IssuedOn = jwtSecurityToken.ValidFrom.ToLocalTime();
+                response.ExpiresOn = jwtSecurityToken.ValidTo.ToLocalTime();
+                response.User.Email = user.Email;
+                response.User.Avatar = user.Avatar;
+                response.User.CreatedOn = user.CreatedOn;
+                return new BaseResponse<TokenResponse>(response);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<TokenResponse>(Get500(ex.Message)); 
+            }
+           
         }
 
         public async Task<BaseResponse<RegisterResponse>> Register(RegisterRequest request)
         {
-            var emailCheck= await _userRepository.GetUserByEmail(request.Email);
-            var nameCheck = await _userRepository.GetUserByUsername(request.UserName);
-            if(emailCheck == null && nameCheck == null)
+            try
             {
-                var user = GetUserWithDefaultValues();
-                user.UserName= request.UserName;
-                user.Email= request.Email;
-                user.Avatar= request.Avatar;
-                user.PasswordHash = RandomTokenString();
-                user.SecurityStamp = RandomTokenString();
-                user.Password= _encryptionService.AESEncryptText(request.Password,user.PasswordHash);
-                user.Id=await _userRepository.AddUser(user);
-                var data= _mapper.Map<UserDto>(user);
-                if(user.Id>0)  return new BaseResponse<RegisterResponse> { Data = new RegisterResponse { User = data }, Success=true };
+                var emailCheck = await _userRepository.GetUserByEmail(request.Email);
+                var nameCheck = await _userRepository.GetUserByUsername(request.UserName);
+                if (emailCheck == null && nameCheck == null)
+                {
+                    var user = GetUserWithDefaultValues();
+                    user.UserName = request.UserName;
+                    user.Email = request.Email;
+                    user.Avatar = request.Avatar;
+                    user.PasswordHash = RandomTokenString();
+                    user.SecurityStamp = RandomTokenString();
+                    user.Password = _encryptionService.AESEncryptText(request.Password, user.PasswordHash);
+                    user.Id = await _userRepository.AddUser(user);
+                    var data = _mapper.Map<UserDto>(user);
+                    return new BaseResponse<RegisterResponse> { Data = new RegisterResponse { User = data }, Success = true };
+                }
+                return new BaseResponse<RegisterResponse>(Get400("Bu e-posta veya kullanıcı adıyla bir kullanııcı zaten mevcut"));
             }
-            return new BaseResponse<RegisterResponse> { Error = new ErrorResponse { Code = "400", Message = "Bu e-posta veya kullanıcı adıyla bir kullanııcı zaten mevcut" }, Success = false };
+            catch (Exception ex)
+            {
+                return new BaseResponse<RegisterResponse>(Get500(ex.Message));
+            }
+
+            
         }
         public async Task<BaseResponse<bool>> ChangePassword(ChangePasswordRequest request)
         {
-            var user= await _userRepository.GetUserById(request.UserId);
-            if (user != null)
+            try
             {
+                var user= await _userRepository.GetUserById(request.UserId);
+                if (user == null)
+                    return new BaseResponse<bool>(Get404());
                 var oldHash = _encryptionService.AESEncryptText( request.OldPassword, user.PasswordHash);
-                if (oldHash == user.Password)
-                {
-                    user.PasswordHash = RandomTokenString();
-                    user.Password= _encryptionService.AESEncryptText(request.NewPassword, user.PasswordHash);
-                    var result= await _userRepository.UpdateUser(user);
-                    return new BaseResponse<bool> { Success = true, Data = true };
-                }
+                if (oldHash != user.Password)
+                    return new BaseResponse<bool>(Get400("Bilgiler eksik veya hatalı"));
+                user.PasswordHash = RandomTokenString();
+                user.Password= _encryptionService.AESEncryptText(request.NewPassword, user.PasswordHash);
+                var result= await _userRepository.UpdateUser(user);
+                    return new BaseResponse<bool>(true);
             }
-            return new BaseResponse<bool> { Error = new ErrorResponse { Code = "400", Message = "Bilgiler eksik veya hatalı" } };
+            catch (Exception ex)
+            {
+                return new BaseResponse<bool>(Get500(ex.Message));
+            }
+           
         }
         private async Task<JwtSecurityToken> GenerateJWToken(DataLayer.Entities.User user)
         {

@@ -1,4 +1,4 @@
-- Contribution Api'nin tamamlanmasý
+//OK - Contribution Api'nin tamamlanmasý
 - Refactoring: IsActive - IsArchived - IsBanned kontrollerinin eklenmesi
 - Refactoring: Entity - Dto - Request validasyonlarýnýn eklenmesi
 - Refactoring: Gerekli interface'lerin belirlenmesi, gereksiz interface'lerin kaldýrýlmasý

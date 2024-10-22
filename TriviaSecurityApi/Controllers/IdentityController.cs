@@ -8,7 +8,7 @@ namespace TriviaSecurityApi.Controllers
 {
     [Route("api/identity")]
     [ApiController]
-    public class IdentityController : ControllerBase
+    public class IdentityController : BaseController
     {
         private readonly IIdentityService _identityService;
 
@@ -17,28 +17,13 @@ namespace TriviaSecurityApi.Controllers
             _identityService = identityService;
         }
         [HttpPost("login")]
-        public async Task<BaseResponse<TokenResponse>> Login(TokenRequest request)
-        {
-            return await _identityService.GetToken(request);
-        }
+        public async Task<IActionResult> Login(TokenRequest request) => GetHttpResult( await _identityService.GetToken(request));
+        
         [HttpPost("register")]
-        public async Task<BaseResponse<RegisterResponse>> Register(RegisterRequest request)
-        {
-            if (ModelState.IsValid)
-            {
-                return await _identityService.Register(request);
-            }
-            return new BaseResponse<RegisterResponse> { Error = new ErrorResponse { Code = "400", Message = "Bilgiler eksik veya hatalı" } };
-        }
+        public async Task<IActionResult> Register(RegisterRequest request) => GetHttpResult(await _identityService.Register(request));
+        
         [HttpPost("changepassword")]
-        public async Task<BaseResponse<bool>> ChangePassword(ChangePasswordRequest request)
-        {
-
-            if (ModelState.IsValid && request.OldPassword!=request.NewPassword)
-            {
-                return await _identityService.ChangePassword(request);
-            }
-            return new BaseResponse<bool> { Error = new ErrorResponse { Code = "400", Message = "Bilgiler eksik veya hatalı" } };
-        } 
+        public async Task<IActionResult> ChangePassword(ChangePasswordRequest request) => GetHttpResult(await _identityService.ChangePassword(request));
+        
     }
 }

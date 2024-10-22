@@ -8,7 +8,7 @@ namespace TriviaSecurityApi.DataLayer.Repositories
         Task<User> GetUserById(int id);
         Task<User> GetUserByEmail(string email);
         Task<User> GetUserByUsername(string username);
-        Task<int> UpdateUser(User user);
+        Task<bool> UpdateUser(User user);
         Task<int> AddUser (User user);
     }
 }
