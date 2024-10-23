@@ -1,12 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TriviaContributionApi.DTOs
 {
     public class QuestionDraftQualityDto
     {
         public int Id { get; set; }
+        [Required]
         public int CreatedBy { get; set; }
+        [Required]
         public int QuestionDraftId { get; set; }
+        [Required]
         public int QualityPoint { get; set; }
         public string Feedback { get; set; }
         
@@ -14,8 +18,11 @@ namespace TriviaContributionApi.DTOs
     public class QuestionDraftDifficultyDto
     {
         public int Id { get; set; }
+        [Required]
         public int CreatedBy { get; set; }
+        [Required]
         public int QuestionDraftId { get; set; }
+        [Required]
         public int DifficultyPoint { get; set; }
     }
 }

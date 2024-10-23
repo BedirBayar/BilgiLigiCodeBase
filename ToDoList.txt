@@ -1,7 +1,6 @@
 //OK - Contribution Api'nin tamamlanmasý
-- Refactoring: IsActive - IsArchived - IsBanned kontrollerinin eklenmesi
-- Refactoring: Entity - Dto - Request validasyonlarýnýn eklenmesi
-- Refactoring: Gerekli interface'lerin belirlenmesi, gereksiz interface'lerin kaldýrýlmasý
+//OK - Refactoring: IsActive - IsArchived - IsBanned kontrollerinin eklenmesi
+//OK - Refactoring: Entity - Dto - Request validasyonlarýnýn eklenmesi
 - Refactoring: Trivia yerine baþka sözcük bulunmasý (DB dahil)
 - Refactoring: Servislerin yaþam döngülerinin doðru ayarlanmasý (DbContext->scoped, servisler->scoped, repository->scoped)
 - Apide Authentication eklenmesi ve CreatedBy-UpdatedBy-ArchivedBy setlerinin yapýlmasý

@@ -1,9 +1,13 @@
-﻿namespace TriviaRatingApi.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TriviaRatingApi.DTOs
 {
     public class AwardDto
     {
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Description { get; set; }
         public string Badge { get; set; }
         public string UserOrTeam { get; set; } = "U";

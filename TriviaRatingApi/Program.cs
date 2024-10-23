@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
 using TriviaRatingApi.Extensions;
+using TriviaRatingApi.Models;
 using TriviaSecurityApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,24 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddApplicationLayer();
 builder.Services.AddTheDbContext();
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var errors = context.ModelState
+            .Where(e => e.Value.Errors.Count > 0)
+            .ToDictionary(
+                kvp => kvp.Key,
+                kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+            );
+
+        var response = new BaseResponse<Dictionary<string, string[]>>(errors);
+        response.Success = false;
+        response.Error = new ErrorResponse { Code = "400", Message = "Validasyon hatalarýný kontrol edin" };
+
+        return new BadRequestObjectResult(response);
+    };
+});
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(allowedOrigins,

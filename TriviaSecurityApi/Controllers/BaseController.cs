@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using TriviaSecurityApi.DTOs;
 
 namespace TriviaSecurityApi.Controllers
@@ -27,5 +28,21 @@ namespace TriviaSecurityApi.Controllers
 
             return StatusCode(500, response);
         }
+
+        //protected IActionResult GetValidationErrorResult(ModelStateDictionary modelState)
+        //{
+        //    var response = new BaseResponse<List<string>>();
+        //    var list=new List<string>();
+        //    var errors = modelState.Select(x => x.Value.Errors)
+        //                   .Where(y => y.Count > 0)
+        //                   .ToList();
+        //    foreach (var error in errors)
+        //    {
+        //        list.Add(error.ToString());
+        //    }
+        //    response.Data = list;
+        //    response.Success = false;
+        //    return BadRequest(response);
+        //}
     }
 }
