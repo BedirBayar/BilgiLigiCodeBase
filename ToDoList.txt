@@ -1,8 +1,8 @@
 //OK - Contribution Api'nin tamamlanmasý
 //OK - Refactoring: IsActive - IsArchived - IsBanned kontrollerinin eklenmesi
 //OK - Refactoring: Entity - Dto - Request validasyonlarýnýn eklenmesi
-- Refactoring: Trivia yerine baþka sözcük bulunmasý (DB dahil)
-- Refactoring: Servislerin yaþam döngülerinin doðru ayarlanmasý (DbContext->scoped, servisler->scoped, repository->scoped)
+//OK - Refactoring: BilgiLigi yerine baþka sözcük bulunmasý (DB dahil)
+//OK - Refactoring: Servislerin yaþam döngülerinin doðru ayarlanmasý (DbContext->scoped, servisler->scoped, repository->scoped)
 - Apide Authentication eklenmesi ve CreatedBy-UpdatedBy-ArchivedBy setlerinin yapýlmasý
 - Backend hata mesajlarýnýn yapýlandýrýlmasý ve 400-404 ayrýmýnýn netleþmesi
 - Yeterli test datasý girilmesi

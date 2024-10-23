@@ -4,10 +4,10 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "triviacontestapi": "StartDebugging",
-        "triviasecurityapi": "StartDebugging",
-        "triviaratingapi": "StartDebugging",
-        "triviacontributionapi": "StartDebugging"
+        "BilgiLigicontestapi": "StartDebugging",
+        "BilgiLigisecurityapi": "StartDebugging",
+        "BilgiLigiratingapi": "StartDebugging",
+        "BilgiLigicontributionapi": "StartDebugging"
       }
     }
   }
