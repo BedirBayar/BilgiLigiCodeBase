@@ -28,30 +28,30 @@ namespace TriviaSecurityApi.Extensions
         public static void AddApplicationLayer(this IServiceCollection services)
         {
             // data layer
-            services.AddTransient<IContestDbContext, ContestDbContext>();
-            services.AddTransient<ICategoryRepository, CategoryRepository>();
-            services.AddTransient<IContestRepository, ContestRepository>();
-            services.AddTransient<IContestAwardRepository, ContestAwardRepository>();
-            services.AddTransient<IContestRuleRepository, ContestRuleRepository>();
-            services.AddTransient<IContestTypeRepository, ContestTypeRepository>();
-            services.AddTransient<ILeaderBoardRepository, LeaderBoardRepository>();
-            services.AddTransient<ILeaderBoardTeamRepository, LeaderBoardTeamRepository>();
-            services.AddTransient<ILeaderBoardUserRepository, LeaderBoardUserRepository>();
-            services.AddTransient<IUserMatchRepository, UserMatchRepository>();
-            services.AddTransient<ITeamMatchRepository, TeamMatchRepository>();
-            services.AddTransient<IQuestionRepository, QuestionRepository>();
-            services.AddTransient<IUserMatchQuestionRepository, UserMatchQuestionRepository>();
-            services.AddTransient<IContestUserRepository, ContestUserRepository>();
-            services.AddTransient<IContestTeamRepository, ContestTeamRepository>();
+            services.AddScoped<IContestDbContext, ContestDbContext>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IContestRepository, ContestRepository>();
+            services.AddScoped<IContestAwardRepository, ContestAwardRepository>();
+            services.AddScoped<IContestRuleRepository, ContestRuleRepository>();
+            services.AddScoped<IContestTypeRepository, ContestTypeRepository>();
+            services.AddScoped<ILeaderBoardRepository, LeaderBoardRepository>();
+            services.AddScoped<ILeaderBoardTeamRepository, LeaderBoardTeamRepository>();
+            services.AddScoped<ILeaderBoardUserRepository, LeaderBoardUserRepository>();
+            services.AddScoped<IUserMatchRepository, UserMatchRepository>();
+            services.AddScoped<ITeamMatchRepository, TeamMatchRepository>();
+            services.AddScoped<IQuestionRepository, QuestionRepository>();
+            services.AddScoped<IUserMatchQuestionRepository, UserMatchQuestionRepository>();
+            services.AddScoped<IContestUserRepository, ContestUserRepository>();
+            services.AddScoped<IContestTeamRepository, ContestTeamRepository>();
             //service layer
-            services.AddTransient<ICategoryService, CategoryService>();
-            services.AddTransient<IContestService, ContestService>();
-            services.AddTransient<IContestRuleService, ContestRuleService>();
-            services.AddTransient<IContestTypeService, ContestTypeService>();
-            services.AddTransient<ILeaderBoardService, LeaderBoardService>();
-            services.AddTransient<IQuestionService, QuestionService>();
-            services.AddTransient<IUserMatchService, UserMatchService>();
-            services.AddTransient<ITeamMatchService, TeamMatchService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IContestService, ContestService>();
+            services.AddScoped<IContestRuleService, ContestRuleService>();
+            services.AddScoped<IContestTypeService, ContestTypeService>();
+            services.AddScoped<ILeaderBoardService, LeaderBoardService>();
+            services.AddScoped<IQuestionService, QuestionService>();
+            services.AddScoped<IUserMatchService, UserMatchService>();
+            services.AddScoped<ITeamMatchService, TeamMatchService>();
 
         }
         public static void AddTheDbContext(this IServiceCollection services)

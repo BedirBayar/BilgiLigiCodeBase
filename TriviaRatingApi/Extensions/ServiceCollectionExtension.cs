@@ -31,28 +31,28 @@ namespace TriviaSecurityApi.Extensions
         public static void AddApplicationLayer(this IServiceCollection services)
         {
             //data layer
-            services.AddTransient<IRatingDbContext, RatingDbContext>();
-            services.AddTransient<IAwardRepository, AwardRepository>();
-            services.AddTransient<IRankRepository, RankRepository>();
-            services.AddTransient<ITeamRepository, TeamRepository>();
-            services.AddTransient<ITeamAwardRepository, TeamAwardRepository>();
-            services.AddTransient<ITeamRankRepository, TeamRankRepository>();
-            services.AddTransient<ITeamRatingRepository, TeamRatingRepository>();
-            services.AddTransient<IUserRankRepository, UserRankRepository>();
-            services.AddTransient<IUserRatingRepository, UserRatingRepository>();
-            services.AddTransient<IUserAwardRepository, UserAwardRepository>();
-            services.AddTransient<IUserTeamRepository, UserTeamRepository>();
+            services.AddScoped<IRatingDbContext, RatingDbContext>();
+            services.AddScoped<IAwardRepository, AwardRepository>();
+            services.AddScoped<IRankRepository, RankRepository>();
+            services.AddScoped<ITeamRepository, TeamRepository>();
+            services.AddScoped<ITeamAwardRepository, TeamAwardRepository>();
+            services.AddScoped<ITeamRankRepository, TeamRankRepository>();
+            services.AddScoped<ITeamRatingRepository, TeamRatingRepository>();
+            services.AddScoped<IUserRankRepository, UserRankRepository>();
+            services.AddScoped<IUserRatingRepository, UserRatingRepository>();
+            services.AddScoped<IUserAwardRepository, UserAwardRepository>();
+            services.AddScoped<IUserTeamRepository, UserTeamRepository>();
             //service layer
-            services.AddTransient<ITeamService, TeamService>();
-            services.AddTransient<IRankService, RankService>();
-            services.AddTransient<IAwardService, AwardService>();
-            services.AddTransient<ITeamAwardService, TeamAwardService>();
-            services.AddTransient<ITeamRankService, TeamRankService>();
-            services.AddTransient<ITeamRatingService, TeamRatingService>();
-            services.AddTransient<IUserAwardService, UserAwardService>();
-            services.AddTransient<IUserRankService, UserRankService>();
-            services.AddTransient<IUserRatingService, UserRatingService>();
-            services.AddTransient<IUserTeamService, UserTeamService>();
+            services.AddScoped<ITeamService, TeamService>();
+            services.AddScoped<IRankService, RankService>();
+            services.AddScoped<IAwardService, AwardService>();
+            services.AddScoped<ITeamAwardService, TeamAwardService>();
+            services.AddScoped<ITeamRankService, TeamRankService>();
+            services.AddScoped<ITeamRatingService, TeamRatingService>();
+            services.AddScoped<IUserAwardService, UserAwardService>();
+            services.AddScoped<IUserRankService, UserRankService>();
+            services.AddScoped<IUserRatingService, UserRatingService>();
+            services.AddScoped<IUserTeamService, UserTeamService>();
 
         }
         public static void AddTheDbContext(this IServiceCollection services)

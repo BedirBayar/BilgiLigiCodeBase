@@ -14,13 +14,13 @@ namespace TriviaSecurityApi.Extensions
     {
         public static void AddApplicationLayer(this IServiceCollection services)
         {
-            services.AddTransient<IEncryptionService, EncryptionService>();
-            services.AddTransient<ISecurityDbContext, SecurityDbContext>();
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IRoleRepository, RoleRepository>();
-            services.AddTransient<IRoleService, RoleService>();
-            services.AddTransient<IIdentityService, IdentityService>();
+            services.AddScoped<IEncryptionService, EncryptionService>();
+            services.AddScoped<ISecurityDbContext, SecurityDbContext>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IIdentityService, IdentityService>();
 
         }
         public static void AddTheDbContext(this IServiceCollection services)
