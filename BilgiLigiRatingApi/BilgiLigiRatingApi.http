@@ -1,0 +1,6 @@
+@BilgiLigiRatingApi_HostAddress = http://localhost:5193
+
+GET {{BilgiLigiRatingApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

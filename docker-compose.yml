@@ -1,40 +1,40 @@
 version: '3.4'
-name: trivia_backend_container
+name: bilgiligi_backend_container
 
 services:
-  triviasecurityapi:
-    image: ${DOCKER_REGISTRY-}triviasecurityapi
+  bilgiligisecurityapi:
+    image: ${DOCKER_REGISTRY-}bilgiligisecurityapi
     ports:
         - 44312:8080
     build:
-      context: TriviaSecurityApi
+      context: BilgiLigiSecurityApi
       dockerfile: Dockerfile
     networks: 
         - backend-network
-  triviacontestapi:
-    image: ${DOCKER_REGISTRY-}triviacontestapi
+  bilgiligicontestapi:
+    image: ${DOCKER_REGISTRY-}bilgiligicontestapi
     ports:
         - 44313:8080
     build:
-      context: TriviaContestApi
+      context: BilgiLigiContestApi
       dockerfile: Dockerfile
     networks: 
         - backend-network
-  triviaratingapi:
-    image: ${DOCKER_REGISTRY-}triviaratingapi
+  bilgiligiratingapi:
+    image: ${DOCKER_REGISTRY-}bilgiligiratingapi
     ports:
         - 44314:8080
     build:
-      context: TriviaRatingApi
+      context: BilgiLigiRatingApi
       dockerfile: Dockerfile
     networks: 
         - backend-network
-  triviacontributionapi:
-    image: ${DOCKER_REGISTRY-}triviacontributionapi
+  bilgiligicontributionapi:
+    image: ${DOCKER_REGISTRY-}bilgiligiicontributionapi
     ports:
         - 44315:8080
     build:
-      context: TriviaContributionApi
+      context: BilgiLigiContributionApi
       dockerfile: Dockerfile
     networks: 
         - backend-network
@@ -46,10 +46,10 @@ services:
       context: ApiGateway
       dockerfile: Dockerfile
     depends_on:
-      - triviasecurityapi
-      - triviacontestapi
-      - triviaratingapi
-      - triviacontributionapi
+      - bilgiligisecurityapi
+      - bilgiligicontestapi
+      - bilgiligiratingapi
+      - bilgiligicontributionapi
     networks: 
         - backend-network
 networks:
