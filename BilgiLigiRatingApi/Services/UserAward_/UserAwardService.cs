@@ -12,7 +12,7 @@ namespace BilgiLigiRatingApi.Services.UserAward_
     {
         private readonly IUserAwardRepository _repository;
 
-        public UserAwardService(IMapper mapper, IUserAwardRepository repository) : base(mapper)
+        public UserAwardService(IMapper mapper, IUserAwardRepository repository, AuthenticatedUserService _aus) : base(mapper, _aus)
         {
             _repository = repository;
         }

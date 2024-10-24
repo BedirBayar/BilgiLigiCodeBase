@@ -10,7 +10,7 @@ namespace BilgiLigiRatingApi.Services.TeamRating_
     public class TeamRatingService : BaseService, ITeamRatingService
     {
         private readonly ITeamRatingRepository _repository;
-        public TeamRatingService(IMapper _mapper, ITeamRatingRepository repository) : base(_mapper)
+        public TeamRatingService(IMapper _mapper, ITeamRatingRepository repository, AuthenticatedUserService _aus) : base(_mapper, _aus)
         {
             _repository = repository;
         }

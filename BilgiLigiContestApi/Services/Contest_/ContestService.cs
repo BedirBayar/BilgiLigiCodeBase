@@ -23,7 +23,8 @@ namespace BilgiLigiContestApi.Services.Contest_
             IContestAwardRepository car, 
             IContestUserRepository contestUserRep,
             IContestTeamRepository contestTeamRep,
-            IMapper _mapper) : base(_mapper)
+            IMapper _mapper, AuthenticatedUserService _aus) 
+            : base(_mapper, _aus)
         {
             _contestRep = contestRep;
             _contestUserRep = contestUserRep;
@@ -32,38 +33,27 @@ namespace BilgiLigiContestApi.Services.Contest_
         }
         public async Task<BaseResponse<int>> Add(ContestDto cont)
         {
-            var exist = await _contestRep.GetByName(cont.Name);
-            if (exist == null)
+            try
             {
+                var exist = await _contestRep.GetByName(cont.Name);
+                if (exist != null) return new BaseResponse<int>(Get400("Aynı isimde bir yarışma mevcut"));
+            
                 var entity = new Contest
                 {
                     Name = cont.Name,
                     Description = cont.Description,
                     IsActive = cont.IsActive,
-                    CreatedBy = 1,
+                    CreatedBy = _aus.UserId,
                     CreatedOn = DateTime.Now
                 };
-                try
-                {
-                    int result = await _contestRep.Add(entity);
-                    return new BaseResponse<int>(result);
-                }
-                catch (Exception ex)
-                {
-                    return new BaseResponse<int>
-                    {
-                        Data = -1,
-                        Success = false,
-                        Error = Get500(ex.Message)
-                    };
-                }
+                int result = await _contestRep.Add(entity);
+                return new BaseResponse<int>(result);
             }
-            return new BaseResponse<int>
+            catch (Exception ex)
             {
-                Data = -1,
-                Success = false,
-                Error = Get400("Aynı isimde bir yarışma mevcut")
-            };
+                return new BaseResponse<int> (Get500(ex.Message));
+            }
+           
         }
         public async Task<BaseResponse<bool>> Archive(int id)
         {
@@ -72,6 +62,8 @@ namespace BilgiLigiContestApi.Services.Contest_
                 var entity = await _contestRep.GetById(id);
                 if (entity == null) return new BaseResponse<bool>(Get404());
                 entity.IsArchived = true;
+                entity.ArchivedBy = _aus.UserId;
+                entity.ArchivedOn = DateTime.Now;
                 var result = await _contestRep.Update(entity);
                 return new BaseResponse<bool>(result);
             }
@@ -87,6 +79,8 @@ namespace BilgiLigiContestApi.Services.Contest_
                 var entity = await _contestRep.GetById(id);
                 if (entity == null) return new BaseResponse<bool>(Get404());
                 entity.IsActive = !entity.IsActive;
+                entity.UpdatedBy = _aus.UserId;
+                entity.UpdatedOn = DateTime.Now;
                 var result = await _contestRep.Update(entity);
                 return new BaseResponse<bool>(result);
             }
@@ -102,6 +96,8 @@ namespace BilgiLigiContestApi.Services.Contest_
                 var entity = await _contestRep.GetById(id);
                 if (entity == null) return new BaseResponse<bool>(Get404());
                 entity.IsRunning = true;
+                entity.UpdatedBy = _aus.UserId;
+                entity.UpdatedOn = DateTime.Now;
                 var result = await _contestRep.Update(entity);
                 return new BaseResponse<bool>(result);
             }
@@ -117,6 +113,8 @@ namespace BilgiLigiContestApi.Services.Contest_
                 var entity = await _contestRep.GetById(id);
                 if (entity == null) return new BaseResponse<bool>(Get404());
                 entity.IsRunning = false;
+                entity.UpdatedBy = _aus.UserId;
+                entity.UpdatedOn = DateTime.Now;
                 var result = await _contestRep.Update(entity);
                 return new BaseResponse<bool>(result);
             }
@@ -207,6 +205,9 @@ namespace BilgiLigiContestApi.Services.Contest_
                 entity.MinimumRank = contest.MinimumRank;
                 entity.MaximumRank = contest.MaximumRank;
                 entity.MatchFrequency = contest.MatchFrequency;
+
+                entity.UpdatedBy = _aus.UserId;
+                entity.UpdatedOn = DateTime.Now;
                 var result = await _contestRep.Update(entity);
                 return new BaseResponse<bool>(result);
             }

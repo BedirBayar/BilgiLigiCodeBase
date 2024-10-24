@@ -7,7 +7,7 @@ namespace BilgiLigiContestApi.Services.Match_
     public class TeamMatchService: BaseService, ITeamMatchService
     {
         private readonly ITeamMatchRepository _repository;
-        public TeamMatchService(ITeamMatchRepository repository, IMapper _mapper):base(_mapper)
+        public TeamMatchService(ITeamMatchRepository repository, IMapper _mapper, AuthenticatedUserService _aus):base(_mapper, _aus)
         {
             _repository = repository;
         }

@@ -9,7 +9,7 @@ namespace BilgiLigiContestApi.Services.Match_
     {
         private readonly IUserMatchRepository _repository;
 
-        public UserMatchService(IUserMatchRepository repository, IMapper _mapper): base(_mapper)
+        public UserMatchService(IUserMatchRepository repository, IMapper _mapper, AuthenticatedUserService _aus): base(_mapper,_aus)
         {
             _repository = repository;
         }

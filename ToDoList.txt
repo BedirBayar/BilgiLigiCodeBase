@@ -3,11 +3,12 @@
 //OK - Refactoring: Entity - Dto - Request validasyonlarýnýn eklenmesi
 //OK - Refactoring: BilgiLigi yerine baþka sözcük bulunmasý (DB dahil)
 //OK - Refactoring: Servislerin yaþam döngülerinin doðru ayarlanmasý (DbContext->scoped, servisler->scoped, repository->scoped)
-- Apide Authentication eklenmesi ve CreatedBy-UpdatedBy-ArchivedBy setlerinin yapýlmasý
+//OK - mikroservislerin dýþarýya kapatýlmasý
+- Apide Authentication eklenmesi 
+- CreatedBy-UpdatedBy-ArchivedBy setlerinin yapýlmasý
 - Backend hata mesajlarýnýn yapýlandýrýlmasý ve 400-404 ayrýmýnýn netleþmesi
 - Yeterli test datasý girilmesi
 - Monitoring uyumlu Logging mimarisi - apigateway
-- mikroservislerin dýþarýya kapatýlmasý
 - backend'in https'e alýnmasý
 - static ip ile mikroservisler ve db'nin remote hale getirilmesi
 - Caching with Redis - apigateway

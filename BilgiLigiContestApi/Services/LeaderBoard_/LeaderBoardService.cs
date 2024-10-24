@@ -7,7 +7,7 @@ namespace BilgiLigiContestApi.Services.LeaderBoard_
     public class LeaderBoardService :BaseService, ILeaderBoardService
     {
         private readonly ILeaderBoardRepository _repository;
-        public LeaderBoardService(ILeaderBoardRepository repository,IMapper _mapper) : base(_mapper)
+        public LeaderBoardService(ILeaderBoardRepository repository,IMapper _mapper,AuthenticatedUserService _aus) : base(_mapper,_aus)
         {
             _repository = repository;
         }

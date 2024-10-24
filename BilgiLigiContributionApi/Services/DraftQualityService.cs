@@ -8,7 +8,7 @@ namespace BilgiLigiContributionApi.Services
     public class DraftQualityService :BaseService
     {
         private readonly IDraftQualityRepository _repository;
-        public DraftQualityService(IDraftQualityRepository repository, IMapper _mapper) : base(_mapper)
+        public DraftQualityService(IDraftQualityRepository repository, IMapper _mapper, AuthenticatedUserService _aus) : base(_mapper, _aus)
         {
             _repository = repository;
         }
@@ -97,7 +97,7 @@ namespace BilgiLigiContributionApi.Services
                 var data = await _repository.GetById(request.Id);
                 if (data == null) return new BaseResponse<bool>(Get404());
 
-                data.CreatedBy = request.CreatedBy;
+                data.UpdatedBy = request.CreatedBy;
                 data.QuestionDraftId = request.QuestionDraftId;
                 data.QualityPoint = request.QualityPoint;
                 data.Feedback = request.Feedback;

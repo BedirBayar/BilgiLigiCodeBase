@@ -10,7 +10,7 @@ namespace BilgiLigiRatingApi.Services.UserRating_
     public class UserRatingService : BaseService, IUserRatingService
     {
         private readonly IUserRatingRepository _repository;
-        public UserRatingService(IMapper mapper, IUserRatingRepository repository) : base(mapper)
+        public UserRatingService(IMapper mapper, IUserRatingRepository repository, AuthenticatedUserService _aus) : base(mapper, _aus)
         {
             _repository = repository;
         }

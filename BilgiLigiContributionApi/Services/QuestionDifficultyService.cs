@@ -8,7 +8,7 @@ namespace BilgiLigiContributionApi.Services
     public class QuestionDifficultyService :BaseService
     {
         private readonly IQuestionDifficultyRepository _repository;
-        public QuestionDifficultyService(IQuestionDifficultyRepository repository, IMapper _mapper) : base(_mapper)
+        public QuestionDifficultyService(IQuestionDifficultyRepository repository, IMapper _mapper, AuthenticatedUserService _aus) : base(_mapper, _aus)
         {
             _repository = repository;
         }

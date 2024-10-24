@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
 using BilgiLigiSecurityApi.DTOs;
+using BilgiLigiSecurityApi.Services;
 
 namespace BilgiLigiContestApi.Services
 {
     public class BaseService
     {
         protected readonly IMapper _mapper;
-        public BaseService(IMapper mapper) { 
+        protected readonly AuthenticatedUserService _aus;
+        public BaseService(IMapper mapper, AuthenticatedUserService aus) { 
             _mapper = mapper;
+            _aus = aus;
         }
 
         protected ErrorResponse Get404(string? message="")

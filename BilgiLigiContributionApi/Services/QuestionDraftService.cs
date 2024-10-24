@@ -8,7 +8,7 @@ namespace BilgiLigiContributionApi.Services
     public class QuestionDraftService : BaseService
     {
         private readonly IQuestionDraftRepository _repository;
-        public QuestionDraftService(IQuestionDraftRepository repository, IMapper _mapper) : base(_mapper)
+        public QuestionDraftService(IQuestionDraftRepository repository, IMapper _mapper, AuthenticatedUserService _aus) : base(_mapper, _aus)
         {
             _repository = repository;
         }
@@ -96,7 +96,8 @@ namespace BilgiLigiContributionApi.Services
                     Choice2 = request.Choice2,
                     Choice3 = request.Choice3,
                     Choice4 = request.Choice4,
-                    CreatedOn = DateTime.Now
+                    CreatedOn = DateTime.Now,
+                    CreatedBy = _aus.UserId
                 };
                 var data = await _repository.Add(entity);
                 return new BaseResponse<int>(data);
@@ -121,6 +122,7 @@ namespace BilgiLigiContributionApi.Services
                 entity.Choice3 = request.Choice3;
                 entity.Choice4 = request.Choice4;
                 entity.UpdatedOn = DateTime.Now;
+                entity.UpdatedBy = _aus.UserId;
                 var result = await _repository.Update(entity);
                 return new BaseResponse<bool>(result);
             }

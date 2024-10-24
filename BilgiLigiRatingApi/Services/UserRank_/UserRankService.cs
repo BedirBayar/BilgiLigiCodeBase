@@ -12,7 +12,7 @@ namespace BilgiLigiRatingApi.Services.UserRank_
     public class UserRankService : BaseService, IUserRankService
     {
         private readonly IUserRankRepository _repository;
-        public UserRankService(IMapper _mapper, IUserRankRepository repository) : base(_mapper)
+        public UserRankService(IMapper _mapper, IUserRankRepository repository, AuthenticatedUserService _aus) : base(_mapper, _aus)
         {
             _repository = repository;
         }

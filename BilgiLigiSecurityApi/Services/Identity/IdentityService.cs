@@ -24,7 +24,8 @@ namespace BilgiLigiSecurityApi.Services.Identity
             IUserRepository userRepository, 
             IRoleRepository roleRepository, 
             IEncryptionService encryptionService,
-            IMapper _mapper) : base(_mapper)
+            AuthenticatedUserService _aus,
+            IMapper _mapper) : base(_mapper,_aus)
         {
             _roleRepository = roleRepository;
             _userRepository = userRepository;

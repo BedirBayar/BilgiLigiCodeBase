@@ -22,6 +22,7 @@ using BilgiLigiRatingApi.Services.UserAward_;
 using BilgiLigiRatingApi.Services.UserRank_;
 using BilgiLigiRatingApi.Services.UserRating_;
 using BilgiLigiRatingApi.Services.UserTeam_;
+using BilgiLigiRatingApi.Services;
 
 
 namespace BilgiLigiSecurityApi.Extensions
@@ -53,6 +54,7 @@ namespace BilgiLigiSecurityApi.Extensions
             services.AddScoped<IUserRankService, UserRankService>();
             services.AddScoped<IUserRatingService, UserRatingService>();
             services.AddScoped<IUserTeamService, UserTeamService>();
+            services.AddScoped<AuthenticatedUserService>();
 
         }
         public static void AddTheDbContext(this IServiceCollection services)

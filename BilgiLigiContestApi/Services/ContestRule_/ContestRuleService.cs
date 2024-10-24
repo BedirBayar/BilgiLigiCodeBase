@@ -9,7 +9,7 @@ namespace BilgiLigiContestApi.Services.ContestRule_
     public class ContestRuleService : BaseService, IContestRuleService
     {
         private readonly IContestRuleRepository _repository;
-        public ContestRuleService(IContestRuleRepository repository, IMapper _mapper) : base(_mapper)
+        public ContestRuleService(IContestRuleRepository repository, IMapper _mapper, AuthenticatedUserService _aus) : base(_mapper, _aus)
         {
             _repository = repository;
         }
@@ -18,16 +18,15 @@ namespace BilgiLigiContestApi.Services.ContestRule_
             try
             {
                 var exist = await _repository.GetByContestTypeAndOrder(rule.ContestTypeId, rule.Order);
-                if (exist != null)
-                {
-                    ContestRule entity = _mapper.Map<ContestRule>(rule);
-                   var id= await _repository.Add(entity);
-                    return new BaseResponse<int> { Success=true,Data=id };
-                }
-                return new BaseResponse<int> { Success = false, Data = -1, Error = Get400("Aynı sırada bir kural mevcut") };
+                if (exist != null)  return new BaseResponse<int>(Get400("Aynı sırada bir kural mevcut"));
+                ContestRule entity = _mapper.Map<ContestRule>(rule);
+                entity.CreatedBy = _aus.UserId;
+                entity.CreatedOn = DateTime.Now;
+                var id= await _repository.Add(entity);
+                return new BaseResponse<int>(id);
             }
             catch (Exception ex) {
-                return new BaseResponse<int> { Success = false, Data = -1, Error = Get500(ex.Message) };
+                return new BaseResponse<int> (Get500(ex.Message));
             }
         }
 
@@ -36,23 +35,16 @@ namespace BilgiLigiContestApi.Services.ContestRule_
             try
             {
                 var entity = await _repository.GetById(id);
-                if (entity != null)
-                {
-                    entity.ArchivedOn = DateTime.Now;
-                    entity.IsArchived = true;
-                    var result = await _repository.Update(entity);
-                    return new BaseResponse<bool> { Success = true, Data = true };
-                }
-                return new BaseResponse<bool> { Success = false, Data = false, Error = Get404() };
+                if (entity == null) return new BaseResponse<bool>(Get404());
+                entity.ArchivedOn = DateTime.Now;
+                entity.ArchivedBy = _aus.UserId;
+                entity.IsArchived = true;
+                var result = await _repository.Update(entity);
+                return new BaseResponse<bool> (true);
             }
             catch (Exception ex)
             {
-                return new BaseResponse<bool>
-                {
-                    Success = false,
-                    Data = false,
-                    Error = Get500(ex.Message)
-                };
+                return new BaseResponse<bool>(Get500(ex.Message));
             }
         }
 
@@ -61,23 +53,16 @@ namespace BilgiLigiContestApi.Services.ContestRule_
             try
             {
                 var entity = await _repository.GetById(id);
-                if (entity != null)
-                {
-                    entity.UpdatedOn = DateTime.Now;
-                    entity.IsActive = !entity.IsActive;
-                    var result = await _repository.Update(entity);
-                    return new BaseResponse<bool> { Success = true, Data = true };
-                }
-                return new BaseResponse<bool> { Success = false, Data = false, Error = Get404() };
+                if (entity == null) return new BaseResponse<bool>(Get404());
+                entity.UpdatedOn = DateTime.Now;
+                entity.UpdatedBy = _aus.UserId;
+                entity.IsActive = !entity.IsActive;
+                var result = await _repository.Update(entity);
+                return new BaseResponse<bool>(true);
             }
             catch (Exception ex)
             {
-                return new BaseResponse<bool>
-                {
-                    Success = false,
-                    Data = false,
-                    Error = Get500(ex.Message)
-                };
+                return new BaseResponse<bool>(Get500(ex.Message));
             }
         }
 
@@ -86,16 +71,13 @@ namespace BilgiLigiContestApi.Services.ContestRule_
             try
             {
                 var data = await _repository.GetAll();
-                if (data != null)
-                {
-                    var list = _mapper.Map<List<ContestRuleDto>>(data);
-                    return new BaseResponse<List<ContestRuleDto>> { Data = list, Success = true };
-                }
-                return new BaseResponse<List<ContestRuleDto>> { Success = false, Error = Get404() };
+                if (data == null) return new BaseResponse<List<ContestRuleDto>>(Get404());
+                var list = _mapper.Map<List<ContestRuleDto>>(data);
+                return new BaseResponse<List<ContestRuleDto>> (list);
             }
             catch (Exception ex)
             {
-                return new BaseResponse<List<ContestRuleDto>> { Success = false, Error = Get500(ex.Message) };
+                return new BaseResponse<List<ContestRuleDto>> ( Get500(ex.Message) );
             }
         }
         public async Task<BaseResponse<List<ContestRuleDto>>> GetAllActive()
@@ -103,16 +85,13 @@ namespace BilgiLigiContestApi.Services.ContestRule_
             try
             {
                 var data = await _repository.GetAllActive();
-                if (data != null)
-                {
-                    var list = _mapper.Map<List<ContestRuleDto>>(data);
-                    return new BaseResponse<List<ContestRuleDto>> { Data = list, Success = true };
-                }
-                return new BaseResponse<List<ContestRuleDto>> { Success = false, Error = Get404() };
+                if (data == null) return new BaseResponse<List<ContestRuleDto>>(Get404());
+                var list = _mapper.Map<List<ContestRuleDto>>(data);
+                return new BaseResponse<List<ContestRuleDto>> (list);
             }
             catch (Exception ex)
             {
-                return new BaseResponse<List<ContestRuleDto>> { Success = false, Error = Get500(ex.Message) };
+                return new BaseResponse<List<ContestRuleDto>>(Get500(ex.Message));
             }
         }
 
@@ -121,16 +100,13 @@ namespace BilgiLigiContestApi.Services.ContestRule_
             try
             {
                 var data = await _repository.GetByContestType(cTypeId);
-                if (data != null)
-                {
-                    var list = _mapper.Map<List<ContestRuleDto>>(data);
-                    return new BaseResponse<List<ContestRuleDto>> { Data = list, Success = true };
-                }
-                return new BaseResponse<List<ContestRuleDto>> { Success = false, Error = Get404() };
+                if (data == null) return new BaseResponse<List<ContestRuleDto>>(Get404());
+                var list = _mapper.Map<List<ContestRuleDto>>(data);
+                return new BaseResponse<List<ContestRuleDto>> (list);
             }
             catch (Exception ex)
             {
-                return new BaseResponse<List<ContestRuleDto>> { Success = false, Error = Get500(ex.Message) };
+                return new BaseResponse<List<ContestRuleDto>>(Get500(ex.Message));
             }
         }
 
@@ -139,16 +115,13 @@ namespace BilgiLigiContestApi.Services.ContestRule_
             try
             {
                 var data = await _repository.GetById(id);
-                if (data != null)
-                {
-                    var item = _mapper.Map<ContestRuleDto>(data);
-                    return new BaseResponse<ContestRuleDto> { Data = item, Success = true };
-                }
-                return new BaseResponse<ContestRuleDto> { Success = false, Error = Get404() };
+                if (data == null) return new BaseResponse<ContestRuleDto>(Get404());
+                var item = _mapper.Map<ContestRuleDto>(data);
+                return new BaseResponse<ContestRuleDto>(item);
             }
             catch (Exception ex)
             {
-                return new BaseResponse<ContestRuleDto> { Success = false, Error = Get500(ex.Message) };
+                return new BaseResponse<ContestRuleDto>(Get500(ex.Message));
             }
         }
 
@@ -157,25 +130,18 @@ namespace BilgiLigiContestApi.Services.ContestRule_
             try
             {
                 var entity = await _repository.GetById(rule.Id);
-                if (entity != null)
-                {
-                    entity.UpdatedOn = DateTime.Now;
-                    entity.Description = rule.Description;
-                    entity.Order = rule.Order;
-                    entity.IsActive = rule.IsActive;
-                    var result = await _repository.Update(entity);
-                    return new BaseResponse<bool> { Success = true, Data = true };
-                }
-                return new BaseResponse<bool> { Success = false, Data = false, Error = Get404() };
+                if (entity == null) return new BaseResponse<bool>(Get404());
+                entity.UpdatedOn = DateTime.Now;
+                entity.UpdatedBy = -_aus.UserId;
+                entity.Description = rule.Description;
+                entity.Order = rule.Order;
+                entity.IsActive = rule.IsActive;
+                var result = await _repository.Update(entity);
+                return new BaseResponse<bool>(true);
             }
             catch (Exception ex)
             {
-                return new BaseResponse<bool>
-                {
-                    Success = false,
-                    Data = false,
-                    Error = Get500(ex.Message)
-                };
+                return new BaseResponse<bool>(Get500(ex.Message));
             }
         }
     }

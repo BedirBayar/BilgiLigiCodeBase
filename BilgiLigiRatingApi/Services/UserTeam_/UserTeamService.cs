@@ -11,7 +11,7 @@ namespace BilgiLigiRatingApi.Services.UserTeam_
     public class UserTeamService : BaseService, IUserTeamService
     {
         private readonly IUserTeamRepository _repository;
-        public UserTeamService(IMapper _mapper, IUserTeamRepository repository) : base(_mapper)
+        public UserTeamService(IMapper _mapper, IUserTeamRepository repository, AuthenticatedUserService _aus) : base(_mapper, _aus)
         {
             _repository = repository;
         }

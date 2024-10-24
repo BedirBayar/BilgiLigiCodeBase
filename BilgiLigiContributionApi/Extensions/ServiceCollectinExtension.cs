@@ -29,6 +29,7 @@ namespace BilgiLigiContributionApi.Extensions
             services.AddScoped<QuestionQualityService>();
             services.AddScoped<QuestionDifficultyService>();
             services.AddScoped<UserContributionRatingService>();
+            services.AddScoped<AuthenticatedUserService>();
 
 
         }

@@ -9,7 +9,7 @@ namespace BilgiLigiRatingApi.Services.Award_
     public class AwardService : BaseService, IAwardService
     {
         private readonly IAwardRepository _repository;
-        public AwardService (IAwardRepository repository,IMapper _mapper) : base(_mapper) { 
+        public AwardService (IAwardRepository repository,IMapper _mapper, AuthenticatedUserService _aus) : base(_mapper, _aus) { 
             _repository = repository; 
         }
         public async Task<BaseResponse<int>> Add(AwardDto awardDto)
@@ -26,6 +26,7 @@ namespace BilgiLigiRatingApi.Services.Award_
                         UserOrTeam = awardDto.UserOrTeam,
                         Badge = awardDto.Badge,
                         CreatedOn = DateTime.Now,
+                        CreatedBy = _aus.UserId,
                         IsActive = true
                     };
                     var id = await _repository.Add(entity);
@@ -48,6 +49,7 @@ namespace BilgiLigiRatingApi.Services.Award_
                 if (entity != null)
                 {
                     entity.IsArchived = true;
+                    entity.ArchivedBy =_aus.UserId;
                     entity.ArchivedOn = DateTime.Now;
                     var result = await _repository.Update(entity);
                     return new BaseResponse<bool>(result);
@@ -69,6 +71,7 @@ namespace BilgiLigiRatingApi.Services.Award_
                 if (entity != null)
                 {
                     entity.IsActive = !entity.IsActive;
+                    entity.UpdatedBy = _aus.UserId;
                     entity.UpdatedOn = DateTime.Now;
                     var result = await _repository.Update(entity);
                     return new BaseResponse<bool>(result);
@@ -166,6 +169,7 @@ namespace BilgiLigiRatingApi.Services.Award_
                         entity.Name = awardDto.Name;
                         entity.Description = awardDto.Description;
                         entity.Badge = awardDto.Badge;
+                        entity.UpdatedBy= _aus.UserId;
                         entity.UpdatedOn= DateTime.Now;
                         var result = await _repository.Update(entity);
                         return new BaseResponse<bool>(result);

@@ -9,7 +9,7 @@ namespace BilgiLigiRatingApi.Services.TeamRank_
     public class TeamRankService : BaseService, ITeamRankService
     {
         private readonly ITeamRankRepository _repository;
-        public TeamRankService(IMapper mapper, ITeamRankRepository repository) : base(mapper)
+        public TeamRankService(IMapper mapper, ITeamRankRepository repository, AuthenticatedUserService _aus) : base(mapper, _aus)
         {
             _repository = repository;
         }

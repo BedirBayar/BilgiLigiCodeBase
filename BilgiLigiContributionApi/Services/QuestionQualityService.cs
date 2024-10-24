@@ -8,7 +8,7 @@ namespace BilgiLigiContributionApi.Services
     public class QuestionQualityService : BaseService
     {
         private readonly IQuestionQualityRepository _repository;
-        public QuestionQualityService(IQuestionQualityRepository repository, IMapper _mapper) : base(_mapper)
+        public QuestionQualityService(IQuestionQualityRepository repository, IMapper _mapper, AuthenticatedUserService _aus) : base(_mapper, _aus)
         {
             _repository = repository;
         }
@@ -97,7 +97,7 @@ namespace BilgiLigiContributionApi.Services
                 var data = await _repository.GetById(request.Id);
                 if (data == null) return new BaseResponse<bool>(Get404());
 
-                data.CreatedBy = request.CreatedBy;
+                data.UpdatedBy = request.CreatedBy;
                 data.QuestionId = request.QuestionId;
                 data.QualityPoint = request.QualityPoint;
                 data.Feedback = request.Feedback;

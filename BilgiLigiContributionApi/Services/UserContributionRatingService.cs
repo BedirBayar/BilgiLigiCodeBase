@@ -8,7 +8,7 @@ namespace BilgiLigiContributionApi.Services
     public class UserContributionRatingService : BaseService
     {
         private readonly IUserContributionRatingRepository _repository;
-        public UserContributionRatingService(IUserContributionRatingRepository repository,IMapper _mapper):base(_mapper)
+        public UserContributionRatingService(IUserContributionRatingRepository repository,IMapper _mapper, AuthenticatedUserService _aus):base(_mapper, _aus)
         {
             _repository = repository;
         }

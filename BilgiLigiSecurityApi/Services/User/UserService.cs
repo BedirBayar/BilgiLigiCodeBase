@@ -10,7 +10,7 @@ namespace BilgiLigiSecurityApi.Services.User
     public class UserService : BaseService, IUserService
     {
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository, IMapper _mapper) :base(_mapper)
+        public UserService(IUserRepository userRepository, IMapper _mapper, AuthenticatedUserService _aus) :base(_mapper, _aus)
         {
             _userRepository = userRepository;
         }
@@ -43,7 +43,7 @@ namespace BilgiLigiSecurityApi.Services.User
 
                 u.IsArchived = true;
                 u.ArchivedOn = DateTime.Now;
-                u.ArchivedBy = 1;
+                u.ArchivedBy = _aus.UserId;
                 var result = await _userRepository.UpdateUser(u);
                 return new BaseResponse<bool>(result);
 
@@ -73,6 +73,8 @@ namespace BilgiLigiSecurityApi.Services.User
                     u.BannedUntil = DateTime.Now.AddDays(request.BanDays);
                     u.BanReason = request.BanReason;
                 }
+                u.UpdatedBy = _aus.UserId;
+                u.UpdatedOn = DateTime.Now;
                 var result = await _userRepository.UpdateUser(u);
                 return new BaseResponse<bool>(result);
             }
@@ -157,7 +159,7 @@ namespace BilgiLigiSecurityApi.Services.User
                 u.Avatar = user.Avatar;
                 u.Email = user.Email;
                 u.UpdatedOn = DateTime.Now;
-                u.UpdatedBy = 1;
+                u.UpdatedBy = _aus.UserId;
                 var result = await _userRepository.UpdateUser(u);
                 return new BaseResponse<bool>(result);
             }

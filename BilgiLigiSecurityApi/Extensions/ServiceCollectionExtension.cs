@@ -21,6 +21,7 @@ namespace BilgiLigiSecurityApi.Extensions
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<AuthenticatedUserService>();
 
         }
         public static void AddTheDbContext(this IServiceCollection services)

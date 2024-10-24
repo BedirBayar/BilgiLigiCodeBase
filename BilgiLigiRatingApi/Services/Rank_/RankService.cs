@@ -9,7 +9,7 @@ namespace BilgiLigiRatingApi.Services.Rank_
     public class RankService: BaseService, IRankService
     {
         private readonly IRankRepository _repository;
-        public RankService (IRankRepository repository, IMapper _mapper): base(_mapper)
+        public RankService (IRankRepository repository, IMapper _mapper, AuthenticatedUserService _aus): base(_mapper, _aus)
         {
             _repository = repository;
         }
@@ -109,6 +109,7 @@ namespace BilgiLigiRatingApi.Services.Rank_
                 entity.Degree = rankDto.Degree;
                 entity.Description = rankDto.Description;
                 entity.Insignia = rankDto.Insignia;
+                entity.CreatedBy = _aus.UserId;
                 entity.CreatedOn = DateTime.Now;
                 entity.IsActive = true;
                 var result = await _repository.Add(entity);
@@ -131,6 +132,7 @@ namespace BilgiLigiRatingApi.Services.Rank_
                 entity.Degree = rankDto.Degree;
                 entity.Description = rankDto.Description;
                 entity.Insignia = rankDto.Insignia;
+                entity.UpdatedBy = _aus.UserId;
                 entity.UpdatedOn = DateTime.Now;
                 var result = await _repository.Update(entity);
                 return new BaseResponse<bool>(true);
@@ -149,6 +151,7 @@ namespace BilgiLigiRatingApi.Services.Rank_
                 if (entity == null) return new BaseResponse<bool>(Get404());
                 entity.IsArchived = true;
                 entity.ArchivedOn = DateTime.Now;
+                entity.ArchivedBy = _aus.UserId;
                 var result = await _repository.Update(entity);
                 return new BaseResponse<bool>(true);
             }
@@ -165,6 +168,7 @@ namespace BilgiLigiRatingApi.Services.Rank_
                 if (entity == null) return new BaseResponse<bool>(Get404());
                 entity.IsActive = !entity.IsActive;
                 entity.UpdatedOn = DateTime.Now;
+                entity.UpdatedBy = _aus.UserId;
                 var result = await _repository.Update(entity);
                 return new BaseResponse<bool>(true);
             }

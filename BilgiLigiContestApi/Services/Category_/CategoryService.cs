@@ -9,43 +9,31 @@ namespace BilgiLigiContestApi.Services.Category_
     public class CategoryService : BaseService, ICategoryService
     {
         private readonly ICategoryRepository _categoryRep;
-        public CategoryService(ICategoryRepository categoryRepository, IMapper _mapper):base(_mapper) {
+        public CategoryService(ICategoryRepository categoryRepository, IMapper _mapper, AuthenticatedUserService _aus):base(_mapper, _aus) {
             _categoryRep = categoryRepository;
         }
         public async Task<BaseResponse<int>> Add(CategoryDto cat)
         {
-            var exist = await _categoryRep.GetByName(cat.Name);
-            if (exist == null)
+            try
             {
+                var exist = await _categoryRep.GetByName(cat.Name);
+                if (exist != null) return new BaseResponse<int>(Get400("Aynı isimde bir kategori mevcut"));
+            
                 var entity = new Category
                 {
                     Name = cat.Name,
                     Description = cat.Description,
                     IsActive = cat.IsActive,
-                    CreatedBy = 1,
-                    CreatedOn = DateTime.Now
+                    CreatedOn = DateTime.Now,
+                    CreatedBy = _aus.UserId
                 };
-                try
-                {
-                    int result = await _categoryRep.Add(entity);
-                    return new BaseResponse<int>(result);
-                }
-                catch (Exception ex)
-                {
-                    return new BaseResponse<int>
-                    {
-                        Data = -1,
-                        Success = false,
-                        Error = Get500(ex.Message)
-                    };
-                }
+                int result = await _categoryRep.Add(entity);
+                return new BaseResponse<int>(result);
             }
-            return new BaseResponse<int>
+            catch (Exception ex)
             {
-                Data = -1,
-                Success = false,
-                Error = Get400("Aynı isimde bir kategori mevcut")
-            };
+                return new BaseResponse<int>(Get500(ex.Message));
+            }
         }
 
         public async Task<BaseResponse<List<CategoryDto>>> GetAll()
@@ -58,8 +46,7 @@ namespace BilgiLigiContestApi.Services.Category_
             }
             catch(Exception ex) 
             {
-                var error = Get500(ex.Message);
-                return new BaseResponse<List<CategoryDto>> (error);
+                return new BaseResponse<List<CategoryDto>>(Get500(ex.Message));
             }
         }
         public async Task<BaseResponse<List<CategoryDto>>> GetAllActive()
@@ -70,10 +57,9 @@ namespace BilgiLigiContestApi.Services.Category_
                 var data = _mapper.Map<List<CategoryDto>>(entities);
                 return new BaseResponse<List<CategoryDto>>(data);
             }
-            catch(Exception ex) 
+            catch(Exception ex)
             {
-                var error = Get500(ex.Message);
-                return new BaseResponse<List<CategoryDto>> (error);
+                return new BaseResponse<List<CategoryDto>>(Get500(ex.Message));
             }
         }
 
@@ -87,8 +73,7 @@ namespace BilgiLigiContestApi.Services.Category_
             }
             catch (Exception ex)
             {
-                var error = Get500(ex.Message);
-                return new BaseResponse<CategoryDto>(error);
+                return new BaseResponse<CategoryDto>(Get500(ex.Message));
             }
         }
 
@@ -102,142 +87,90 @@ namespace BilgiLigiContestApi.Services.Category_
             }
             catch (Exception ex)
             {
-                var error = Get500(ex.Message);
-                return new BaseResponse<CategoryDto>(error);
+                return new BaseResponse<CategoryDto>(Get500(ex.Message));
             }
         }
 
         public async Task<BaseResponse<bool>> Update(CategoryDto cat)
         {
-            var entity = await _categoryRep.GetById(cat.Id);
-            if (entity != null)
+            try
             {
-
+                var entity = await _categoryRep.GetById(cat.Id);
+                if (entity == null) return new BaseResponse<bool>(Get404("Kategori Bulunamadı"));
                 entity.Name = cat.Name;
                 entity.Description = cat.Description;
                 entity.IsActive = cat.IsActive;
-                entity.UpdatedBy = 1;
+                entity.UpdatedBy = -_aus.UserId;
                 entity.UpdatedOn = DateTime.Now;
                 
-                try
-                {
-                    bool result = await _categoryRep.Update(entity);
-                    return new BaseResponse<bool>(result);
-                }
-                catch (Exception ex)
-                {
-                    return new BaseResponse<bool>
-                    {
-                        Data = false,
-                        Success = false,
-                        Error = Get500(ex.Message)
-                    };
-                }
+                bool result = await _categoryRep.Update(entity);
+                return new BaseResponse<bool>(result);
             }
-            return new BaseResponse<bool>
+            catch (Exception ex)
             {
-                Data = false,
-                Success = false,
-                Error = Get404("Kategori bulunamadı")
-            };
+                return new BaseResponse<bool>(Get500(ex.Message));
+            }
         }
 
         public async Task<BaseResponse<bool>> Archive(int id)
         {
-            var entity = await _categoryRep.GetById(id);
-            if (entity != null)
+            try
             {
+                var entity = await _categoryRep.GetById(id);
+                if (entity == null) return new BaseResponse<bool>(Get404("Kategori Bulunamadı"));
                 entity.IsActive = false;
                 entity.IsArchived = true;
-                entity.UpdatedBy = 1;
-                entity.UpdatedOn = DateTime.Now;
-
-                try
-                {
-                    bool result = await _categoryRep.Update(entity);
-                    return new BaseResponse<bool>(result);
-                }
-                catch (Exception ex)
-                {
-                    return new BaseResponse<bool>
-                    {
-                        Data = false,
-                        Success = false,
-                        Error = Get500(ex.Message)
-                    };
-                }
+                entity.ArchivedBy = _aus.UserId;
+                entity.ArchivedOn = DateTime.Now;
+                bool result = await _categoryRep.Update(entity);
+                return new BaseResponse<bool>(result);
             }
-            return new BaseResponse<bool>
+            catch (Exception ex)
             {
-                Data = false,
-                Success = false,
-                Error = Get404("Kategori bulunamadı")
-            };
+                return new BaseResponse<bool>(Get500(ex.Message));
+            }
+            
         }
     
         public async Task<BaseResponse<bool>> ArchiveByName(string name)
         {
-            var entity = await _categoryRep.GetByName(name);
-            if (entity != null)
+            try
             {
+                var entity = await _categoryRep.GetByName(name);
+                if (entity == null)
+                return new BaseResponse<bool>(Get404("Kategori bulunamadı"));
+            
                 entity.IsActive = false;
                 entity.IsArchived = true;
-                entity.UpdatedBy = 1;
-                entity.UpdatedOn = DateTime.Now;
-
-                try
-                {
-                    bool result = await _categoryRep.Update(entity);
-                    return new BaseResponse<bool>(result);
-                }
-                catch (Exception ex)
-                {
-                    return new BaseResponse<bool>
-                    {
-                        Data = false,
-                        Success = false,
-                        Error = Get500(ex.Message)
-                    };
-                }
+                entity.ArchivedBy = _aus.UserId;
+                entity.ArchivedOn = DateTime.Now;
+                bool result = await _categoryRep.Update(entity);
+                return new BaseResponse<bool>(result);
             }
-            return new BaseResponse<bool>
+            catch (Exception ex)
             {
-                Data = false,
-                Success = false,
-                Error = Get404("Kategori bulunamadı")
-            };
+
+                return new BaseResponse<bool>(Get500(ex.Message));
+            }
         }
         public async Task<BaseResponse<bool>> ChangeStatus(int id)
         {
-            var entity = await _categoryRep.GetById(id);
-            if (entity != null)
+            try
             {
+                var entity = await _categoryRep.GetById(id);
+                if (entity == null)  return new BaseResponse<bool>(Get404("Kategori bulunamadı"));
                 entity.IsActive = !entity.IsActive;
-                entity.IsArchived = false;
-                entity.UpdatedBy = 1;
+                entity.UpdatedBy = _aus.UserId;
                 entity.UpdatedOn = DateTime.Now;
 
-                try
-                {
-                    bool result = await _categoryRep.Update(entity);
-                    return new BaseResponse<bool>(result);
-                }
-                catch (Exception ex)
-                {
-                    return new BaseResponse<bool>
-                    {
-                        Data = false,
-                        Success = false,
-                        Error = Get500(ex.Message)
-                    };
-                }
+                bool result = await _categoryRep.Update(entity);
+                return new BaseResponse<bool>(result);
             }
-            return new BaseResponse<bool>
+            catch (Exception ex)
             {
-                Data = false,
-                Success = false,
-                Error = Get404("Kategori bulunamadı")
-            };
+                return new BaseResponse<bool>(Get500(ex.Message));
+            }
+            
         }
     }
 }

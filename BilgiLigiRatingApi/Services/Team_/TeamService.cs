@@ -11,7 +11,7 @@ namespace BilgiLigiRatingApi.Services.Team_
     public class TeamService : BaseService, ITeamService
     {
         private readonly ITeamRepository _repository;
-        public TeamService(IMapper _mapper, ITeamRepository repository) : base(_mapper)
+        public TeamService(IMapper _mapper, ITeamRepository repository, AuthenticatedUserService _aus) : base(_mapper, _aus)
         {
             _repository = repository;
         }
@@ -108,6 +108,7 @@ namespace BilgiLigiRatingApi.Services.Team_
                 var entity = _mapper.Map<Team>(dto);
                 entity.IsActive = true;
                 entity.CreatedOn = DateTime.Now;
+                entity.CreatedBy =_aus.UserId;
                 var id = await _repository.Add(entity);
                 if (id>0)
                 {
@@ -129,6 +130,7 @@ namespace BilgiLigiRatingApi.Services.Team_
                 entity.Slogan=dto.Slogan;
                 entity.Image= dto.Image;
                 entity.UpdatedOn = DateTime.Now;
+                entity.UpdatedBy = _aus.UserId;
                 var result = await _repository.Update(entity);
                 return new BaseResponse<bool>(result);
             }
@@ -144,7 +146,7 @@ namespace BilgiLigiRatingApi.Services.Team_
                 var entity = await _repository.GetById(id);
                 entity.IsArchived = true;
                 entity.ArchivedOn = DateTime.Now;
-                entity.UpdatedOn = DateTime.Now;
+                entity.ArchivedBy =_aus.UserId;
                 var result = await _repository.Update(entity);
                 return new BaseResponse<bool>(true);
             }
@@ -160,6 +162,7 @@ namespace BilgiLigiRatingApi.Services.Team_
                 var entity = await _repository.GetById(id);
                 entity.IsActive = !entity.IsActive;
                 entity.UpdatedOn = DateTime.Now;
+                entity.UpdatedBy = _aus.UserId;
                 var result = await _repository.Update(entity);
                 return new BaseResponse<bool>(true);
             }
@@ -185,6 +188,7 @@ namespace BilgiLigiRatingApi.Services.Team_
                 }
 
                 entity.UpdatedOn = DateTime.Now;
+                entity.UpdatedBy = _aus.UserId;
                 var result = await _repository.Update(entity);
                 return new BaseResponse<bool>(true);
             }
@@ -200,6 +204,7 @@ namespace BilgiLigiRatingApi.Services.Team_
                 var entity = await _repository.GetById(request.TeamId);
                 entity.LeaderId = request.NewLeaderId;
                 entity.UpdatedOn = DateTime.Now;
+                entity.UpdatedBy = _aus.UserId;
                 var result = await _repository.Update(entity);
                 return new BaseResponse<bool>(true);
             }

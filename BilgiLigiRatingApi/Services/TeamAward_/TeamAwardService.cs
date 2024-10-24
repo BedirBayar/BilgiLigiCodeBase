@@ -11,7 +11,7 @@ namespace BilgiLigiRatingApi.Services.TeamAward_
     public class TeamAwardService : BaseService, ITeamAwardService
     {
         private readonly ITeamAwardRepository _repository;
-       public TeamAwardService (ITeamAwardRepository repository, IMapper _mapper) : base(_mapper)
+       public TeamAwardService (ITeamAwardRepository repository, IMapper _mapper, AuthenticatedUserService _aus) : base(_mapper, _aus)
         {
             _repository = repository;
         }

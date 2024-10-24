@@ -8,7 +8,7 @@ namespace BilgiLigiContributionApi.Services
     public class DraftDifficultyService : BaseService
     {
         private readonly IDraftDifficultyRepository _repository;
-        public DraftDifficultyService(IDraftDifficultyRepository repository, IMapper _mapper) : base(_mapper)
+        public DraftDifficultyService(IDraftDifficultyRepository repository, IMapper _mapper, AuthenticatedUserService _aus) : base(_mapper, _aus)
         {
             _repository = repository;
         }
@@ -79,7 +79,7 @@ namespace BilgiLigiContributionApi.Services
                     CreatedBy = request.CreatedBy,
                     QuestionDraftId = request.QuestionDraftId,
                     DifficultyPoint = request.DifficultyPoint,
-                    CreatedOn = DateTime.Now
+                    CreatedOn = DateTime.Now,
                 };
                 var id = await _repository.Add(entity);
                 return new BaseResponse<int>(id);
@@ -96,7 +96,7 @@ namespace BilgiLigiContributionApi.Services
                 var data = await _repository.GetById(request.Id);
                 if (data == null) return new BaseResponse<bool>(Get404());
 
-                data.CreatedBy = request.CreatedBy;
+                data.UpdatedBy = request.CreatedBy;
                 data.QuestionDraftId = request.QuestionDraftId;
                 data.DifficultyPoint = request.DifficultyPoint;
                 data.UpdatedOn = DateTime.Now;

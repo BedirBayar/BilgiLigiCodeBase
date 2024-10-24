@@ -9,7 +9,8 @@ namespace BilgiLigiSecurityApi.Services.Role
     public class RoleService :BaseService,IRoleService
     {
         private readonly IRoleRepository _repository;
-        public RoleService( IRoleRepository repository, IMapper _mapper):base(_mapper) {
+        public RoleService( IRoleRepository repository, IMapper _mapper, AuthenticatedUserService _aus) : base(_mapper, _aus)
+        {
             _repository = repository;
         }
 
@@ -57,7 +58,7 @@ namespace BilgiLigiSecurityApi.Services.Role
                 }
                 entity.Name = role.Name;
                 entity.Description = role.Description;
-                entity.UpdatedBy = 1;
+                entity.UpdatedBy = _aus.UserId;
                 entity.UpdatedOn = DateTime.Now;
                 var result= await _repository.UpdateRole(entity);
                 return new BaseResponse<bool>(result);
@@ -75,6 +76,8 @@ namespace BilgiLigiSecurityApi.Services.Role
                 if (entity == null)
                 return new BaseResponse<bool>(Get404());
                 entity.IsActive = !entity.IsActive;
+                entity.UpdatedBy = _aus.UserId;
+                entity.UpdatedOn = DateTime.Now;
                 await _repository.UpdateRole(entity);
                 return new BaseResponse<bool> { Data = entity.IsActive, Success = true };
             }
@@ -94,7 +97,7 @@ namespace BilgiLigiSecurityApi.Services.Role
                     return new BaseResponse<bool>(Get404());
                 entity.IsArchived = true;
                 entity.ArchivedOn = DateTime.Now;
-                entity.ArchivedBy = 1;
+                entity.ArchivedBy = _aus.UserId;
                 await _repository.UpdateRole(entity);
                 return new BaseResponse<bool>(true);
             }
@@ -113,7 +116,7 @@ namespace BilgiLigiSecurityApi.Services.Role
                 var entity = new DataLayer.Entities.Role();
                 entity.Name = role.Name;
                 entity.Description = role.Description;
-                entity.CreatedBy = 1;
+                entity.CreatedBy = _aus.UserId;
                 entity.CreatedOn = DateTime.Now;
                 entity.IsArchived = false;
                 entity.IsActive = true;

@@ -9,7 +9,7 @@ namespace BilgiLigiContestApi.DataAccess.Entities
         [Column("Id")]
         public int Id { get; set; }
         [Column("IsActive")]
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
         [Column("IsArchived")]
         public bool IsArchived { get; set; }
         [Column("CreatedBy")]
