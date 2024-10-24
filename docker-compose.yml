@@ -4,8 +4,8 @@ name: bilgiligi_backend_container
 services:
   bilgiligisecurityapi:
     image: ${DOCKER_REGISTRY-}bilgiligisecurityapi
-    ports:
-        - 44312:8080
+    expose:
+        - "8080"
     build:
       context: BilgiLigiSecurityApi
       dockerfile: Dockerfile
@@ -13,8 +13,8 @@ services:
         - backend-network
   bilgiligicontestapi:
     image: ${DOCKER_REGISTRY-}bilgiligicontestapi
-    ports:
-        - 44313:8080
+    expose:
+        - "8080"
     build:
       context: BilgiLigiContestApi
       dockerfile: Dockerfile
@@ -22,8 +22,8 @@ services:
         - backend-network
   bilgiligiratingapi:
     image: ${DOCKER_REGISTRY-}bilgiligiratingapi
-    ports:
-        - 44314:8080
+    expose:
+        - "8080"
     build:
       context: BilgiLigiRatingApi
       dockerfile: Dockerfile
@@ -31,8 +31,8 @@ services:
         - backend-network
   bilgiligicontributionapi:
     image: ${DOCKER_REGISTRY-}bilgiligiicontributionapi
-    ports:
-        - 44315:8080
+    expose:
+        - "8080"
     build:
       context: BilgiLigiContributionApi
       dockerfile: Dockerfile
